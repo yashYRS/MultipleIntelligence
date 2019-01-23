@@ -19,6 +19,9 @@
         completions."
     </string>
     <string name="action_register">Register (If no account)</string>
-    <string name ="text_register">Register page</string>
-    <string name ="text_profile">Profile page</string>
+    <string name="text_register">Register page</string>
+    <string name="text_profile">Profile page</string>
+    <string name="txt_logout">Logout</string>
+    <string name="txt_reqPark">Parking Near Me</string>
+    <string name="phone">Phone :</string>
 </resources>
