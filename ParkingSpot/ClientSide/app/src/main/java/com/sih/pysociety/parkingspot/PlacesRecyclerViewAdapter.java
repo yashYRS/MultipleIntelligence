@@ -1,4 +1,6 @@
 package com.sih.pysociety.parkingspot;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,8 +12,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
+import java.util.Locale;
 
 public class PlacesRecyclerViewAdapter extends
         RecyclerView.Adapter<PlacesRecyclerViewAdapter.ViewHolder> {
@@ -50,6 +54,17 @@ public class PlacesRecyclerViewAdapter extends
         holder.name.setText(place.getName());
         holder.address.setText(place.getAddress());
         holder.phone.setText(place.getPhoneNumber());
+        holder.viewOnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LatLng latLng = place.getLatLng();
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", latLng.latitude, latLng.longitude);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                v.getContext().startActivity(intent);
+
+
+            }
+        });
         if(place.getWebsiteUri() != null){
             holder.website.setText(place.getWebsiteUri().toString());
         }

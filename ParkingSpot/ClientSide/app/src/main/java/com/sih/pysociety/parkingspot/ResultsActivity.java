@@ -90,6 +90,19 @@ public class ResultsActivity extends AppCompatActivity {
             }
         }
     }
+    public StringBuilder sbMethod(double mLatitude , doubl mLongitude) {
+
+        StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        sb.append("location=" + mLatitude + "," + mLongitude);
+        sb.append("&radius=5000"); // to be manipulated
+        sb.append("&types=" + "parking");
+        sb.append("&sensor=true");
+        sb.append("&key="+getString(R.string.google_maps_key)); // to be written
+
+        Log.d("Map", "api: " + sb.toString());
+
+        return sb;
+    }
 
     public class PopulateView extends AsyncTask<Void, Void, Boolean> {
 
