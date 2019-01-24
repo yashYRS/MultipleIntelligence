@@ -3,14 +3,27 @@ import os
 import random
 import time  
 import turtle
+from threading import Timer
 
 turtle.fd(0)  #creating the actual screen (required by macos)
 turtle.speed(0) #control the speed of animation
 turtle.bgcolor("black") 
+turtle.bgpic("starfield.gif")
 turtle.title("Space War")
 turtle.ht()  
 turtle.setundobuffer(1) #limits the amount of memory the turtle module uses (saves the memory)
 turtle.tracer(0) #speeds up the drawing , how often you want to update the screen   
+
+lives=3
+
+def exitfunc():
+	if(lives==0):
+		timer.cancel()
+	else:
+		print("Time's Up !")
+		os._exit(0)
+	
+Timer(60, exitfunc).start()
 
 class Sprite(turtle.Turtle): #turtles act as sprites(objects on the screen) ,inherits everything from turtle module
     def __init__(self, spriteshape, color, startx, starty):  
@@ -54,7 +67,7 @@ class Player(Sprite):
         Sprite.__init__(self, spriteshape, color, startx, starty)
         self.shapesize(stretch_wid=0.6, stretch_len=1.1, outline=None) #make it more starshippy
         self.speed = 3  
-        self.lives = 3
+        #self.lives = 3
 
     def turn_left(self):
        self.lt(25)
@@ -172,9 +185,12 @@ class Game():   #game object to draw the info on the screen
 
     def show_status(self):
         self.pen.undo()
-        msg = "Score: %s" %(self.score)
+        if game.lives > 0:
+        	msg = "Lives: %s  Score: %s " %(self.lives, self.score)
+        else:
+            msg = "Game Over ! Score : %s" %(self.score)
         self.pen.penup() #not draw anything
-        self.pen.goto(-50, 310)
+        self.pen.goto(-60, 310)
         self.pen.write(msg, font=("Arial", 16, "normal")) 
 
 
@@ -231,6 +247,9 @@ while True:
             y = random.randint(-250, 250)
             enemy.goto(x, y)
             game.score -= 10
+            game.lives -= 1
+            if game.lives < 1:
+                game.state = "gameover"	
             game.show_status()
 
         # Check for collision between the cannon and the enemy
@@ -261,6 +280,8 @@ while True:
 
     for particle in particles:
         particle.move()
-
+        
+    if game.state == "gameover":
+        os._exit(0)
 
 delay = raw_input("Press enter to finish. > ")
