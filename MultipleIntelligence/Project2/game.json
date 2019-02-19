@@ -1363,12 +1363,12 @@
       ],
       "variables": [
         {
-          "name": "BallX",
-          "value": ""
+          "name": "Score",
+          "value": "0"
         },
         {
-          "name": "BallY",
-          "value": ""
+          "name": "Lives",
+          "value": "3"
         }
       ],
       "instances": [
@@ -1398,21 +1398,6 @@
           "x": 390,
           "y": 510,
           "zOrder": 2,
-          "numberProperties": [],
-          "stringProperties": [],
-          "initialVariables": []
-        },
-        {
-          "angle": 0,
-          "customSize": true,
-          "height": 30,
-          "layer": "",
-          "locked": false,
-          "name": "ExitCond",
-          "width": 800,
-          "x": 0,
-          "y": 570,
-          "zOrder": 3,
           "numberProperties": [],
           "stringProperties": [],
           "initialVariables": []
@@ -1710,8 +1695,8 @@
           "locked": false,
           "name": "Text",
           "width": 0,
-          "x": 191,
-          "y": 302,
+          "x": 98,
+          "y": 323,
           "zOrder": 9,
           "numberProperties": [],
           "stringProperties": [],
@@ -1739,10 +1724,55 @@
           "layer": "",
           "locked": false,
           "name": "Score",
-          "width": 116,
+          "width": 187,
           "x": 605,
           "y": 8,
           "zOrder": 10,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": true,
+          "height": 236,
+          "layer": "WinLayer",
+          "locked": false,
+          "name": "Win",
+          "width": 612,
+          "x": 155,
+          "y": 133,
+          "zOrder": 11,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": true,
+          "height": 196,
+          "layer": "LoseLayer",
+          "locked": false,
+          "name": "Lose",
+          "width": 466,
+          "x": 187,
+          "y": 129,
+          "zOrder": 12,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": false,
+          "height": 0,
+          "layer": "",
+          "locked": false,
+          "name": "Lives",
+          "width": 0,
+          "x": 18,
+          "y": 8,
+          "zOrder": 13,
           "numberProperties": [],
           "stringProperties": [],
           "initialVariables": []
@@ -1874,26 +1904,6 @@
           ]
         },
         {
-          "name": "ExitCond",
-          "type": "Sprite",
-          "updateIfNotVisible": false,
-          "variables": [],
-          "behaviors": [],
-          "animations": [
-            {
-              "name": "",
-              "useMultipleDirections": false,
-              "directions": [
-                {
-                  "looping": false,
-                  "timeBetweenFrames": 0.08,
-                  "sprites": []
-                }
-              ]
-            }
-          ]
-        },
-        {
           "name": "BlueBrick",
           "type": "Sprite",
           "updateIfNotVisible": false,
@@ -1965,33 +1975,7 @@
           "type": "Sprite",
           "updateIfNotVisible": false,
           "variables": [],
-          "behaviors": [
-            {
-              "name": "Physics2",
-              "type": "Physics2::Physics2Behavior",
-              "content": {
-                "type": "Static",
-                "bullet": false,
-                "fixedRotation": true,
-                "canSleep": true,
-                "shape": "Box",
-                "shapeDimensionA": 0,
-                "shapeDimensionB": 0,
-                "shapeOffsetX": 0,
-                "shapeOffsetY": 0,
-                "polygonOrigin": "Center",
-                "vertices": [],
-                "density": 1,
-                "friction": 0,
-                "restitution": 1,
-                "linearDamping": 0,
-                "angularDamping": 0,
-                "gravityScale": 0,
-                "layers": 1,
-                "masks": 1
-              }
-            }
-          ],
+          "behaviors": [],
           "animations": [
             {
               "name": "Normal",
@@ -2196,7 +2180,7 @@
           "underlined": false,
           "variables": [],
           "behaviors": [],
-          "string": "Press SPACE Key To START",
+          "string": "        Press SPACE Key To START\n\nUse LEFT and RIGHT Key To Navigate",
           "font": "",
           "characterSize": 32,
           "color": {
@@ -2221,6 +2205,60 @@
             "b": 18,
             "g": 18,
             "r": 163
+          }
+        },
+        {
+          "bold": false,
+          "italic": false,
+          "name": "Win",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "          Nicely Done You Win\n\nPress SPACE To Go To Next Round",
+          "font": "",
+          "characterSize": 32,
+          "color": {
+            "b": 255,
+            "g": 255,
+            "r": 255
+          }
+        },
+        {
+          "bold": false,
+          "italic": false,
+          "name": "Lose",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "Better Luck Next Time\n\nPress SPACE To Continue",
+          "font": "",
+          "characterSize": 32,
+          "color": {
+            "b": 255,
+            "g": 255,
+            "r": 255
+          }
+        },
+        {
+          "bold": false,
+          "italic": false,
+          "name": "Lives",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "Lives: ",
+          "font": "",
+          "characterSize": 32,
+          "color": {
+            "b": 48,
+            "g": 48,
+            "r": 173
           }
         }
       ],
@@ -2259,11 +2297,10 @@
             {
               "type": {
                 "inverted": false,
-                "value": "Delete"
+                "value": "Cache"
               },
               "parameters": [
-                "Text",
-                ""
+                "Text"
               ],
               "subInstructions": []
             },
@@ -2276,7 +2313,31 @@
                 "Ball",
                 "Physics2",
                 "=",
-                "-100"
+                "-200"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "TextObject::String"
+              },
+              "parameters": [
+                "Score",
+                "=",
+                "\"Score: \" + ToString(Variable(Score))"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "TextObject::String"
+              },
+              "parameters": [
+                "Lives",
+                "=",
+                "\"Lives: \" + ToString(Variable(Lives))"
               ],
               "subInstructions": []
             }
@@ -2335,7 +2396,7 @@
                 "Ball",
                 "Physics2",
                 "=",
-                "100"
+                "200"
               ],
               "subInstructions": []
             },
@@ -2361,6 +2422,30 @@
               "parameters": [
                 "Brick",
                 ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ModVarScene"
+              },
+              "parameters": [
+                "Score",
+                "+",
+                "100"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "TextObject::String"
+              },
+              "parameters": [
+                "Score",
+                "=",
+                "\"Score: \" + ToString(Variable(Score))"
               ],
               "subInstructions": []
             }
@@ -2419,7 +2504,7 @@
                 "Ball",
                 "Physics2",
                 "=",
-                "-100"
+                "-200"
               ],
               "subInstructions": []
             },
@@ -2451,10 +2536,22 @@
             {
               "type": {
                 "inverted": false,
+                "value": "ModVarScene"
+              },
+              "parameters": [
+                "Score",
+                "+",
+                "100"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
                 "value": "TextObject::String"
               },
               "parameters": [
-                "Text",
+                "Score",
                 "=",
                 "\"Score: \" + ToString(Variable(Score))"
               ],
@@ -2465,7 +2562,7 @@
         },
         {
           "disabled": false,
-          "folded": false,
+          "folded": true,
           "type": "BuiltinCommonInstructions::Standard",
           "conditions": [
             {
@@ -2518,7 +2615,7 @@
                 "Ball",
                 "Physics2",
                 "=",
-                "-100"
+                "-200"
               ],
               "subInstructions": []
             }
@@ -2553,7 +2650,7 @@
                     "Ball",
                     "Physics2",
                     "=",
-                    "50"
+                    "100"
                   ],
                   "subInstructions": []
                 }
@@ -2589,7 +2686,7 @@
                     "Ball",
                     "Physics2",
                     "=",
-                    "-50"
+                    "-100"
                   ],
                   "subInstructions": []
                 }
@@ -2626,7 +2723,51 @@
                 "Ball",
                 "Physics2",
                 "=",
-                "50"
+                "100"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "VarScene"
+              },
+              "parameters": [
+                "Score",
+                "=",
+                "2000"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "HideLayer"
+              },
+              "parameters": [
+                "",
+                "\"\""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ShowLayer"
+              },
+              "parameters": [
+                "",
+                "\"WinLayer\""
               ],
               "subInstructions": []
             }
@@ -2661,7 +2802,7 @@
                 "Ball",
                 "Physics2",
                 "=",
-                "-50"
+                "-100"
               ],
               "subInstructions": []
             }
@@ -2696,7 +2837,208 @@
                 "Ball",
                 "Physics2",
                 "=",
-                "100"
+                "200"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": true,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "PosY"
+              },
+              "parameters": [
+                "Ball",
+                ">=",
+                "580"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Physics2::LinearVelocityX"
+              },
+              "parameters": [
+                "Ball",
+                "Physics2",
+                "=",
+                "0"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "Physics2::LinearVelocityY"
+              },
+              "parameters": [
+                "Ball",
+                "Physics2",
+                "=",
+                "0"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "MettreXY"
+              },
+              "parameters": [
+                "Ball",
+                "=",
+                "390",
+                "=",
+                "510"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ModVarScene"
+              },
+              "parameters": [
+                "Lives",
+                "-",
+                "1"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "TextObject::String"
+              },
+              "parameters": [
+                "Lives",
+                "=",
+                "\"Lives: \" + ToString(Variable(Lives))"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "Montre"
+              },
+              "parameters": [
+                "Text",
+                "="
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "MettreXY"
+              },
+              "parameters": [
+                "Platform",
+                "=",
+                "335",
+                "=",
+                "530"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": [
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "VarScene"
+                  },
+                  "parameters": [
+                    "Lives",
+                    "=",
+                    "0"
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "HideLayer"
+                  },
+                  "parameters": [
+                    "",
+                    "\"\""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ShowLayer"
+                  },
+                  "parameters": [
+                    "",
+                    "\"LoseLayer\""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            }
+          ]
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "PosX"
+              },
+              "parameters": [
+                "Platform",
+                "<=",
+                "0"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "MettreX"
+              },
+              "parameters": [
+                "Platform",
+                "=",
+                "0"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "TopDownMovementBehavior::SimulateRightKey"
+              },
+              "parameters": [
+                "Platform",
+                "TopDownMovement"
               ],
               "subInstructions": []
             }
@@ -2707,8 +3049,133 @@
           "disabled": false,
           "folded": false,
           "type": "BuiltinCommonInstructions::Standard",
-          "conditions": [],
-          "actions": [],
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "PosX"
+              },
+              "parameters": [
+                "Platform",
+                ">=",
+                "670"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "MettreX"
+              },
+              "parameters": [
+                "Platform",
+                "=",
+                "670"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "TopDownMovementBehavior::SimulateLeftKey"
+              },
+              "parameters": [
+                "Platform",
+                "TopDownMovement"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "LayerVisible"
+              },
+              "parameters": [
+                "",
+                "\"WinLayer\""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "KeyPressed"
+              },
+              "parameters": [
+                "",
+                "Space"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Scene"
+              },
+              "parameters": [
+                "",
+                "\"Transition\"",
+                ""
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "LayerVisible"
+              },
+              "parameters": [
+                "",
+                "\"LoseLayer\""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "KeyPressed"
+              },
+              "parameters": [
+                "",
+                "Space"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Scene"
+              },
+              "parameters": [
+                "",
+                "\"Transition\"",
+                ""
+              ],
+              "subInstructions": []
+            }
+          ],
           "events": []
         }
       ],
@@ -2728,6 +3195,18 @@
               "width": 0
             }
           ],
+          "effects": []
+        },
+        {
+          "name": "WinLayer",
+          "visibility": false,
+          "cameras": [],
+          "effects": []
+        },
+        {
+          "name": "LoseLayer",
+          "visibility": false,
+          "cameras": [],
           "effects": []
         }
       ],
