@@ -4,6 +4,7 @@ import pygame
 import sys
 import math
 import pygame.mixer
+import time 
 
 YELLOW_BG = (255,255,150)	
 BLACK = (0,0,0)
@@ -21,9 +22,27 @@ PLAYER_PIECE = 1
 AI_PIECE = 2
 
 WINDOW_LENGTH = 4
-def show_rules() : 
 
-	return 0 
+def text_objects(text, font):
+	textSurface = font.render(text, True, (25,255,255))
+	return textSurface, textSurface.get_rect()
+
+def message_display(w , h , texts):
+	largeText = pygame.font.Font('freesansbold.ttf',25)	
+	hdiff = -150 
+	for text in texts : 
+		TextSurf, TextRect = text_objects(text, largeText)
+		TextRect.center = ((w/2) - 300 ,h/2  + hdiff)
+		hdiff = hdiff + 50 
+		screen.blit(TextSurf, TextRect)
+		pygame.display.update()
+		time.sleep(0.5)
+	while True:
+		for event in pygame.event.get() : 
+			if event.type == pygame.KEYDOWN : 
+				if event.key == pygame.K_SPACE :
+					screen.fill(BLACK)
+					return 
 
 def create_board():
 	board = np.zeros((ROW_COUNT,COLUMN_COUNT))
@@ -210,9 +229,16 @@ board = create_board()
 game_over = False
 
 pygame.init()
-coin_sound = pygame.mixer.Sound('coin.wav')
-SQUARESIZE = 100
+coinSound = pygame.mixer.Sound('coin.wav')
+rules = [] 
+rules.append("Use the mouse to drop coins on the board")
+rules.append("After your turn we do the same")
+rules.append("Create a line with at least 4 coins, before we do.")
+rules.append("The line could be horizontal vertical or diagonal")
+rules.append("Press Space to continue")
 
+SQUARESIZE = 100
+	
 width = COLUMN_COUNT * SQUARESIZE
 height = (ROW_COUNT+1) * SQUARESIZE
 
@@ -220,11 +246,10 @@ size = (width, height)
 
 RADIUS = int(SQUARESIZE/2 - 5)
 
-screen = pygame.display.set_mode(size , pygame.FULLSCREEN)
-# show_rules()
-# for event in pygame.event.get() : 
-# 		if event.type == pygame.MOUSEBUTTONDOWN : 
-# 			break 
+infoObject = pygame.display.Info()
+screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
+
+message_display(infoObject.current_w, infoObject.current_h , rules)	
 draw_board(board)
 pygame.display.update()
 
@@ -236,7 +261,8 @@ while not game_over:
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
-			sys.exit()
+			pygame.quit()
+			break 
 
 		if event.type == pygame.MOUSEMOTION:
 			pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
@@ -254,6 +280,7 @@ while not game_over:
 
 				if is_valid_location(board, col):
 					row = get_next_open_row(board, col)
+					coinSound.play()
 					drop_piece(board, row, col, PLAYER_PIECE)
 					if winning_move(board, PLAYER_PIECE):
 						label = myfont.render("Player 1 wins!!", 1, RED)
@@ -288,4 +315,6 @@ while not game_over:
 			turn = turn % 2
 
 	if game_over:
-		pygame.time.wait(1000)
+		pygame.time.wait(2000)
+		pygame.quit()
+		break
