@@ -27,7 +27,7 @@ def text_objects(text, font):
 	textSurface = font.render(text, True, (25,255,255))
 	return textSurface, textSurface.get_rect()
 
-def message_display(w , h , texts):
+def message_display(w , h , texts,screen):
 	largeText = pygame.font.Font('freesansbold.ttf',25)	
 	hdiff = -150 
 	for text in texts : 
@@ -211,7 +211,7 @@ def pick_best_move(board, piece):
 
 	return best_col
 
-def draw_board(board):
+def draw_board(board , screen , SQUARESIZE , RADIUS , height , width ):
 	for c in range(COLUMN_COUNT):
 		for r in range(ROW_COUNT):
 			pygame.draw.rect(screen, YELLOW_BG, (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
@@ -225,96 +225,99 @@ def draw_board(board):
 				pygame.draw.circle(screen, LIGHT_BLUE, (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
 	pygame.display.update()
 
-board = create_board()
-game_over = False
+def start_game(level) : 
+	board = create_board()
 
-pygame.init()
-coinSound = pygame.mixer.Sound('coin.wav')
-rules = [] 
-rules.append("Use the mouse to drop coins on the board")
-rules.append("After your turn we do the same")
-rules.append("Create a line with at least 4 coins, before we do.")
-rules.append("The line could be horizontal vertical or diagonal")
-rules.append("Press Space to continue")
+	pygame.init()
+	coinSound = pygame.mixer.Sound('coin.wav')
+	rules = [] 
+	rules.append("Use the mouse to drop coins on the board")
+	rules.append("After your turn we do the same")
+	rules.append("Create a line with at least 4 coins, before we do.")
+	rules.append("The line could be horizontal vertical or diagonal")
+	rules.append("Press Space to continue")
 
-SQUARESIZE = 100
-	
-width = COLUMN_COUNT * SQUARESIZE
-height = (ROW_COUNT+1) * SQUARESIZE
+	SQUARESIZE = 100
+		
+	width = COLUMN_COUNT * SQUARESIZE
+	height = (ROW_COUNT+1) * SQUARESIZE
 
-size = (width, height)
+	size = (width, height)
 
-RADIUS = int(SQUARESIZE/2 - 5)
+	RADIUS = int(SQUARESIZE/2 - 5)
 
-infoObject = pygame.display.Info()
-screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
+	infoObject = pygame.display.Info()
+	screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
 
-message_display(infoObject.current_w, infoObject.current_h , rules)	
-draw_board(board)
-pygame.display.update()
+	message_display(infoObject.current_w, infoObject.current_h , rules , screen)	
+	draw_board(board , screen , SQUARESIZE , RADIUS , height , width )
+	pygame.display.update()
 
-myfont = pygame.font.SysFont("monospace", 75)
+	myfont = pygame.font.SysFont("monospace", 75)
 
-turn = random.randint(PLAYER, AI)
+	turn = random.randint(PLAYER, AI)
 
-while not game_over:
+	game_over = False
+	while not game_over:
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			pygame.quit()
-			break 
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				break 
 
-		if event.type == pygame.MOUSEMOTION:
-			pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
-			posx = event.pos[0]
-			if turn == PLAYER:
-				pygame.draw.circle(screen, RED, (posx, int(SQUARESIZE/2)), RADIUS)
-		pygame.display.update()
-
-		if event.type == pygame.MOUSEBUTTONDOWN:
-			pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
-			# Ask for Player 1 Input
-			if turn == PLAYER:
+			if event.type == pygame.MOUSEMOTION:
+				pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
 				posx = event.pos[0]
-				col = int(math.floor(posx/SQUARESIZE))
+				if turn == PLAYER:
+					pygame.draw.circle(screen, RED, (posx, int(SQUARESIZE/2)), RADIUS)
+			pygame.display.update()
 
-				if is_valid_location(board, col):
-					row = get_next_open_row(board, col)
-					coinSound.play()
-					drop_piece(board, row, col, PLAYER_PIECE)
-					if winning_move(board, PLAYER_PIECE):
-						label = myfont.render("Player 1 wins!!", 1, RED)
-						screen.blit(label, (40,10))
-						game_over = True
+			if event.type == pygame.MOUSEBUTTONDOWN :
+				pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
+				# Ask for Player 1 Input
+				if turn == PLAYER:
+					posx = event.pos[0]
+					col = int(math.floor(posx/SQUARESIZE))
 
-					turn += 1
-					turn = turn % 2
+					if is_valid_location(board, col):
+						row = get_next_open_row(board, col)
+						coinSound.play()
+						drop_piece(board, row, col, PLAYER_PIECE)
+						if winning_move(board, PLAYER_PIECE):
+							label = myfont.render("Player 1 wins!!", 1, RED)
+							screen.blit(label, (40,10))
+							game_over = True
 
-					draw_board(board)
+						turn += 1
+						turn = turn % 2
+
+						draw_board(board , screen , SQUARESIZE , RADIUS , height , width )
 
 
-	# # Ask for Player 2 Input
-	if turn == AI and not game_over:				
+		# # Ask for Player 2 Input
+		if turn == AI and not game_over:				
 
-		#col = random.randint(0, COLUMN_COUNT-1)
-		#col = pick_best_move(board, AI_PIECE)
-		col, minimax_score = minimax(board, 5, -math.inf, math.inf, True)
+			#col = random.randint(0, COLUMN_COUNT-1)
+			#col = pick_best_move(board, AI_PIECE)
+			col, minimax_score = minimax(board, 5, -math.inf, math.inf, True)
 
-		if is_valid_location(board, col):
-			#pygame.time.wait(500)
-			row = get_next_open_row(board, col)
-			drop_piece(board, row, col, AI_PIECE)
+			if is_valid_location(board, col):
+				#pygame.time.wait(500)
+				row = get_next_open_row(board, col)
+				drop_piece(board, row, col, AI_PIECE)
 
-			if winning_move(board, AI_PIECE):
-				label = myfont.render("Player 2 wins!!", 1, LIGHT_BLUE)
-				screen.blit(label, (40,10))
-				game_over = True
-			draw_board(board)
+				if winning_move(board, AI_PIECE):
+					label = myfont.render("Player 2 wins!!", 1, LIGHT_BLUE)
+					screen.blit(label, (40,10))
+					game_over = True
+				draw_board(board , screen , SQUARESIZE , RADIUS , height , width )
 
-			turn += 1
-			turn = turn % 2
+				turn += 1
+				turn = turn % 2
 
-	if game_over:
-		pygame.time.wait(2000)
-		pygame.quit()
-		break
+		if game_over:
+			pygame.time.wait(2000)
+			pygame.quit()
+			break
+
+start_game(0)
