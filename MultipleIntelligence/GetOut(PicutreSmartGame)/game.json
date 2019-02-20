@@ -13,7 +13,7 @@
     "macExecutableFilename": "",
     "orientation": "landscape",
     "packageName": "com.example.gamename",
-    "projectFile": "C:\\Users\\hp\\Desktop\\SIH\\GetOut\\game.json",
+    "projectFile": "C:\\Users\\hp\\Desktop\\SIH\\Smart_India_Hackathon_project\\MultipleIntelligence\\GetOut(PicutreSmartGame)\\game.json",
     "scaleMode": "linear",
     "sizeOnStartupMode": "adaptWidth",
     "useExternalSourceFiles": false,
@@ -182,6 +182,1336 @@
     }
   ],
   "layouts": [
+    {
+      "b": 209,
+      "disableInputWhenNotFocused": true,
+      "mangledName": "Demo",
+      "name": "Demo",
+      "oglFOV": 90,
+      "oglZFar": 500,
+      "oglZNear": 1,
+      "r": 209,
+      "standardSortMethod": true,
+      "stopSoundsOnStartup": true,
+      "title": "",
+      "v": 209,
+      "uiSettings": {
+        "grid": false,
+        "gridB": 255,
+        "gridG": 180,
+        "gridHeight": 32,
+        "gridOffsetX": 0,
+        "gridOffsetY": 0,
+        "gridR": 158,
+        "gridWidth": 32,
+        "snap": true,
+        "windowMask": false,
+        "zoomFactor": 0.376
+      },
+      "objectsGroups": [
+        {
+          "name": "Obstacles",
+          "objects": [
+            {
+              "name": "squareOrange"
+            },
+            {
+              "name": "squareBlue"
+            },
+            {
+              "name": "squareYellow"
+            }
+          ]
+        }
+      ],
+      "variables": [],
+      "instances": [],
+      "objects": [
+        {
+          "name": "squareOrange",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [],
+          "behaviors": [],
+          "animations": [
+            {
+              "name": "",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "Assets\\sq4.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 58,
+                        "y": 79
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "squareBlue",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [],
+          "behaviors": [],
+          "animations": [
+            {
+              "name": "",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "Assets\\sq2.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 62.5,
+                        "y": 73
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "squareYellow",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [],
+          "behaviors": [],
+          "animations": [
+            {
+              "name": "",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "Assets\\sq3.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 62,
+                        "y": 74
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 64,
+                        "y": 76
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "player",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [],
+          "behaviors": [
+            {
+              "acceleration": 400,
+              "allowDiagonals": true,
+              "angleOffset": 0,
+              "angularMaxSpeed": 180,
+              "cellHeight": 20,
+              "cellWidth": 20,
+              "extraBorder": 0,
+              "maxSpeed": 200,
+              "name": "Pathfinding",
+              "rotateObject": true,
+              "type": "PathfindingBehavior::PathfindingBehavior"
+            },
+            {
+              "acceleration": 400,
+              "allowDiagonals": true,
+              "angleOffset": 0,
+              "angularMaxSpeed": 180,
+              "deceleration": 800,
+              "ignoreDefaultControls": false,
+              "maxSpeed": 200,
+              "name": "TopDownMovement",
+              "rotateObject": false,
+              "type": "TopDownMovementBehavior::TopDownMovementBehavior"
+            }
+          ],
+          "animations": [
+            {
+              "name": "",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "Assets\\Fireman.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 250,
+                        "y": 250
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "exit",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [],
+          "behaviors": [],
+          "animations": [
+            {
+              "name": "",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "Assets\\civilians.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 250,
+                        "y": 251
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bold": true,
+          "italic": false,
+          "name": "gameover",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "Game Over",
+          "font": "Assets\\DIRTYEGO.TTF",
+          "characterSize": 60,
+          "color": {
+            "b": 0,
+            "g": 0,
+            "r": 255
+          }
+        },
+        {
+          "bold": false,
+          "italic": false,
+          "name": "congrats",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "Level Up",
+          "font": "Assets\\DIRTYEGO.TTF",
+          "characterSize": 60,
+          "color": {
+            "b": 35,
+            "g": 166,
+            "r": 245
+          }
+        },
+        {
+          "bold": false,
+          "italic": false,
+          "name": "WelcomeMesage",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "Hey there, welcome to \"Get out\". \nThis game is getting out of square city as fast as possible.",
+          "font": "Assets\\DIRTYEGO.TTF",
+          "characterSize": 30,
+          "color": {
+            "b": 0,
+            "g": 0,
+            "r": 255
+          }
+        },
+        {
+          "bold": false,
+          "italic": false,
+          "name": "PlayerIntro",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "The red dot, thats you!!!",
+          "font": "Assets\\DIRTYEGO.TTF",
+          "characterSize": 20,
+          "color": {
+            "b": 226,
+            "g": 144,
+            "r": 74
+          }
+        },
+        {
+          "bold": false,
+          "italic": false,
+          "name": "FinishLine",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "The Blue dot thats the finish dot!!!",
+          "font": "Assets\\DIRTYEGO.TTF",
+          "characterSize": 20,
+          "color": {
+            "b": 27,
+            "g": 2,
+            "r": 208
+          }
+        },
+        {
+          "bold": true,
+          "italic": false,
+          "name": "Instructions",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "Get to the blue dot by avoiding the squares in the shortest time.\nUse the arrow keys to control the red dot.",
+          "font": "Assets\\DIRTYEGO.TTF",
+          "characterSize": 20,
+          "color": {
+            "b": 35,
+            "g": 166,
+            "r": 245
+          }
+        }
+      ],
+      "events": [
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "NbObjet"
+              },
+              "parameters": [
+                "squareOrange",
+                "<=",
+                "Random(5*GlobalVariable(Level))"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Create"
+              },
+              "parameters": [
+                "",
+                "squareOrange",
+                "RandomInRange(30,800)",
+                "RandomInRange(60,600)",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangeHeight"
+              },
+              "parameters": [
+                "squareOrange",
+                "=",
+                "RandomInRange(30,70)"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangeWidth"
+              },
+              "parameters": [
+                "squareOrange",
+                "=",
+                "squareOrange.Height()"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "squareOrange",
+                "player",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "squareOrange",
+                "exit",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "squareOrange",
+                "Obstacles",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangeDirection"
+              },
+              "parameters": [
+                "squareOrange",
+                "=",
+                "Random(360)"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "NbObjet"
+              },
+              "parameters": [
+                "squareBlue",
+                "<=",
+                "Random(5*GlobalVariable(Level))"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Create"
+              },
+              "parameters": [
+                "",
+                "squareBlue",
+                "RandomInRange(30,800)",
+                "RandomInRange(60,600)",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangeHeight"
+              },
+              "parameters": [
+                "squareBlue",
+                "=",
+                "RandomInRange(30,70)"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangeWidth"
+              },
+              "parameters": [
+                "squareBlue",
+                "=",
+                "squareBlue.Height()"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "squareBlue",
+                "player",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "squareBlue",
+                "exit",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "squareBlue",
+                "Obstacles",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangeDirection"
+              },
+              "parameters": [
+                "squareBlue",
+                "=",
+                "Random(360)"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "NbObjet"
+              },
+              "parameters": [
+                "squareYellow",
+                "<=",
+                "Random(5*GlobalVariable(Level))"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Create"
+              },
+              "parameters": [
+                "",
+                "squareYellow",
+                "RandomInRange(30,800)",
+                "RandomInRange(60,600)",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangeHeight"
+              },
+              "parameters": [
+                "squareYellow",
+                "=",
+                "RandomInRange(30,70)"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangeWidth"
+              },
+              "parameters": [
+                "squareYellow",
+                "=",
+                "squareYellow.Height()"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "squareYellow",
+                "player",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "squareYellow",
+                "exit",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "squareYellow",
+                "Obstacles",
+                ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangeDirection"
+              },
+              "parameters": [
+                "squareYellow",
+                "=",
+                "Random(360)"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Timer"
+              },
+              "parameters": [
+                "",
+                "1",
+                "\"Welcome\""
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Create"
+              },
+              "parameters": [
+                "",
+                "WelcomeMesage",
+                "SceneWindowWidth()/3",
+                "SceneWindowHeight()/2",
+                ""
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Timer"
+              },
+              "parameters": [
+                "",
+                "3",
+                "\"Msg\""
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Delete"
+              },
+              "parameters": [
+                "WelcomeMesage",
+                ""
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": [
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "NbObjet"
+                  },
+                  "parameters": [
+                    "player",
+                    "<",
+                    "1"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Timer"
+                  },
+                  "parameters": [
+                    "",
+                    "1",
+                    "\"Test1\""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Create"
+                  },
+                  "parameters": [
+                    "",
+                    "player",
+                    "RandomInRange(10,25)",
+                    "RandomInRange(10,50)",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ChangeHeight"
+                  },
+                  "parameters": [
+                    "player",
+                    "=",
+                    "25"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ChangeWidth"
+                  },
+                  "parameters": [
+                    "player",
+                    "=",
+                    "25"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "SeparateFromObjects"
+                  },
+                  "parameters": [
+                    "player",
+                    "Obstacles",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Create"
+                  },
+                  "parameters": [
+                    "",
+                    "PlayerIntro",
+                    "player.X()+2",
+                    "player.Y()+3",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            },
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Timer"
+                  },
+                  "parameters": [
+                    "",
+                    "3",
+                    "\"Test1\""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Delete"
+                  },
+                  "parameters": [
+                    "PlayerIntro",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            },
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "NbObjet"
+                  },
+                  "parameters": [
+                    "exit",
+                    "<",
+                    "1"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Timer"
+                  },
+                  "parameters": [
+                    "",
+                    "4",
+                    "\"Test1\""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Create"
+                  },
+                  "parameters": [
+                    "",
+                    "exit",
+                    "RandomInRange(600,800)",
+                    "RandomInRange(300,500)",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ChangeHeight"
+                  },
+                  "parameters": [
+                    "exit",
+                    "=",
+                    "25"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ChangeWidth"
+                  },
+                  "parameters": [
+                    "exit",
+                    "=",
+                    "25"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Create"
+                  },
+                  "parameters": [
+                    "",
+                    "FinishLine",
+                    "exit.X()+2",
+                    "exit.Y()-3",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "SeparateFromObjects"
+                  },
+                  "parameters": [
+                    "exit",
+                    "Obstacles",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            },
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Timer"
+                  },
+                  "parameters": [
+                    "",
+                    "7",
+                    "\"Test1\""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Delete"
+                  },
+                  "parameters": [
+                    "FinishLine",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Create"
+                  },
+                  "parameters": [
+                    "",
+                    "Instructions",
+                    "SceneWindowWidth()/2.5",
+                    "SceneWindowHeight()/2",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            },
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Timer"
+                  },
+                  "parameters": [
+                    "",
+                    "10",
+                    "\"Test1\""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Delete"
+                  },
+                  "parameters": [
+                    "Instructions",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            },
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "CollisionNP"
+                  },
+                  "parameters": [
+                    "player",
+                    "Obstacles",
+                    "",
+                    "",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "TopDownMovementBehavior::Acceleration"
+                  },
+                  "parameters": [
+                    "player",
+                    "TopDownMovement",
+                    "=",
+                    "0"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "TopDownMovementBehavior::Deceleration"
+                  },
+                  "parameters": [
+                    "player",
+                    "TopDownMovement",
+                    "=",
+                    "30000"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "TopDownMovementBehavior::MaxSpeed"
+                  },
+                  "parameters": [
+                    "player",
+                    "TopDownMovement",
+                    "=",
+                    "0"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Create"
+                  },
+                  "parameters": [
+                    "",
+                    "gameover",
+                    "ScreenWidth()/2.5",
+                    "ScreenHeight()/2",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ChangePlan"
+                  },
+                  "parameters": [
+                    "gameover",
+                    "=",
+                    "5"
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            },
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Distance"
+                  },
+                  "parameters": [
+                    "player",
+                    "exit",
+                    "exit.Width()-exit.Width()/4",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Distance"
+                  },
+                  "parameters": [
+                    "player",
+                    "exit",
+                    "exit.Height()-exit.Height()/4",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "TopDownMovementBehavior::Acceleration"
+                  },
+                  "parameters": [
+                    "player",
+                    "TopDownMovement",
+                    "=",
+                    "0"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "TopDownMovementBehavior::Deceleration"
+                  },
+                  "parameters": [
+                    "player",
+                    "TopDownMovement",
+                    "=",
+                    "30000"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "TopDownMovementBehavior::MaxSpeed"
+                  },
+                  "parameters": [
+                    "player",
+                    "TopDownMovement",
+                    "=",
+                    "0"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Create"
+                  },
+                  "parameters": [
+                    "",
+                    "congrats",
+                    "ScreenWidth()/2.5",
+                    "ScreenHeight()/2",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ChangePlan"
+                  },
+                  "parameters": [
+                    "congrats",
+                    "=",
+                    "5"
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "Timer"
+                      },
+                      "parameters": [
+                        "",
+                        "2",
+                        "\"Level Up\""
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "Scene"
+                      },
+                      "parameters": [
+                        "",
+                        "\"Level1\"",
+                        "yes"
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "events": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "name": "",
+          "visibility": true,
+          "cameras": [
+            {
+              "defaultSize": true,
+              "defaultViewport": true,
+              "height": 0,
+              "viewportBottom": 1,
+              "viewportLeft": 0,
+              "viewportRight": 1,
+              "viewportTop": 0,
+              "width": 0
+            }
+          ],
+          "effects": []
+        }
+      ],
+      "behaviorsSharedData": [
+        {
+          "name": "Pathfinding",
+          "type": "PathfindingBehavior::PathfindingBehavior"
+        },
+        {
+          "name": "TopDownMovement",
+          "type": "TopDownMovementBehavior::TopDownMovementBehavior"
+        }
+      ]
+    },
     {
       "b": 209,
       "disableInputWhenNotFocused": true,
@@ -844,8 +2174,8 @@
               "parameters": [
                 "",
                 "player",
-                "RandomInRange(0,25)",
-                "RandomInRange(0,50)",
+                "RandomInRange(10,25)",
+                "RandomInRange(10,50)",
                 ""
               ],
               "subInstructions": []
@@ -871,6 +2201,18 @@
                 "player",
                 "=",
                 "25"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "player",
+                "Obstacles",
+                ""
               ],
               "subInstructions": []
             }
@@ -916,8 +2258,8 @@
               "parameters": [
                 "",
                 "exit",
-                "RandomInRange(400,800)",
-                "RandomInRange(300,600)",
+                "RandomInRange(600,800)",
+                "RandomInRange(300,500)",
                 ""
               ],
               "subInstructions": []
@@ -943,6 +2285,18 @@
                 "exit",
                 "=",
                 "25"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "exit",
+                "Obstacles",
+                ""
               ],
               "subInstructions": []
             }
@@ -1908,6 +3262,18 @@
                 "25"
               ],
               "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "player",
+                "Obstacles",
+                ""
+              ],
+              "subInstructions": []
             }
           ],
           "events": []
@@ -1951,8 +3317,8 @@
               "parameters": [
                 "",
                 "exit",
-                "RandomInRange(400,800)",
-                "RandomInRange(300,600)",
+                "RandomInRange(600,800)",
+                "RandomInRange(300,500)",
                 ""
               ],
               "subInstructions": []
@@ -1978,6 +3344,18 @@
                 "exit",
                 "=",
                 "25"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "exit",
+                "Obstacles",
+                ""
               ],
               "subInstructions": []
             }
@@ -3006,8 +4384,8 @@
               "parameters": [
                 "",
                 "exit",
-                "RandomInRange(400,800)",
-                "RandomInRange(300,600)",
+                "RandomInRange(600,800)",
+                "RandomInRange(300,500)",
                 ""
               ],
               "subInstructions": []
@@ -3639,7 +5017,7 @@
               "parameters": [
                 "squareOrange",
                 "<=",
-                "Random(5*GlobalVariable(Level))"
+                "Random(4*GlobalVariable(Level))"
               ],
               "subInstructions": []
             }
@@ -3667,7 +5045,7 @@
               "parameters": [
                 "squareOrange",
                 "=",
-                "RandomInRange(30,70)"
+                "RandomInRange(30,50)"
               ],
               "subInstructions": []
             },
@@ -3747,7 +5125,7 @@
               "parameters": [
                 "squareBlue",
                 "<=",
-                "Random(5*GlobalVariable(Level))"
+                "Random(4*GlobalVariable(Level))"
               ],
               "subInstructions": []
             }
@@ -3775,7 +5153,7 @@
               "parameters": [
                 "squareBlue",
                 "=",
-                "RandomInRange(30,70)"
+                "RandomInRange(30,50)"
               ],
               "subInstructions": []
             },
@@ -3855,7 +5233,7 @@
               "parameters": [
                 "squareYellow",
                 "<=",
-                "Random(5*GlobalVariable(Level))"
+                "Random(4*GlobalVariable(Level))"
               ],
               "subInstructions": []
             }
@@ -3883,7 +5261,7 @@
               "parameters": [
                 "squareYellow",
                 "=",
-                "RandomInRange(30,70)"
+                "RandomInRange(30,50)"
               ],
               "subInstructions": []
             },
@@ -4018,6 +5396,18 @@
                 "25"
               ],
               "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "player",
+                "Obstacles",
+                ""
+              ],
+              "subInstructions": []
             }
           ],
           "events": []
@@ -4061,8 +5451,8 @@
               "parameters": [
                 "",
                 "exit",
-                "RandomInRange(400,800)",
-                "RandomInRange(300,600)",
+                "RandomInRange(600,800)",
+                "RandomInRange(300,500)",
                 ""
               ],
               "subInstructions": []
@@ -4088,6 +5478,18 @@
                 "exit",
                 "=",
                 "25"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "exit",
+                "Obstacles",
+                ""
               ],
               "subInstructions": []
             }
@@ -4394,7 +5796,7 @@
         "gridWidth": 32,
         "snap": true,
         "windowMask": false,
-        "zoomFactor": 0.376
+        "zoomFactor": 0.352
       },
       "objectsGroups": [
         {
@@ -4682,7 +6084,7 @@
               "parameters": [
                 "squareOrange",
                 "<=",
-                "Random(5*GlobalVariable(Level))"
+                "Random(4*GlobalVariable(Level))"
               ],
               "subInstructions": []
             }
@@ -4710,7 +6112,7 @@
               "parameters": [
                 "squareOrange",
                 "=",
-                "RandomInRange(30,70)"
+                "RandomInRange(30,50)"
               ],
               "subInstructions": []
             },
@@ -4790,7 +6192,7 @@
               "parameters": [
                 "squareBlue",
                 "<=",
-                "Random(5*GlobalVariable(Level))"
+                "Random(4*GlobalVariable(Level))"
               ],
               "subInstructions": []
             }
@@ -4818,7 +6220,7 @@
               "parameters": [
                 "squareBlue",
                 "=",
-                "RandomInRange(30,70)"
+                "RandomInRange(30,50)"
               ],
               "subInstructions": []
             },
@@ -4898,7 +6300,7 @@
               "parameters": [
                 "squareYellow",
                 "<=",
-                "Random(5*GlobalVariable(Level))"
+                "Random(4*GlobalVariable(Level))"
               ],
               "subInstructions": []
             }
@@ -4926,7 +6328,7 @@
               "parameters": [
                 "squareYellow",
                 "=",
-                "RandomInRange(30,70)"
+                "RandomInRange(30,50)"
               ],
               "subInstructions": []
             },
@@ -5061,6 +6463,18 @@
                 "25"
               ],
               "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "player",
+                "Obstacles",
+                ""
+              ],
+              "subInstructions": []
             }
           ],
           "events": []
@@ -5104,8 +6518,8 @@
               "parameters": [
                 "",
                 "exit",
-                "RandomInRange(400,800)",
-                "RandomInRange(300,600)",
+                "RandomInRange(600,800)",
+                "RandomInRange(300,500)",
                 ""
               ],
               "subInstructions": []
@@ -5131,6 +6545,18 @@
                 "exit",
                 "=",
                 "25"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "exit",
+                "Obstacles",
+                ""
               ],
               "subInstructions": []
             }
