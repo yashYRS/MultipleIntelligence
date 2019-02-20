@@ -522,7 +522,7 @@
               "parameters": [
                 "squareOrange",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -630,7 +630,7 @@
               "parameters": [
                 "squareBlue",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -738,7 +738,7 @@
               "parameters": [
                 "squareYellow",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -1022,6 +1022,18 @@
                 ""
               ],
               "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangePlan"
+              },
+              "parameters": [
+                "gameover",
+                "=",
+                "5"
+              ],
+              "subInstructions": []
             }
           ],
           "events": []
@@ -1109,6 +1121,18 @@
                 "ScreenWidth()/2.5",
                 "ScreenHeight()/2",
                 ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangePlan"
+              },
+              "parameters": [
+                "congrats",
+                "=",
+                "5"
               ],
               "subInstructions": []
             }
@@ -1219,7 +1243,22 @@
         "windowMask": false,
         "zoomFactor": 0.832
       },
-      "objectsGroups": [],
+      "objectsGroups": [
+        {
+          "name": "Obstacles",
+          "objects": [
+            {
+              "name": "squareBlue"
+            },
+            {
+              "name": "squareYellow"
+            },
+            {
+              "name": "squareOrange"
+            }
+          ]
+        }
+      ],
       "variables": [],
       "instances": [],
       "objects": [
@@ -1518,7 +1557,7 @@
               "parameters": [
                 "squareBlue",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -1626,7 +1665,7 @@
               "parameters": [
                 "squareYellow",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -1734,7 +1773,7 @@
               "parameters": [
                 "squareOrange",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -2018,6 +2057,18 @@
                 ""
               ],
               "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangePlan"
+              },
+              "parameters": [
+                "gameover",
+                "=",
+                "5"
+              ],
+              "subInstructions": []
             }
           ],
           "events": []
@@ -2105,6 +2156,18 @@
                 "ScreenWidth()/2.5",
                 "ScreenHeight()/2",
                 ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangePlan"
+              },
+              "parameters": [
+                "congrats",
+                "=",
+                "5"
               ],
               "subInstructions": []
             }
@@ -2223,7 +2286,22 @@
         "windowMask": false,
         "zoomFactor": 0.376
       },
-      "objectsGroups": [],
+      "objectsGroups": [
+        {
+          "name": "Obstacles",
+          "objects": [
+            {
+              "name": "squareBlue"
+            },
+            {
+              "name": "squareYellow"
+            },
+            {
+              "name": "squareOrange"
+            }
+          ]
+        }
+      ],
       "variables": [],
       "instances": [],
       "objects": [
@@ -2522,7 +2600,7 @@
               "parameters": [
                 "squareYellow",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -2630,7 +2708,7 @@
               "parameters": [
                 "squareBlue",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -2738,7 +2816,7 @@
               "parameters": [
                 "squareOrange",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -2873,6 +2951,18 @@
                 "25"
               ],
               "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "player",
+                "Obstacles",
+                ""
+              ],
+              "subInstructions": []
             }
           ],
           "events": []
@@ -2943,6 +3033,18 @@
                 "exit",
                 "=",
                 "25"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "SeparateFromObjects"
+              },
+              "parameters": [
+                "exit",
+                "Obstacles",
+                ""
               ],
               "subInstructions": []
             }
@@ -3020,6 +3122,18 @@
                 "ScreenWidth()/2.5",
                 "ScreenHeight()/2",
                 ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangePlan"
+              },
+              "parameters": [
+                "gameover",
+                "=",
+                "5"
               ],
               "subInstructions": []
             }
@@ -3109,6 +3223,18 @@
                 "ScreenWidth()/2.5",
                 "ScreenHeight()/2",
                 ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangePlan"
+              },
+              "parameters": [
+                "congrats",
+                "=",
+                "5"
               ],
               "subInstructions": []
             }
@@ -3227,7 +3353,22 @@
         "windowMask": false,
         "zoomFactor": 0.376
       },
-      "objectsGroups": [],
+      "objectsGroups": [
+        {
+          "name": "Obstacles",
+          "objects": [
+            {
+              "name": "squareOrange"
+            },
+            {
+              "name": "squareBlue"
+            },
+            {
+              "name": "squareYellow"
+            }
+          ]
+        }
+      ],
       "variables": [],
       "instances": [],
       "objects": [
@@ -3526,7 +3667,7 @@
               "parameters": [
                 "squareOrange",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -3634,7 +3775,7 @@
               "parameters": [
                 "squareBlue",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -3742,7 +3883,7 @@
               "parameters": [
                 "squareYellow",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -4026,6 +4167,18 @@
                 ""
               ],
               "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangePlan"
+              },
+              "parameters": [
+                "gameover",
+                "=",
+                "5"
+              ],
+              "subInstructions": []
             }
           ],
           "events": []
@@ -4113,6 +4266,18 @@
                 "ScreenWidth()/2.5",
                 "ScreenHeight()/2",
                 ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangePlan"
+              },
+              "parameters": [
+                "congrats",
+                "=",
+                "5"
               ],
               "subInstructions": []
             }
@@ -4231,7 +4396,22 @@
         "windowMask": false,
         "zoomFactor": 0.376
       },
-      "objectsGroups": [],
+      "objectsGroups": [
+        {
+          "name": "Obstacles",
+          "objects": [
+            {
+              "name": "squareOrange"
+            },
+            {
+              "name": "squareBlue"
+            },
+            {
+              "name": "squareYellow"
+            }
+          ]
+        }
+      ],
       "variables": [],
       "instances": [],
       "objects": [
@@ -4530,7 +4710,7 @@
               "parameters": [
                 "squareOrange",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -4638,7 +4818,7 @@
               "parameters": [
                 "squareBlue",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -4746,7 +4926,7 @@
               "parameters": [
                 "squareYellow",
                 "=",
-                "RandomInRange(30,80)"
+                "RandomInRange(30,70)"
               ],
               "subInstructions": []
             },
@@ -5030,6 +5210,18 @@
                 ""
               ],
               "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangePlan"
+              },
+              "parameters": [
+                "gameover",
+                "=",
+                "5"
+              ],
+              "subInstructions": []
             }
           ],
           "events": []
@@ -5117,6 +5309,18 @@
                 "ScreenWidth()/2.5",
                 "ScreenHeight()/2",
                 ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ChangePlan"
+              },
+              "parameters": [
+                "congrats",
+                "=",
+                "5"
               ],
               "subInstructions": []
             }
