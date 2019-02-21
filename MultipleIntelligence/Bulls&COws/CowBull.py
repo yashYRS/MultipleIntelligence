@@ -250,7 +250,7 @@ def endGame(word, result, turn, timer):
     text("The required answer was", 50, white, 125, 200)
     text(word, 100, white, 200, 325)
     if result:
-        if levelread=3:
+        if levelread==3:
             score=6-turn
         else:
             score=11-turn
