@@ -143,9 +143,10 @@ def score_position(board, piece):
 def is_terminal_node(board):
 	return winning_move(board, PLAYER_PIECE) or winning_move(board, AI_PIECE) or len(get_valid_locations(board)) == 0
 
-def minimax(board, depth, alpha, beta, maximizingPlayer):
+def minimax(board, depth, alpha, beta, maximizingPlayer ):
 	valid_locations = get_valid_locations(board)
 	is_terminal = is_terminal_node(board)
+
 	if depth == 0 or is_terminal:
 		if is_terminal:
 			if winning_move(board, AI_PIECE):
@@ -163,7 +164,7 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
 			row = get_next_open_row(board, col)
 			b_copy = board.copy()
 			drop_piece(b_copy, row, col, AI_PIECE)
-			new_score = minimax(b_copy, depth-1, alpha, beta, False)[1]
+			new_score = minimax(b_copy, depth-1, alpha, beta, False )[1]
 			if new_score > value:
 				value = new_score
 				column = col
@@ -179,7 +180,7 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
 			row = get_next_open_row(board, col)
 			b_copy = board.copy()
 			drop_piece(b_copy, row, col, PLAYER_PIECE)
-			new_score = minimax(b_copy, depth-1, alpha, beta, True)[1]
+			new_score = minimax(b_copy, depth-1, alpha, beta, True  )[1]
 			if new_score < value:
 				value = new_score
 				column = col
@@ -238,7 +239,10 @@ def start_game(level) :
 	rules.append("Press Space to continue")
 
 	SQUARESIZE = 100
-		
+	TotalMoves = 0 
+	Score = 0 
+	winner = 0 
+
 	width = COLUMN_COUNT * SQUARESIZE
 	height = (ROW_COUNT+1) * SQUARESIZE
 
@@ -284,7 +288,8 @@ def start_game(level) :
 						coinSound.play()
 						drop_piece(board, row, col, PLAYER_PIECE)
 						if winning_move(board, PLAYER_PIECE):
-							label = myfont.render("Player 1 wins!!", 1, RED)
+							label = myfont.render(" YOU WON !!!!", 1, RED)
+							winner = 1 
 							screen.blit(label, (40,10))
 							game_over = True
 
@@ -292,32 +297,74 @@ def start_game(level) :
 						turn = turn % 2
 
 						draw_board(board , screen , SQUARESIZE , RADIUS , height , width )
-
+						TotalMoves = TotalMoves + 1 
 
 		# # Ask for Player 2 Input
 		if turn == AI and not game_over:				
 
 			#col = random.randint(0, COLUMN_COUNT-1)
 			#col = pick_best_move(board, AI_PIECE)
-			col, minimax_score = minimax(board, 5, -math.inf, math.inf, True)
+			if level == 3 : 
+				col, minimax_score = minimax(board, 5, -math.inf, math.inf, True)
 
-			if is_valid_location(board, col):
-				#pygame.time.wait(500)
-				row = get_next_open_row(board, col)
-				drop_piece(board, row, col, AI_PIECE)
+				if is_valid_location(board, col):
+					#pygame.time.wait(500)
+					row = get_next_open_row(board, col)
+					drop_piece(board, row, col, AI_PIECE)
 
-				if winning_move(board, AI_PIECE):
-					label = myfont.render("Player 2 wins!!", 1, LIGHT_BLUE)
-					screen.blit(label, (40,10))
-					game_over = True
-				draw_board(board , screen , SQUARESIZE , RADIUS , height , width )
+					if winning_move(board, AI_PIECE):
+						label = myfont.render("You lost!!", 1, LIGHT_BLUE)
+						winner = 2 
+						screen.blit(label, (40,10))
+						game_over = True
+					draw_board(board , screen , SQUARESIZE , RADIUS , height , width )
 
-				turn += 1
-				turn = turn % 2
+					turn += 1
+					turn = turn % 2
+			elif level == 2 : 
+				col, minimax_score = minimax(board, 3, -math.inf, math.inf, True)
+
+				if is_valid_location(board, col):
+					#pygame.time.wait(500)
+					row = get_next_open_row(board, col)
+					drop_piece(board, row, col, AI_PIECE)
+
+					if winning_move(board, AI_PIECE):
+						label = myfont.render("You lost!!", 1, LIGHT_BLUE)
+						winner = 2
+						screen.blit(label, (40,10))
+						game_over = True
+					draw_board(board , screen , SQUARESIZE , RADIUS , height , width )
+
+					turn += 1
+					turn = turn % 2
+			elif level == 1 : 
+				col, minimax_score = minimax(board, 1, -math.inf, math.inf, True)
+
+				if is_valid_location(board, col):
+					#pygame.time.wait(500)
+					row = get_next_open_row(board, col)
+					drop_piece(board, row, col, AI_PIECE)
+
+					if winning_move(board, AI_PIECE):
+						label = myfont.render("You lost!!", 1, LIGHT_BLUE)
+						winner = 2
+						screen.blit(label, (40,10))
+						game_over = True
+					draw_board(board , screen , SQUARESIZE , RADIUS , height , width )
+
+					turn += 1
+					turn = turn % 2				
+				# do something 
 
 		if game_over:
+			if winner == 2 : # player lost 
+				score = TotalMoves/42
+			elif winner == 1 : # player wins 
+				score = 0.5 + (22 - TotalMoves)/42
+			else : 
+				score = 0.5
+			print(TotalMoves, score)
 			pygame.time.wait(2000)
 			pygame.quit()
 			break
-
-start_game(0)
