@@ -3,9 +3,10 @@ import arcade
 import time
 
 SPRITE_SCALING_PLAYER = 0.5
-SPRITE_SCALING_GRASS = 1
-SPRITE_SCALING_DEAD_GRASS = 1
+SPRITE_SCALING_GRASS = 0.3
+SPRITE_SCALING_DEAD_GRASS = 0.3
 SPRITE_SCALING_KNIFE= 0.2
+SPRITE_SCALING_STORE= 0.5
 GRASS_COUNT = 15
 DEAD_GRASS_COUNT = 10
 
@@ -26,6 +27,7 @@ class MyGame(arcade.Window):
         # Variables that will hold sprite listss
         self.player_list = None
         self.grass_list = None
+        self.dead_grass_list = None
         self.knife_list = None
         width, height = self.get_size() 
         self.set_viewport(0,width, 0 , height)
@@ -48,24 +50,30 @@ class MyGame(arcade.Window):
         self.grass_list = arcade.SpriteList()
         self.knife_list = arcade.SpriteList()
         self.dead_grass_list = arcade.SpriteList()
+        self.static_objects_list = arcade.SpriteList() 
         # Set up the player
         self.score = 0
 
+        left, screen_width, bottom , screen_height = self.get_viewport()
+        
         # Image from kenney.nl
         self.player_sprite = arcade.Sprite("character.png", SPRITE_SCALING_PLAYER)
+        self.storeRoom = arcade.Sprite("storeroom.png", SPRITE_SCALING_STORE)
+        self.storeRoom.center_x = left + screen_width - 200 
+        self.storeRoom.center_y = bottom + 200
         self.player_sprite.center_x = 50
         self.player_sprite.center_y = 70
         self.player_sprite.change_x = 0
         self.player_sprite.change_y = 0
         self.player_list.append(self.player_sprite)
-
-        left, screen_width, bottom , screen_height = self.get_viewport()
+        self.static_objects_list.append(self.storeRoom)
+        
         # Create the grasss
         for i in range(GRASS_COUNT):
 
             # Create the grass instance
             # Coin image from kenney.nl
-            grass = arcade.Sprite("grass.jpg", SPRITE_SCALING_GRASS)
+            grass = arcade.Sprite("grass.png", SPRITE_SCALING_GRASS)
 
             # Position the grass
             grass.center_x = random.randrange(screen_width)
@@ -79,7 +87,7 @@ class MyGame(arcade.Window):
 
             # Create the grass instance
             # Coin image from kenney.nl
-            deadgrass = arcade.Sprite("deadGrass.jpg", SPRITE_SCALING_DEAD_GRASS)
+            deadgrass = arcade.Sprite("deadgrass.png", SPRITE_SCALING_DEAD_GRASS)
 
             # Position the grass
             deadgrass.center_x = random.randrange(screen_width)
@@ -100,11 +108,14 @@ class MyGame(arcade.Window):
 
         # Draw all the sprites.
         self.grass_list.draw()
+        self.dead_grass_list.draw() 
         self.knife_list.draw()
         self.player_list.draw()
-
+        self.static_objects_list.draw() 
         # Render the text
         arcade.draw_text(f"Score: {self.score}", 10, 20, arcade.color.WHITE, 14)
+    
+        
 
 
     def on_key_press(self, key, modifiers):
@@ -117,7 +128,14 @@ class MyGame(arcade.Window):
             self.player_sprite.change_y =  MOVEMENT_SPEED
         elif key == arcade.key.DOWN:
             self.player_sprite.change_y = - MOVEMENT_SPEED
-            
+        elif key == arcade.key.SPACE :
+            knife = arcade.Sprite("knife.png", SPRITE_SCALING_KNIFE)
+            # Position the knife
+            knife.center_x = self.player_sprite.center_x + 35
+            knife.bottom = self.player_sprite.center_y - 30
+            # Add the knife to the appropriate lists
+            self.knife_list.append(knife)
+
     def on_key_release(self, key, modifiers):
         """ Called whenever a user releases a key. """
         if key == arcade.key.LEFT or key == arcade.key.RIGHT:
@@ -125,30 +143,22 @@ class MyGame(arcade.Window):
         elif key == arcade.key.UP or key == arcade.key.DOWN:
             self.player_sprite.change_y = 0
 
+        elif key == arcade.key.SPACE : 
+            for knife in self.knife_list : 
+                knife.kill()
 
     def on_mouse_press(self, x, y, button, modifiers):
         """
         Called whenever the mouse button is clicked.
         """
-
-        # Create a knife
-        knife = arcade.Sprite("knife.png", SPRITE_SCALING_KNIFE)
-
-        # The image points to the right, and we want it to point up. So
-        # rotate it.
-
-        # Position the knife
-        knife.center_x = self.player_sprite.center_x + 35
-        knife.bottom = self.player_sprite.center_y - 30
-
-        # Add the knife to the appropriate lists
-        self.knife_list.append(knife)
+        pass
 
     def update(self, delta_time):
         """ Movement and game logic """
 
         # Call update on all sprites
         self.grass_list.update()
+        self.dead_grass_list.update() 
         self.knife_list.update()
         self.player_sprite.center_x = self.player_sprite.center_x + self.player_sprite.change_x
         self.player_sprite.center_y = self.player_sprite.center_y + self.player_sprite.change_y
@@ -166,6 +176,17 @@ class MyGame(arcade.Window):
 
         if self.player_sprite.center_y > screen_height - 20:
             self.player_sprite.center_y = screen_height - 20
+
+        for grass in self.grass_list: 
+            destroy_list = arcade.check_for_collision_with_list(grass, self.static_objects_list)
+            
+            if len(destroy_list) > 0 : 
+                grass.kill() 
+
+        for deadgrass in self.dead_grass_list : 
+            destroy_list = arcade.check_for_collision_with_list(deadgrass, self.static_objects_list)
+            if len(destroy_list) > 0 : 
+                deadgrass.kill() 
 
         # Loop through each knife
         for knife in self.knife_list:
