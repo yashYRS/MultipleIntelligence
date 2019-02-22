@@ -1,0 +1,12 @@
+1. Manage farm -> 
+
+Things that can be done 
+
+Water Plants (plant, water action, plant dying)
+feed animals (appropriate food)
+Plant something (saplings)
+Make the storeroom on button click
+cut the grass (grass, on collission, shorten the radius , scissors )
+
+
+2. Make a game to make a food chain, given some animals
