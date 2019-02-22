@@ -1,6 +1,5 @@
-import sys
+#import sys
 #sys.path.append('/usr/local/lib/python3.6/dist-packages')
-#sys.path.append('/home/arshia/anaconda3/lib/python3.5/site-packages')
 import numpy as np
 #import detect_blinks
 #import spacewars
