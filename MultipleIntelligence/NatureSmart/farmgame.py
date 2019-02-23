@@ -2,23 +2,23 @@ import random
 import arcade
 import time
 
-SPRITE_SCALING_PLAYER = 0.5
+SPRITE_SCALING_PLAYER = 0.6
 SPRITE_SCALING_DEAD_GRASS = 0.3
-SPRITE_SCALING_WASTE_HARM = 0.1
+SPRITE_SCALING_WASTE_HARM = 0.15
 SPRITE_SCALING_KNIFE= 0.2
-SPRITE_SCALING_TRASH= 0.2
+SPRITE_SCALING_TRASH= 0.3
 SPRITE_SCALING_SAPLING= 0.2
-SPRITE_SCALING_BROOM= 0.03
+SPRITE_SCALING_BROOM= 0.05
 
 DEAD_GRASS_COUNT = 15
 WASTE_HARM_COUNT = 5
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-BROOM_SPEED = 2 
+BROOM_SPEED = 3
 MOVEMENT_SPEED = 4
 BULLET_SPEED = 5
-EQUIPMENT = [ ['knife.png', SPRITE_SCALING_KNIFE, 0 ] ,  ['broom.png' ,SPRITE_SCALING_BROOM , 60] , ['grass.png' , SPRITE_SCALING_SAPLING , 0] ]
+EQUIPMENT = [ ['knife.png', SPRITE_SCALING_KNIFE, 0 ] ,  ['broom.png' ,SPRITE_SCALING_BROOM , 300] , ['grass.png' , SPRITE_SCALING_SAPLING , 0] ]
 ## image source , scale , angle of rendering
 
 class MyGame(arcade.Window):
@@ -43,6 +43,7 @@ class MyGame(arcade.Window):
         self.changeScreen = False
         self.player_sprite = None
         self.score = 0
+        self.initialTime = 0 
         self.curr_equip = 0 
         # Don't show the mouse cursor
         self.set_mouse_visible(False)
@@ -62,20 +63,22 @@ class MyGame(arcade.Window):
         self.static_objects_list = arcade.SpriteList() 
         # Set up the player
         self.score = 0
+        self.initialTime = time.time()
         self.curr_equip = 1 
         left, screen_width, bottom , screen_height = self.get_viewport()
         
         # Image from kenney.nl
-        self.player_sprite = arcade.Sprite("character.png", SPRITE_SCALING_PLAYER)
-        self.dustBin_sprite = arcade.Sprite("trash.png", SPRITE_SCALING_TRASH)
-        self.dustBin_sprite.center_x = left + screen_width - 200 
-        self.dustBin_sprite.center_y = bottom + 200
+        self.player_sprite = arcade.Sprite("characterRight.png", SPRITE_SCALING_PLAYER)
+        for i in range(2) : 
+            self.dustBin_sprite = arcade.Sprite("trash.png", SPRITE_SCALING_TRASH)
+            self.dustBin_sprite.center_x = left + i*(screen_width - 600) + 300
+            self.dustBin_sprite.center_y = bottom + i*(screen_height - 600) + 300
+            self.static_objects_list.append(self.dustBin_sprite)
         self.player_sprite.center_x = 50
         self.player_sprite.center_y = 70
         self.player_sprite.change_x = 0
-        self.player_sprite.change_y = 0
+        self.player_sprite.change_y = 0  
         self.player_list.append(self.player_sprite)
-        self.static_objects_list.append(self.dustBin_sprite)
 
         # Create the grasss
         for i in range(DEAD_GRASS_COUNT):
@@ -124,17 +127,18 @@ class MyGame(arcade.Window):
         self.player_list.draw()
         self.static_objects_list.draw() 
         # Render the text
-        arcade.draw_text(f"Score: {self.score}", 10, 20, arcade.color.WHITE, 14)
-    
-        
+        arcade.draw_text(f"Time Remaining: {120 - int(time.time() - self.initialTime)}", 10, 40, arcade.color.WHITE, 14)
+        if 120 - int(time.time() - self.initialTime) < 1 : 
+            exit(0)
+            
 
 
     def on_key_press(self, key, modifiers):
         """ Called whenever the user presses a key. """
         if key == arcade.key.LEFT:
-            self.player_sprite.change_x = - MOVEMENT_SPEED
+            self.player_sprite.change_x = - MOVEMENT_SPEED - 1 
         elif key == arcade.key.RIGHT:
-            self.player_sprite.change_x = MOVEMENT_SPEED
+            self.player_sprite.change_x = MOVEMENT_SPEED + 1 
         elif key == arcade.key.UP:
             self.player_sprite.change_y =  MOVEMENT_SPEED
         elif key == arcade.key.DOWN:
@@ -143,8 +147,9 @@ class MyGame(arcade.Window):
             ind = self.curr_equip
             equip_sprite = arcade.Sprite(EQUIPMENT[ind][0], EQUIPMENT[ind][1])
             # Position the equipment
-            equip_sprite.center_x = self.player_sprite.center_x + 35
-            equip_sprite.bottom = self.player_sprite.center_y - 30
+            equip_sprite.center_x = self.player_sprite.center_x + 25
+            equip_sprite.center_y = self.player_sprite.center_y - 30
+            equip_sprite.angle = EQUIPMENT[ind][2]
             # Add the equipment to the appropriate lists
             if ind == 2 : 
                 self.plant_sapling_list.append(equip_sprite)
@@ -243,7 +248,7 @@ class MyGame(arcade.Window):
                         waste.center_y = waste.center_y - BROOM_SPEED 
                     else : 
                         waste.center_y = waste.center_y + BROOM_SPEED 
-                    
+
             elif self.curr_equip == 2 : 
                 sapling = equip 
 
