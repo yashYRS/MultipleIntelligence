@@ -1,6 +1,3 @@
-import sys
-sys.path.append('/usr/local/lib/python3.6/dist-packages')
-sys.path.append('/home/arshia/anaconda3/lib/python3.5/site-packages')
 from pprint import pprint
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 #from chatterbot import ChatBot
