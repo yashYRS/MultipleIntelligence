@@ -191,6 +191,7 @@ def main():
             levelscore/=11
             print(levelscore)
             displayGameOver()
+            pygame.display.update()
             time.sleep(1)
             exit()
         cursor = 0
@@ -284,6 +285,23 @@ def main():
             yes=0
             happy_group.empty()
             right = False
+            try:
+                if image_list is not None:
+                    rand = random.choice(image_list)
+                    image_list.remove(rand)
+                    the_word = Word(rand)
+                    sname = 'sounds/' + str(rand)
+                    sound  = pygame.mixer.Sound(sname)
+                    sound.play()
+            except:
+                print('CATCHING EMPTY LIST')
+                levelscore/=11
+                text = "All Questions Over :("
+                st= font.render(text, 1, (255, 10, 10))
+                screen.blit(st, (300, 100))
+                pygame.display.update()
+                time.sleep(2)
+                exit()
             rand = random.choice(image_list)
             image_list.remove(rand)
             the_word = Word(rand)
@@ -344,12 +362,26 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos  
                 if skipbutton.collidepoint(mouse_pos):
-                    rand = random.choice(image_list)
-                    image_list.remove(rand)
-                    the_word = Word(rand)
-                    sname = 'sounds/' + str(rand)
-                    sound  = pygame.mixer.Sound(sname)
-                    sound.play()
+                    try:
+                        if image_list is not None:
+                            rand = random.choice(image_list)
+                            image_list.remove(rand)
+                            the_word = Word(rand)
+                            sname = 'sounds/' + str(rand)
+                            sound  = pygame.mixer.Sound(sname)
+                            sound.play()
+                    except:
+                        print('CATCHING EMPTY LIST')
+                        levelscore/=11
+                        text = "All Questions Over :("
+                        st= font.render(text, 1, (255, 10, 10))
+                        screen.blit(st, (300, 100))
+                        pygame.display.update()
+                        time.sleep(2)
+                        exit()
+
+                    ##
+                    
 
         
             
