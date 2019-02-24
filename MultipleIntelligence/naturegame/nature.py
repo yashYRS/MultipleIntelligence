@@ -265,6 +265,7 @@ def main():
             right = False
             the_word = Word(random.choice(image_list),levelread)
             happy.reset()
+            levelscore+=1
         happy_group.update()
         
         #### Handle answer ####
