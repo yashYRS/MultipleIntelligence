@@ -40,7 +40,7 @@ class MyGame(arcade.Window):
 	def __init__(self):
 		""" Initializer """
 		# Call the parent class initializer
-		super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Manage Farm" )
+		super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Memory Game" , fullscreen  = True )
 
 		# Variables that will hold sprite listss
 		self.curr_state = "Instructions"
@@ -135,11 +135,11 @@ class MyGame(arcade.Window):
 		midY = (bottom + screen_height)/2
 		### -- Change the Instructions to be displayed -- ### 
 		arcade.draw_text(f" INSTRUCTIONS ", midX/2 + 100 , 6*(screen_height - bottom)/7 , arcade.color.YELLOW , 40)
-		arcade.draw_text(f" Basic Memory Game  ", midX/2, 5*(screen_height - bottom)/7 , arcade.color.YELLOW , 30)
-		arcade.draw_text(f" Basic rules " ,midX/2, 4*(screen_height - bottom)/7, arcade.color.YELLOW , 30 )
-		arcade.draw_text(f" Some more shit  " ,midX/2, 3*(screen_height - bottom)/7, arcade.color.YELLOW , 30 )
-		arcade.draw_text(f" Final Shit  " ,midX/2, 2*(screen_height - bottom)/7 , arcade.color.YELLOW , 30)
-		arcade.draw_text(f" That's about it " ,midX/2 + 150 , 1*(screen_height - bottom)/7 , arcade.color.YELLOW , 15)
+		arcade.draw_text(f" A Memory Game based on Musical Sounds ", midX/2, 5*(screen_height - bottom)/7 , arcade.color.YELLOW , 30)
+		arcade.draw_text(f" Click on a tile to listen to a sound " ,midX/2, 4*(screen_height - bottom)/7, arcade.color.YELLOW , 30 )
+		arcade.draw_text(f" Selecting tiles with similar sounds dissolves them " ,midX/2, 3*(screen_height - bottom)/7, arcade.color.YELLOW , 30 )
+		arcade.draw_text(f" Dissolve all tiles to complete the game " ,midX/2, 2*(screen_height - bottom)/7 , arcade.color.YELLOW , 30)
+		arcade.draw_text(f" You might miss something " ,midX/2 + 150 , 1*(screen_height - bottom)/7 , arcade.color.YELLOW , 15)
 
 
 
