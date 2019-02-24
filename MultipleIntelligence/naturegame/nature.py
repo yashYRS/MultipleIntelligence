@@ -255,6 +255,12 @@ def drawSkip():
     screen.blit(st1,(810,505))
     return skip_button
 
+def listcheck(l):
+    if l is None:
+        print('Empty List')
+        exit()
+        return True
+
 # main function and loop 
 def main():
     levelscore=0
@@ -279,7 +285,8 @@ def main():
             levelscore/=div
             print(levelscore)
             displayGameOver()
-            time.sleep(2)
+            pygame.display.update()
+            time.sleep(1)
             exit()
         cursor = 0
         letter_position = dict()
@@ -365,6 +372,24 @@ def main():
         if happy.lifespan == 0:
             happy_group.empty()
             right = False
+            try:
+                if image_list is not None:
+                    choice=random.choice(image_list)
+                    image_list.remove(choice)
+                    the_word = Word(choice,levelread)
+            except:
+                print('CATCHING EMPTY LIST')
+                if levelread==3:
+                    div=5
+                else:
+                    div=10
+                levelscore/=div
+                text = "All Questions Over :("
+                st= font.render(text, 1, (255, 10, 10))
+                screen.blit(st, (300, 100))
+                pygame.display.update()
+                time.sleep(2)
+                exit()
             choice=random.choice(image_list)
             image_list.remove(choice)
             the_word = Word(choice,levelread)
@@ -423,12 +448,25 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos  
                 if skipbutton.collidepoint(mouse_pos):
-                    choice=random.choice(image_list)
-                    image_list.remove(choice)
-                    the_word = Word(choice,levelread)
+                    try:
+                        if image_list is not None:
+                            choice=random.choice(image_list)
+                            image_list.remove(choice)
+                            the_word = Word(choice,levelread)
+                    except:
+                        print('CATCHING EMPTY LIST')
+                        if levelread==3:
+                            div=5
+                        else:
+                            div=10
+                        levelscore/=div
+                        text = "All Questions Over :("
+                        st= font.render(text, 1, (255, 10, 10))
+                        screen.blit(st, (300, 100))
+                        pygame.display.update()
+                        time.sleep(2)
+                        exit()
 
-        
-            
         #### Render typed letters on screen ####
         try:
             for letter in entered_text:                                          
