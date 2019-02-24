@@ -7,7 +7,7 @@ import sounddevice as sd
 from scipy.signal import butter, lfilter
 
 def function play():
-    refSample, samplerrate = librosa.load("C:/Users/hp/Desktop/SIH/SoundProcessing/middlecsample.wav",duration=5)
+    refSample, samplerrate = librosa.load("C:/Users/hp/Desktop/SIH/SoundProcessing/middlecsample.wav",sr=44100,duration=5)
     sd.play(refSample,samplerate=samplerate)
     return refSample, samplerate
 
