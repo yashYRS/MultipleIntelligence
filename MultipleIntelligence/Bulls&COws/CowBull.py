@@ -19,7 +19,7 @@ font2 = "Arial"
 toggleKey = ["  *" for i in range(0, 26)]
 
 def finfScoreToSend(score,time):
-    fscore=score*10/(time*.75)
+    fscore=score/(time*.75)
     return fscore
 
 def getLevelFile(level):
@@ -262,16 +262,8 @@ def endGame(word, result, turn, timer):
         text("Oops! You failed to guess the word correctly.", 50, white, 325, 200)
         text("Score : 0", 75, white, 425, 320)
     text("Time : " + str(timer) + "s", 75, white, 500, 320)
-    
-    #To Detect 'Escape' Key Being Pressed And Restart The Game
-    text("To play again, press Escape key.", 50, white, 600, 200)
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                terminate()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    return True
+    time.sleep(2)
+    exit()
 
 #Main Function
 Canvas.fill(red)

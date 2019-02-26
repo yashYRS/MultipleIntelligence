@@ -11,16 +11,19 @@ from faces import Face
 import time
 global levelread
 global timeStart
-levelread = 2 
+global levelread
+levelread = 2
 timeStart = time.time()+10
 
 
-
+def getLevel():
+    return levelread
 #startTime = time.time()
 EXEC_DIR = os.path.dirname(__file__)  
 
 ### Test for platform since the .app bundle behaves strangely
-
+tree = pygame.image.load('tree.png')
+tr = pygame.image.load('tr1.png')
 if levelread==1:
     if sys.platform == 'darwin':
         image_dir = os.walk("word_files")
@@ -31,6 +34,11 @@ elif levelread==2:
         image_dir = os.walk("animals")
     else:
         image_dir = os.walk(os.path.join(EXEC_DIR, "animals"))
+elif levelread==3:
+    if sys.platform == 'darwin':
+        image_dir = os.walk("species")
+    else:
+        image_dir = os.walk(os.path.join(EXEC_DIR, "species"))
 #elif levelread==3:
  #   image_dir=getImage('animals')
 
@@ -58,8 +66,9 @@ for root, dir, files in image_dir:
     for file in files:
         if '.DS_Store' not in file:
             image_list.append(file)
-
-the_word = Word(random.choice(image_list),levelread)
+choice=random.choice(image_list)
+image_list.remove(choice)
+the_word = Word(choice,levelread)
 #the_word = Word('yo-yo.png')
 
 ignored_keys = ('escape', 'return', 'backspace', 'enter', 'space', 'right shift'\
@@ -97,12 +106,16 @@ def draw_cloud(x,y,size):
     pygame.draw.circle(screen,(255,255,255),(x+size,int(y-size*.1)),int(size*.4))
 
 def displayRules():
-    txt1= "Hello player! Some basic rules:"
+    if levelread==3:
+        sec=str(10)
+    else:
+        sec=str(30)
+    txt1= "Hello player! Some basic rules for Level: "+str(levelread)
     txt2= "Answer the question displayed below the photos"
     txt3= "As fast as you can"
     txt4= "If your answer is correct"
     txt5= "Next qustion will be diplayed"
-    txt6= "You have 60 seconds. Timer is displayed"
+    txt6= "You have "+sec+" seconds. Timer is displayed above"
     st1 = font1.render(txt1, 1, green)
     st2 = font1.render(txt2, 1, green)
     st3 = font1.render(txt3, 1, green)
@@ -160,11 +173,98 @@ def background():
     draw_cloud(130,100,40)
     draw_cloud(1120,1180,40)
     draw_cloud(1140,1140,60)
+    screen.blit(tree,(1000,550))
+    screen.blit(tree,(950,550))
+    screen.blit(tree,(920,550))
+    screen.blit(tree,(900,550))
+    screen.blit(tr,(850,570))
+    screen.blit(tree,(950,570))
+    screen.blit(tree,(980,550))
+    screen.blit(tree,(1030,550))
+    screen.blit(tree,(1060,560))
+    screen.blit(tree,(1080,570))
+    screen.blit(tree,(1110,560))
+    screen.blit(tree,(1130,570))
+    screen.blit(tree,(1150,570))
+    screen.blit(tree,(1190,560))
+    screen.blit(tree,(1230,570))
+    screen.blit(tree,(1260,560))
+    screen.blit(tr,(1090,580))
+    screen.blit(tr,(1110,580))
+    screen.blit(tr,(1130,580))
+    screen.blit(tr,(970,610))
+    screen.blit(tr,(880,620))
+    screen.blit(tr,(860,570))
+    screen.blit(tr,(930,610))
+    screen.blit(tr,(1000,610))
+    screen.blit(tr,(1020,610))
+    screen.blit(tr,(1035,610))
+    screen.blit(tr,(900,635))
+    screen.blit(tr,(930,635))
+    screen.blit(tr,(950,635))
+    screen.blit(tr,(980,635))
+    screen.blit(tr,(400,630))
+    screen.blit(tr,(420,630))
+    screen.blit(tr,(450,630))
+    screen.blit(tr,(480,630))
+    screen.blit(tr,(500,630))
+    screen.blit(tr,(500,580))
+    screen.blit(tr,(530,630))
+    screen.blit(tr,(530,580))
+    screen.blit(tr,(560,630))
+    screen.blit(tr,(560,580))
+    screen.blit(tr,(580,630))
+    screen.blit(tr,(585,580))
+    screen.blit(tr,(600,630))
+    screen.blit(tr,(610,575))
+    screen.blit(tr,(630,630))
+    screen.blit(tr,(640,575))
+    screen.blit(tr,(660,630))
+    screen.blit(tr,(665,575))
+    screen.blit(tr,(690,630))
+    screen.blit(tr,(695,575))
+    screen.blit(tr,(720,630))
+    screen.blit(tr,(730,568))
+    screen.blit(tr,(750,630))
+    screen.blit(tr,(760,575))
+    screen.blit(tr,(770,630))
+    screen.blit(tr,(800,630))
+    screen.blit(tr,(810,575))
+    screen.blit(tr,(830,630))
+    screen.blit(tr,(860,630))
+    screen.blit(tr,(890,630))
+    screen.blit(tr,(1000,600))
+    screen.blit(tr,(1030,620))
+    screen.blit(tr,(1050,630))
+    screen.blit(tr,(1080,610))
+    screen.blit(tr,(1100,620))
+    screen.blit(tr,(1130,610))
+    screen.blit(tr,(1160,620))
+    screen.blit(tr,(1180,610))
+    screen.blit(tr,(1210,620))
+    screen.blit(tr,(1240,610))
+    screen.blit(tr,(1260,580))
+    screen.blit(tr,(1200,610))
+    screen.blit(tr,(1230,600))
+    screen.blit(tr,(1260,610))
+
+def drawSkip():
+    txt = "SKIP"
+    st1 = font1.render(txt, 1, (0,0,0))
+    skip_button = pygame.draw.rect(screen,(227,207,87),(800, 500, 70, 30))
+    screen.blit(st1,(810,505))
+    return skip_button
+
+def listcheck(l):
+    if l is None:
+        print('Empty List')
+        exit()
+        return True
 
 # main function and loop 
 def main():
     levelscore=0
-    levelread = 2
+    levelread = getLevel()
     global the_word
     global entered_text
     global ignored_keys
@@ -175,10 +275,18 @@ def main():
     pygame.key.set_repeat(0,0)
     
     while running:
-        if int(time.time())-int(timeStart) > 20:
+        if levelread==3:
+            val=10
+            div=5
+        else:
+            val=30
+            div=10
+        if int(time.time())-int(timeStart) > val:
+            levelscore/=div
             print(levelscore)
             displayGameOver()
-            time.sleep(2)
+            pygame.display.update()
+            time.sleep(1)
             exit()
         cursor = 0
         letter_position = dict()
@@ -186,6 +294,7 @@ def main():
         mods = pygame.key.get_mods()
         screen.fill((255,240,245))
         background()
+        skipbutton=drawSkip()
         #pygame.display.update()
         displayRules()
         if levelread==1:
@@ -195,7 +304,7 @@ def main():
             textq="Guess my Offsping's name"
             cdnts=(430,350)
         elif levelread==3:
-            textq="Guess my habitat"
+            textq="Where is my home?"
             cdnts=(440,350)
         st = font.render(textq, 1, (255, 100, 200))
         screen.blit(st,cdnts)
@@ -263,9 +372,29 @@ def main():
         if happy.lifespan == 0:
             happy_group.empty()
             right = False
-            the_word = Word(random.choice(image_list),levelread)
-            happy.reset()
+            try:
+                if image_list is not None:
+                    choice=random.choice(image_list)
+                    image_list.remove(choice)
+                    the_word = Word(choice,levelread)
+            except:
+                print('CATCHING EMPTY LIST')
+                if levelread==3:
+                    div=5
+                else:
+                    div=10
+                levelscore/=div
+                text = "All Questions Over :("
+                st= font.render(text, 1, (255, 10, 10))
+                screen.blit(st, (300, 100))
+                pygame.display.update()
+                time.sleep(2)
+                exit()
+            choice=random.choice(image_list)
+            image_list.remove(choice)
+            the_word = Word(choice,levelread)
             levelscore+=1
+            happy.reset()
         happy_group.update()
         
         #### Handle answer ####
@@ -316,9 +445,28 @@ def main():
                         sad.reset()
                         sad_group.add(sad)
                         wrong = True
-       
-        
-            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = event.pos  
+                if skipbutton.collidepoint(mouse_pos):
+                    try:
+                        if image_list is not None:
+                            choice=random.choice(image_list)
+                            image_list.remove(choice)
+                            the_word = Word(choice,levelread)
+                    except:
+                        print('CATCHING EMPTY LIST')
+                        if levelread==3:
+                            div=5
+                        else:
+                            div=10
+                        levelscore/=div
+                        text = "All Questions Over :("
+                        st= font.render(text, 1, (255, 10, 10))
+                        screen.blit(st, (300, 100))
+                        pygame.display.update()
+                        time.sleep(2)
+                        exit()
+
         #### Render typed letters on screen ####
         try:
             for letter in entered_text:                                          
