@@ -1,8 +1,15 @@
 import xml.etree.ElementTree as ET 
-
+import random
 #### -------- --------------  GLOBAL VARIABLES -------- --------------------  #### 
 
+filename = "game_details.xml"
+alpha = 0.7
+beta = 0.3 
+thld_one = 0.9
+thld_common = 0.4
 
+
+#### ------- -------------------  MODULES  ------------- -------------------  #### 
 def get_total_each(filename , levels_per_game) : 
 	""" Returns total score possible in each module """
 	maximum_state = { "picture" : 0, "word" : 0 , "nature" : 0, "people" : 0, "self" : 0, "logic" : 0, "body" :  0, "music" :0  }  
@@ -23,7 +30,7 @@ def get_levels(filename) :
 	return levels_per_game
 
 
-def find_heuristic(game_id, level, curr_state, maximum_state , curr_score) : 
+def find_heuristic(filename , game_id, level, curr_state, maximum_state , curr_score) : 
 
 	# get game_state 
 	_, _ , game_state =  get_info_game( filename , game_id, level )
@@ -62,7 +69,7 @@ def find_heuristic(game_id, level, curr_state, maximum_state , curr_score) :
 
 
 
-def goal_test( maximum_state , curr_state , thld_one , thld_common ) : 
+def goal_test( maximum_state , curr_state ) : 
 	""" Return True if goal achieved, else false """
 	temp_dict = {}
 	for key in curr_state : 
@@ -100,13 +107,13 @@ def get_info_game( filename , idx , level) :
 	root = data.getroot()
 	game_state = {} 
 	for game in root : 
-		if game['ID'] == str(idx) : 
-			mod_name = game['module_name']
-			mod_story = game['module_story' + str(level)]
+		if game.attrib['ID'] == str(idx) : 
+			mod_name = game.attrib['module_name']
+			mod_story = game.attrib['module_story' + str(level)]
 			for param in game : 
 				for key in param.attrib : 
 					game_state[key] = float(param.attrib[key])
-				
+	print(game_state)
 	return mod_name , mod_story , game_state
 
 def call_game(filename , game_idx , level , curr_state , curr_score) : 
@@ -123,26 +130,47 @@ def call_game(filename , game_idx , level , curr_state , curr_score) :
 	## update the state after getting the score 
 
 
+# for testing, without games 
+# def call_game(filename , game_idx , level , curr_state , curr_score) : 
+
+# 	## get backstory of level and game module of the level , update curr_state 
+# 	game_module , story_module , game_state = get_info_game( filename, game_idx, level)
+# 	print( " Game idx -> " + str(game_idx) , end = " : ")
+# 	score = float( input(" Enter score : " ) ) 
+# 	for key in curr_state : 
+# 		curr_score[key] = curr_score[key] + game_state[key]*score 
+# 		curr_state[key] = curr_state[key] + game_state[key]
+# 	return curr_score , curr_state
+# 	## update the state after getting the score 
+
+
 def start_search(filename) : 
 	"""" For testing """
 	initial_state , maximum_state , levels_per_game = setup_initial(filename)
 	levels_done = [0 for i in levels_per_game]
 	games_played = 0 
 	curr_state = initial_state 
-	curr_score = [0 for i in maximum_state] ## current score 
-
+	curr_score = {}
+	for key in curr_state : 
+		curr_score[key] = 0
+	print(maximum_state)
 	while games_played < 8 : 
 		
 		## choose a game randomly 
+		print(" curr_state - " , end = " :- ")
+		print(curr_state)
+		print(curr_score)
 		game_choice_id = random.choice(range(1,17))
 		if levels_done[game_choice_id - 1] == 0 : 
 			## get the score and the updated state after playing the game 
-			curr_score , curr_state = call_game(game_choice_id , 1 , curr_state , curr_score) ## score is the actual score
+			curr_score , curr_state = call_game(filename ,game_choice_id , 1 , curr_state , curr_score) ## score is the actual score
 			games_played = games_played + 1
 			levels_done[game_choice_id - 1] = 1 # increment to show the level at which a player is
 
 	while True : 
-		if goal_test(curr_state) : 
+		print(" curr_state - " , end = " :- ")
+		print(curr_state)
+		if goal_test(maximum_state , curr_state) : 
 			break 
 		games_left_id = find_games_left(levels_per_game , levels_done)	
 		
@@ -150,13 +178,17 @@ def start_search(filename) :
 		max_heur_score = 0 
 		
 		for game_id in games_left_id :
-			temp_heur_score  = find_heuristic(game_id , levels_done[game_id - 1]  + 1 ,  curr_state , maximum_state , curr_score) 
+			temp_heur_score  = find_heuristic(filename , game_id , levels_done[game_id - 1]  + 1 ,  curr_state , maximum_state , curr_score) 
+			print(temp_heur_score , max_heur_score)
 			if temp_heur_score > max_heur_score : 
 				max_heur_score = temp_heur_score
 				game_choice_id = game_id
 		
-		curr_score, curr_state = call_game(game_choice_id ,  levels_done[game_choice_id - 1] + 1 , curr_state , curr_score ) # -1 since the index is 1 less than actual id 
+		curr_score, curr_state = call_game(filename , game_choice_id ,  levels_done[game_choice_id - 1] + 1 , curr_state , curr_score ) # -1 since the index is 1 less than actual id 
 		games_played = games_played + 1 
 		levels_done[game_choice_id - 1] = levels_done[game_choice_id - 1] + 1 ## increment to show the level at which a player is
 
 	return ## return implies exit 
+
+
+start_search("game_details.xml")
