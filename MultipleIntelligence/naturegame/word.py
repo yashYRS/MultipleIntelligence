@@ -11,11 +11,15 @@ class Word(object):
                 self.word_image = os.path.join('word_files', word)
             elif level==2:
                 self.word_image = os.path.join('animals', word)
+            elif level==3:
+                self.word_image = os.path.join('species', word)
         else:
             if level==1:
                 self.word_image = os.path.join(EXEC_DIR, 'word_files', word)
             elif level==2:
                 self.word_image = os.path.join(EXEC_DIR, 'animals', word)
+            elif level==3:
+                self.word_image = os.path.join(EXEC_DIR, 'species', word)
         self.word = word
         self.image = pygame.image.load(self.word_image)
         self.rect = self.image.get_rect()
