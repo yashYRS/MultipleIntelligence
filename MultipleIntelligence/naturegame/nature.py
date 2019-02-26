@@ -390,9 +390,6 @@ def main():
                 pygame.display.update()
                 time.sleep(2)
                 exit()
-            choice=random.choice(image_list)
-            image_list.remove(choice)
-            the_word = Word(choice,levelread)
             levelscore+=1
             happy.reset()
         happy_group.update()
