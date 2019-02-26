@@ -37,7 +37,10 @@ def find_heuristic(game_id, level, curr_state, maximum_state , curr_score) :
 	score_percentages = {}
 	state_percentages = {} 
 	for key in curr_score : 	
-		score_percentages[key] = curr_score[key]/curr_state[key] 
+		if curr_state[key] == 0 : 
+			score_percentages[key] = 0 # thus scores_percentage = 0 
+		else : 
+			score_percentages[key] = curr_score[key]/curr_state[key] 
 		state_percentages[key] = curr_state[key]/maximum_state[key]
 	# get the intelligence type with the highest percentage 
 	max_key = max ( score_percentages , key = score_percentages.get ) 
@@ -45,12 +48,16 @@ def find_heuristic(game_id, level, curr_state, maximum_state , curr_score) :
 	# get the dist from upper threshold amd that curr/max of that intelligence type 
 	heur_val2 = thld_one - state_percentages[max_key]
 	heur_val1 = thld_common - state_percentages[min_key]
+	
+	if game_state[min_key] == 0 : ## no use going for this 
+		return beta*heur_val2 
 
 	if heur_val1 > 0 and heur_val2 > 0: 
 		return alpha*heur_val1 + beta*heur_val2 
-	
-	# if any one of the requirements is reached, the other needs to be reached with immediate effect 
-	return 1 
+	elif heur_val2 < 0 and heur_val1 > 0 : 
+		return alpha*heur_val1
+	elif heur_val2 > 0 and heur_val1 < 0 : 
+		return alpha*heur_val2 
 
 
 
