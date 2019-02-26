@@ -4,51 +4,46 @@ import os
 import pygame
 from pygame.locals import *
 from pygame.color import THECOLORS
-from word import Word
+from musicword import Word
 import random
 import sys
-from faces import Face
+from musicfaces import Face
 import time
-global levelread
+global levelscore
+levelscore=0
 global timeStart
-global levelread
-levelread = 2
-timeStart = time.time()+10
+timeStart = time.time()+5
 
 
-def getLevel():
-    return levelread
+
 #startTime = time.time()
 EXEC_DIR = os.path.dirname(__file__)  
 
 ### Test for platform since the .app bundle behaves strangely
-tree = pygame.image.load('tree.png')
-tr = pygame.image.load('tr1.png')
-if levelread==1:
-    if sys.platform == 'darwin':
-        image_dir = os.walk("word_files")
-    else:
-        image_dir = os.walk(os.path.join(EXEC_DIR, "word_files"))
-elif levelread==2:
-    if sys.platform == 'darwin':
-        image_dir = os.walk("animals")
-    else:
-        image_dir = os.walk(os.path.join(EXEC_DIR, "animals"))
-elif levelread==3:
-    if sys.platform == 'darwin':
-        image_dir = os.walk("species")
-    else:
-        image_dir = os.walk(os.path.join(EXEC_DIR, "species"))
-#elif levelread==3:
- #   image_dir=getImage('animals')
+
+if sys.platform == 'darwin':
+    image_dir = os.walk("sounds")
+else:
+    image_dir = os.walk(os.path.join(EXEC_DIR, "sounds"))
+
 
 
 pygame.init()
-pygame.display.set_caption("Guess the word")
+pygame.display.set_caption("MusicSMart")
+img = pygame.image.load('speaker.png')
+an1 = pygame.image.load('an1.png')
+an2 = pygame.image.load('an2.png')
+an3 = pygame.image.load('an3.png')
+an5 = pygame.image.load('an5.png')
+an6 = pygame.image.load('an6.png')
+an7 = pygame.image.load('an7.png')
+tr1 = pygame.image.load('tr1.png')
+tr3 = pygame.image.load('tr3.png')
 #### Globals
 screen = pygame.display.set_mode((0, 0))
 font = pygame.font.SysFont('Helvetica', 50)
 font1 = pygame.font.SysFont('Helvetica', 20)
+flashfont = pygame.font.SysFont("celtic", 35)
 green = (0,255,0)
 brown = (139,58,58)
 yellow = (255,215,0)
@@ -66,10 +61,22 @@ for root, dir, files in image_dir:
     for file in files:
         if '.DS_Store' not in file:
             image_list.append(file)
-choice=random.choice(image_list)
-image_list.remove(choice)
-the_word = Word(choice,levelread)
+
+rand = random.choice(image_list)
+the_word = Word(rand)
+image_list.remove(rand)
+sname = 'sounds/' + str(rand)
+global sound  
+sound = pygame.mixer.Sound(sname)
+sound1 = pygame.mixer.Sound(sname)
 #the_word = Word('yo-yo.png')
+
+def drawSkip():
+    txt = "SKIP"
+    st1 = font1.render(txt, 1, (0,0,0))
+    skip_button = pygame.draw.rect(screen,(227,207,87),(850, 450, 70, 30))
+    screen.blit(st1,(855,455))
+    return skip_button
 
 ignored_keys = ('escape', 'return', 'backspace', 'enter', 'space', 'right shift'\
                 ,'left shift', 'left meta', 'right meta', 'f1', 'f2', 'f3', 'f4', 'f5'\
@@ -106,16 +113,12 @@ def draw_cloud(x,y,size):
     pygame.draw.circle(screen,(255,255,255),(x+size,int(y-size*.1)),int(size*.4))
 
 def displayRules():
-    if levelread==3:
-        sec=str(10)
-    else:
-        sec=str(30)
-    txt1= "Hello player! Some basic rules for Level: "+str(levelread)
-    txt2= "Answer the question displayed below the photos"
-    txt3= "As fast as you can"
-    txt4= "If your answer is correct"
-    txt5= "Next qustion will be diplayed"
-    txt6= "You have "+sec+" seconds. Timer is displayed above"
+    txt1= "Hello player! Some basic rules:"
+    txt2= "Listen carefully to the sound"
+    txt3= "Guess the animal it belings to"
+    txt4= "Type in and press enter"
+    txt5= "Next sound will be played"
+    txt6= "You have 20 seconds. Timer is displayed above"
     st1 = font1.render(txt1, 1, green)
     st2 = font1.render(txt2, 1, green)
     st3 = font1.render(txt3, 1, green)
@@ -133,138 +136,45 @@ def displayGameOver():
     txt = "Time's up! GAME OVER"
     stt = font1.render(txt, 1, green)
     screen.blit(stt,(450,1100))
+    pygame.display.flip()
 
 
 def background():
-    pygame.draw.arc(screen, yellow, (40,40,150,150), 0, 180,70)
-    pygame.draw.polygon(screen, brown, [[200, 30], [10, 270],[400, 270]])
-    pygame.draw.polygon(screen, brown, [[300, 100], [100, 270],[450, 270]])
-    pygame.draw.polygon(screen, brown, [[1100, 400], [860, 600],[1260, 600]])
-    pygame.draw.polygon(screen, brown, [[1200, 500], [1100, 600],[1300, 600]])
-    pygame.draw.ellipse(screen, blue, [1000, 1000, 100, 150],10)
-    draw_tree(80,340)
-    draw_tree(30,340)
-    draw_tree(110,360)
-    draw_tree(250,370)
-    draw_tree(180,380)
-    draw_tree(330,380)
-    draw_tree(100,400)
-    draw_tree(320,460)
-    draw_tree(300,460)
-    draw_tree(200,480)
-    draw_tree(280,480)
-    draw_tree(20,500) #x and y location are the bottom left of tree trunk
-    draw_tree(100,500)
-    draw_tree(100,600)
-    draw_tree(50,600)
-    draw_tree(50,490)
-    draw_tree(280,550)
-    draw_tree(200,600)
-    draw_tree(300,650)
-    draw_tree(150,700)
-    draw_tree(230,700)
-    draw_tree(280,700)
-    draw_tree(340,700)
-    draw_tree(420,700)
-    draw_house(20,700)
-    draw_cloud(170,120,70)
-    draw_cloud(30,50,40)
-    draw_cloud(80,100,50)
-    draw_cloud(130,100,40)
-    draw_cloud(1120,1180,40)
-    draw_cloud(1140,1140,60)
-    screen.blit(tree,(1000,550))
-    screen.blit(tree,(950,550))
-    screen.blit(tree,(920,550))
-    screen.blit(tree,(900,550))
-    screen.blit(tr,(850,570))
-    screen.blit(tree,(950,570))
-    screen.blit(tree,(980,550))
-    screen.blit(tree,(1030,550))
-    screen.blit(tree,(1060,560))
-    screen.blit(tree,(1080,570))
-    screen.blit(tree,(1110,560))
-    screen.blit(tree,(1130,570))
-    screen.blit(tree,(1150,570))
-    screen.blit(tree,(1190,560))
-    screen.blit(tree,(1230,570))
-    screen.blit(tree,(1260,560))
-    screen.blit(tr,(1090,580))
-    screen.blit(tr,(1110,580))
-    screen.blit(tr,(1130,580))
-    screen.blit(tr,(970,610))
-    screen.blit(tr,(880,620))
-    screen.blit(tr,(860,570))
-    screen.blit(tr,(930,610))
-    screen.blit(tr,(1000,610))
-    screen.blit(tr,(1020,610))
-    screen.blit(tr,(1035,610))
-    screen.blit(tr,(900,635))
-    screen.blit(tr,(930,635))
-    screen.blit(tr,(950,635))
-    screen.blit(tr,(980,635))
-    screen.blit(tr,(400,630))
-    screen.blit(tr,(420,630))
-    screen.blit(tr,(450,630))
-    screen.blit(tr,(480,630))
-    screen.blit(tr,(500,630))
-    screen.blit(tr,(500,580))
-    screen.blit(tr,(530,630))
-    screen.blit(tr,(530,580))
-    screen.blit(tr,(560,630))
-    screen.blit(tr,(560,580))
-    screen.blit(tr,(580,630))
-    screen.blit(tr,(585,580))
-    screen.blit(tr,(600,630))
-    screen.blit(tr,(610,575))
-    screen.blit(tr,(630,630))
-    screen.blit(tr,(640,575))
-    screen.blit(tr,(660,630))
-    screen.blit(tr,(665,575))
-    screen.blit(tr,(690,630))
-    screen.blit(tr,(695,575))
-    screen.blit(tr,(720,630))
-    screen.blit(tr,(730,568))
-    screen.blit(tr,(750,630))
-    screen.blit(tr,(760,575))
-    screen.blit(tr,(770,630))
-    screen.blit(tr,(800,630))
-    screen.blit(tr,(810,575))
-    screen.blit(tr,(830,630))
-    screen.blit(tr,(860,630))
-    screen.blit(tr,(890,630))
-    screen.blit(tr,(1000,600))
-    screen.blit(tr,(1030,620))
-    screen.blit(tr,(1050,630))
-    screen.blit(tr,(1080,610))
-    screen.blit(tr,(1100,620))
-    screen.blit(tr,(1130,610))
-    screen.blit(tr,(1160,620))
-    screen.blit(tr,(1180,610))
-    screen.blit(tr,(1210,620))
-    screen.blit(tr,(1240,610))
-    screen.blit(tr,(1260,580))
-    screen.blit(tr,(1200,610))
-    screen.blit(tr,(1230,600))
-    screen.blit(tr,(1260,610))
+    text1 = "Music is like a dream. One that I cannot hear."
+    text2 = "Music is the shorthand of emotion."
+    txt1 = flashfont.render(text1,1,green)
+    txt2 = flashfont.render(text2,1,green)
+    #screen.blit(txt1,(10,250))
+    #screen.blit(txt2,(10,290))
+    screen.blit(tr3, (1090,300))
+    screen.blit(tr3, (1140,300))
+    screen.blit(tr3, (950,300))
+    screen.blit(tr3, (1000,300))
+    screen.blit(tr3, (1050,300))
+    screen.blit(tr1, (20,170))
+    screen.blit(tr1, (90,170))
+    screen.blit(tr1, (150,170))
+    screen.blit(tr1, (10,300))
+    screen.blit(tr1, (70,300))
+    screen.blit(tr1, (120,300))
+    screen.blit(tr1, (160,300))
+    screen.blit(tr1, (220,300))
+    screen.blit(an1, (10,470))
+    screen.blit(an2, (310,470))
+    screen.blit(an3, (610,470))
+    screen.blit(an5, (1190,300))
+    screen.blit(an6, (910,470))
+    screen.blit(an7, (1100,470))
+    screen.blit(img,(550,100))
 
-def drawSkip():
-    txt = "SKIP"
-    st1 = font1.render(txt, 1, (0,0,0))
-    skip_button = pygame.draw.rect(screen,(227,207,87),(800, 500, 70, 30))
-    screen.blit(st1,(810,505))
-    return skip_button
-
-def listcheck(l):
-    if l is None:
-        print('Empty List')
-        exit()
-        return True
-
+def displayspeaker():
+    return 1
+    
 # main function and loop 
+
 def main():
     levelscore=0
-    levelread = getLevel()
+    levelread = 2
     global the_word
     global entered_text
     global ignored_keys
@@ -273,22 +183,19 @@ def main():
     global hyphen
     running = True
     pygame.key.set_repeat(0,0)
-    
+
+    yes=1
+    flag=True
     while running:
-        if levelread==3:
-            val=10
-            div=5
-        else:
-            val=30
-            div=10
-        if int(time.time())-int(timeStart) > val:
-            levelscore/=div
+        if int(time.time())-int(timeStart) > 30:
+            levelscore/=11
             print(levelscore)
             displayGameOver()
             pygame.display.update()
             time.sleep(1)
             exit()
         cursor = 0
+        displayspeaker()
         letter_position = dict()
         key = pygame.key.get_pressed()
         mods = pygame.key.get_mods()
@@ -297,22 +204,27 @@ def main():
         skipbutton=drawSkip()
         #pygame.display.update()
         displayRules()
-        if levelread==1:
-            textq="Guess the place"
-            cdnts=(450,350)
-        elif levelread==2:
-            textq="Guess my Offsping's name"
-            cdnts=(430,350)
-        elif levelread==3:
-            textq="Where is my home?"
-            cdnts=(440,350)
+        textq="Who am I?"
+        cdnts=(560,300)
         st = font.render(textq, 1, (255, 100, 200))
         screen.blit(st,cdnts)
         timer = int(time.time())-int(timeStart)
         t = "Timer: " + str(timer)
         s = font.render(t, 1, (100, 100, 100))
         screen.blit(s,(1100,40))
-        the_word.draw(screen, (screen_x/2 - the_word.width/2), 50)
+        t = "Score " + str(levelscore)
+        s = font.render(t, 1, (100, 100, 100))
+        screen.blit(s,(100,100))
+        if yes==1:
+            while flag:
+                sound1.play()
+                flag=False
+        else:
+            flag=True
+            while flag:
+                sound.play()
+                flag = False
+        #the_word.draw(screen, (screen_x/2 - the_word.width/2), 50)
 
         ### Begin calculations for total width of area for typing
         num_lines = len(the_word.letters)  ##Number of lines
@@ -349,7 +261,7 @@ def main():
             
            
             line_x2 = line_x1 + underline_width 
-            pygame.draw.line(screen, THECOLORS['black'], (line_x1, 460), (line_x2, 460), 2)
+            pygame.draw.line(screen, THECOLORS['black'], (line_x1, 430), (line_x2, 430), 2)
             line_x1 += underline_width + 20 
             line_x2 += underline_width + 20 
         
@@ -370,29 +282,31 @@ def main():
         
         #(Right answer)happy face lifespan 
         if happy.lifespan == 0:
+            yes=0
             happy_group.empty()
             right = False
             try:
                 if image_list is not None:
-                    choice=random.choice(image_list)
-                    image_list.remove(choice)
-                    the_word = Word(choice,levelread)
+                    rand = random.choice(image_list)
+                    image_list.remove(rand)
+                    the_word = Word(rand)
+                    sname = 'sounds/' + str(rand)
+                    sound  = pygame.mixer.Sound(sname)
+                    sound.play()
             except:
                 print('CATCHING EMPTY LIST')
-                if levelread==3:
-                    div=5
-                else:
-                    div=10
-                levelscore/=div
+                levelscore/=11
                 text = "All Questions Over :("
                 st= font.render(text, 1, (255, 10, 10))
                 screen.blit(st, (300, 100))
                 pygame.display.update()
                 time.sleep(2)
                 exit()
-            choice=random.choice(image_list)
-            image_list.remove(choice)
-            the_word = Word(choice,levelread)
+            rand = random.choice(image_list)
+            image_list.remove(rand)
+            the_word = Word(rand)
+            sname = 'sounds/' + str(rand)
+            sound  = pygame.mixer.Sound(sname)
             levelscore+=1
             happy.reset()
         happy_group.update()
@@ -400,11 +314,11 @@ def main():
         #### Handle answer ####
         if right:
             text = font.render("Correct!", 1, (100, 100, 200))
-            screen.blit(text,(550,500)) 
+            screen.blit(text,(550,450)) 
             entered_text = []
         if wrong:
             text = font.render("Wrong!", 1, (100, 100, 200))
-            screen.blit(text,(550,500))            
+            screen.blit(text,(550,450))            
             entered_text = []
 
         #if key[pygame.K_ESCAPE]:
@@ -450,16 +364,15 @@ def main():
                 if skipbutton.collidepoint(mouse_pos):
                     try:
                         if image_list is not None:
-                            choice=random.choice(image_list)
-                            image_list.remove(choice)
-                            the_word = Word(choice,levelread)
+                            rand = random.choice(image_list)
+                            image_list.remove(rand)
+                            the_word = Word(rand)
+                            sname = 'sounds/' + str(rand)
+                            sound  = pygame.mixer.Sound(sname)
+                            sound.play()
                     except:
                         print('CATCHING EMPTY LIST')
-                        if levelread==3:
-                            div=5
-                        else:
-                            div=10
-                        levelscore/=div
+                        levelscore/=11
                         text = "All Questions Over :("
                         st= font.render(text, 1, (255, 10, 10))
                         screen.blit(st, (300, 100))
@@ -467,6 +380,11 @@ def main():
                         time.sleep(2)
                         exit()
 
+                    ##
+                    
+
+        
+            
         #### Render typed letters on screen ####
         try:
             for letter in entered_text:                                          
@@ -476,7 +394,7 @@ def main():
 
                     correct_letter = font.render(letter, 1, (255, 10, 10))
                     letter_size = font.size(letter)                        
-                    screen.blit(correct_letter, [letter_dict.get(cursor)[0], 400])             
+                    screen.blit(correct_letter, [letter_dict.get(cursor)[0], 380])             
                     cursor += 1
         except:
             print("Exception")
