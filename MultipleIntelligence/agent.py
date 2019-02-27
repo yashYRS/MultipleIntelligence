@@ -191,4 +191,4 @@ def start_search(filename) :
 	return ## return implies exit 
 
 
-start_search("game_details.xml")
+start_search(filename)
