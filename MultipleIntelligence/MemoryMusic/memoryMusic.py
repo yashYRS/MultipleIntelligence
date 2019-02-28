@@ -50,6 +50,7 @@ class MyGame(arcade.Window):
 		self.tiles_in_row = None 
 		self.opened = 0 
 		self.sound_of_first = -1
+		self.sound_id_playing = -1 
 
 		# individual sprites 
 		self.temp_sprite_list = None 
@@ -209,10 +210,13 @@ class MyGame(arcade.Window):
 				self.opened = self.opened + 1 
 				soundID = self.map_sounds[ID]
 				try:
+					tempVar = 0 
+					while tempVar < 1000000 : 
+						tempVar = tempVar + 1 
 					arcade.play_sound(self.object_sounds[soundID])
-					time.sleep(0.1)
-				except Exception as e:
-					pass 
+				except Exception as e:	
+					pass
+				self.sound_id_playing = soundID 
 				if self.opened == 2 : 
 					if soundID == self.sound_of_first and not ID==self.first_cube_id :  ## no match 
 						cube.kill() 
