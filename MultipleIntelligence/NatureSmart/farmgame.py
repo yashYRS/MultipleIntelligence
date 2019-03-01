@@ -2,6 +2,7 @@ import random
 import arcade
 import time
 
+time_limit = 3 
 SPRITE_SCALING_PLAYER = 0.6
 SPRITE_SCALING_DEAD_GRASS = 0.3
 SPRITE_SCALING_WASTE_HARM = 0.15
@@ -141,9 +142,13 @@ class MyGame(arcade.Window):
         self.static_objects_list.draw() 
         # Render the text
         arcade.draw_text(f"Time Remaining: {90 - int(time.time() - self.initialTime)}", 10, 40, arcade.color.WHITE, 14)
-        if 90 - int(time.time() - self.initialTime) < 1 : 
-            print(self.score/100)
-            exit(0)
+        if time_limit - int(time.time() - self.initialTime) < 1 : 
+            f = open('score.txt','w')
+            f.write(str(self.score/100))
+            f.close()
+
+            arcade.close_window()
+
             #self.curr_state = "GameOver
             
     def draw_end_screen(self):
@@ -335,7 +340,12 @@ class MyGame(arcade.Window):
 def main():
     window = MyGame()
     window.setup()
-    arcade.run()
+    try:
+        arcade.run() 
+    except Exception as e:
+        f = open("score.txt" , "r")
+        score = f.read()
+        print(score)
 
 
 if __name__ == "__main__":
