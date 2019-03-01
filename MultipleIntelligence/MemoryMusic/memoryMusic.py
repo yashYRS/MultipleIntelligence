@@ -155,8 +155,14 @@ class MyGame(arcade.Window):
 		curr_time = 50 - int(time.time() - self.initialTime)
 		if curr_time < 1 or self.score == self.normalize : 
 			self.score = ((50 - curr_time)/50)*0.3 + (self.score*0.7)/self.normalize
-			print(self.score)
-			exit(0)
+			
+			f = open('score.txt','w')
+			f.write(str(self.score/100))
+			f.close()
+			arcade.close_window()
+
+			
+
 			#self.curr_state = "GameOver
 
 
@@ -243,6 +249,14 @@ def main():
 	window = MyGame()
 	window.setup(level)
 	arcade.run()
+	score = 0 
+	try:
+		arcade.run() 
+	except Exception as e:
+		f = open("score.txt" , "r")
+		score = f.read()
+	return score 
+
 
 
 if __name__ == "__main__":

@@ -340,12 +340,13 @@ class MyGame(arcade.Window):
 def main():
     window = MyGame()
     window.setup()
+    score = 0 
     try:
         arcade.run() 
     except Exception as e:
         f = open("score.txt" , "r")
         score = f.read()
-        print(score)
+    return score 
 
 
 if __name__ == "__main__":
