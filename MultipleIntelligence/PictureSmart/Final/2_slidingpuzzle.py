@@ -18,11 +18,13 @@ Green = (0, 255, 0)
 Blue = (0, 0, 255)
 BLACK = (0, 0, 0)
 FPS = 40
-Num_Random = 90
+Num_Random = 60
 gscore = 0.25
 time = 0 
 milli = 0
 seconds =0 
+flag =0
+check=1
 start_ticks=pygame.time.get_ticks()
 
 #def load():
@@ -43,8 +45,8 @@ start_ticks=pygame.time.get_ticks()
 
 # exit
 def Stop():
-	#save(board)
-	#print (seconds)
+#save(board)
+#print (seconds)
 	pygame.time.wait(500)
 	pygame.display.quit()
 	pygame.quit()
@@ -137,6 +139,7 @@ def Show_End_Interface(Demo, width, height, flag,gscore):
 	pygame.display.update() #If no argument is passed it updates the entire Surface area
 	pygame.time.wait(500) #pause
 	print(round(gscore,2))
+	check = 0
 	Stop()
 	#while True:
 	#	for event in pygame.event.get():
@@ -235,14 +238,14 @@ def main(filepath):
 		gameBoard, blankCell = CreateBoard(row, columns, Num_Cell)
 		if not isOver(gameBoard, blankCell, size):
 			break
-	while True:
+	while True and check:
 		seconds=(pygame.time.get_ticks()-start_ticks)/1000
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				Stop()
 			if over:
-				seconds = 150 - seconds
-				gscore = (10 + (seconds/15))/20
+				seconds = 120 - seconds
+				gscore = (10 + (seconds/12))/20
 				Show_End_Interface(Demo, ImgRect.width, ImgRect.height,0,gscore)
 			# Keyboard operation
 			if event.type == KEYDOWN:
@@ -268,7 +271,8 @@ def main(filepath):
 		if isOver(gameBoard, blankCell, size):
 			gameBoard[blankCell] = Num_Cell-1
 			over = True
-		Demo.fill(Background_Color)
+		if check:	
+			Demo.fill(Background_Color)
 		for i in range(Num_Cell):
 			if gameBoard[i] == -1:
 				continue
@@ -285,7 +289,7 @@ def main(filepath):
 			pygame.draw.line(Demo, BLACK, (0, i*cellHeight), (ImgRect.width, i*cellHeight))
 		pygame.display.update()
 		#mainClock.tick(FPS)  # This can be used to help limit the runtime speed of a game.
-		if seconds > 150: 
+		if seconds > 120: 
 				Show_End_Interface(Demo, ImgRect.width, ImgRect.height,1,gscore)
 
 
