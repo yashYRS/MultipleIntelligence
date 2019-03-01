@@ -23,7 +23,8 @@ gscore = 0.25
 time = 0 
 milli = 0
 seconds =0 
-flag = 1
+flag =0
+check=1
 start_ticks=pygame.time.get_ticks()
 
 #def load():
@@ -44,8 +45,8 @@ start_ticks=pygame.time.get_ticks()
 
 # exit
 def Stop():
-	#save(board)
-	#print (seconds)
+#save(board)
+#print (seconds)
 	pygame.time.wait(500)
 	pygame.display.quit()
 	pygame.quit()
@@ -138,7 +139,7 @@ def Show_End_Interface(Demo, width, height, flag,gscore):
 	pygame.display.update() #If no argument is passed it updates the entire Surface area
 	pygame.time.wait(500) #pause
 	print(round(gscore,2))
-	flag=0
+	check = 0
 	Stop()
 	#while True:
 	#	for event in pygame.event.get():
@@ -155,7 +156,7 @@ def Show_Start_Interface(Demo, width, height ,img , imgrect):
 	cfont = pygame.font.Font('./font/Roboto-Black.ttf', width//40)
 	title = tfont.render('Sliding Puzzle', True, White)
 	content1 = cfont.render('Slide the pieces to establish the configuration of the image shown', True, Yellow)
-	content2 =cfont.render('under 120 seconds', True, Yellow)
+	content2 =cfont.render('under 150 seconds', True, Yellow)
 	content3 = cfont.render('Use the arrow keys or the mouse to play', True, Yellow)
 	content4 = cfont.render('        Press enter to start the game', True, Red)
 	trect = title.get_rect()
@@ -237,7 +238,7 @@ def main(filepath):
 		gameBoard, blankCell = CreateBoard(row, columns, Num_Cell)
 		if not isOver(gameBoard, blankCell, size):
 			break
-	while True and flag:
+	while True and check:
 		seconds=(pygame.time.get_ticks()-start_ticks)/1000
 		for event in pygame.event.get():
 			if event.type == QUIT:
@@ -270,7 +271,8 @@ def main(filepath):
 		if isOver(gameBoard, blankCell, size):
 			gameBoard[blankCell] = Num_Cell-1
 			over = True
-		Demo.fill(Background_Color)
+		if check:	
+			Demo.fill(Background_Color)
 		for i in range(Num_Cell):
 			if gameBoard[i] == -1:
 				continue
