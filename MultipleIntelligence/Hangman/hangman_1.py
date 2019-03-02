@@ -46,7 +46,7 @@ guess = ''
 missedLetters = ''
 correctLetters = ''
 curser = [240, 190, 50, 50]
-option = ['New Game','Rules: Guess the word correctly You Have 60seconds.','The category word belongs to is displayed in top right area.','You get 8 tries.','Have fun!',0,'',0]
+option = ['Start Game','Rules: Guess the word correctly You Have 60seconds.','The category word belongs to is displayed in top right area.','You get 8 tries.','Have fun!',0,'',0]
 #option = [0,'New Game']
 score = [0,0,'',0,0]
 gameIsDone = False
@@ -605,44 +605,11 @@ def menu():
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
-                    # change the keyboard variables
-                    if event.key == K_UP or event.key == ord('w'):#Curser Up
-                        moveDown = False
-                        moveUp = True
-                    if event.key == K_DOWN or event.key == ord('s'):#Curser Down
-                        moveUp = False
-                        moveDown = True
-                    if event.key == K_9:#Show FPS
-                        if show[0] == 1:
-                            show[0] = 0
-                        else:
-                            show[0] = 1
-                    if event.key == K_8:#Show Gradiated Sky
-                        if show[2] == True:
-                            show[2] = False
-                        else:
-                            show[2] = True
-                    if event.key == K_7:#Show Detailed Background
-                        if show[3] == True:
-                            show[3] = False
-                        else:
-                            show[3] = True
-                    if event.key == K_EQUALS:#Increase max FPS
-                        show[1] += 5
-                    if event.key == K_MINUS:#Decrease max FPS
-                        show[1] -= 5
-                    if event.key == K_RETURN or event.key == K_SPACE:#Select current option
-                        if curser[1]==190:
-                            option[5]=1
-                            secretWord,secretKey = getNextRound(words,levelread)
-            if event.type == KEYUP:
-                    if event.key == K_ESCAPE:
-                        pygame.quit()
-                        sys.exit()
-                    if event.key == K_UP or event.key == ord('w'):
-                        moveUp = False
-                    if event.key == K_DOWN or event.key == ord('s'):
-                        moveDown = False
+                if event.key == K_RETURN or event.key == K_SPACE:#Select current option
+                    if curser[1]==190:
+                        option[5]=1
+                        secretWord,secretKey = getNextRound(words,levelread)
+
 
         # move the Curser
         if moveDown and curser[1] < 300:
