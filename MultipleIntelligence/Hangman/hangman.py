@@ -4,7 +4,7 @@ import random
 import pygame, sys, time
 from pygame.locals import *
 
-levelread = 2
+levelread = 1
 levelscore=0
 pygame.init()
 mainClock = pygame.time.Clock()
@@ -29,8 +29,11 @@ GREY = (74,112,139)
 LGREY = (0,104,139)
 GREEN = (0,139,0)
 
-def getFinalScore(score,time):
-    return score*10/(time*1.75)
+def getFinalScore(score,time): ## if it's 1 
+    if score == 0 : 
+        return 0.3*(time)/60 
+    else : 
+        return 0.8 + 0.2*(60 - time)/60 
 
 correctSound = pygame.mixer.Sound('sound/correct.wav')
 hahahaSound = pygame.mixer.Sound('sound/hahaha.wav')
@@ -208,7 +211,7 @@ def background():
         pygame.draw.circle(windowSurface, GREEN, (banner[5]+300,500),240,0)
         pygame.draw.circle(windowSurface, GREEN, (banner[5]+600,480),240,0)
         pygame.draw.circle(windowSurface, GREEN, (banner[5]+900,540),240,0)
-        time_string = "Timer: {} ".format(str(int(time.time() - startTime)))
+        time_string = "Timer: {} ".format(str(60 - int(time.time() - startTime)))
         text = FlashFont.render(time_string, True, BLACK)
         windowSurface.blit(text, (900,40))
 
@@ -734,7 +737,7 @@ while True:
         text = FlashFont.render("Game Over!", True, BLACK)
         windowSurface.blit(text, (900,100))
         time.sleep(5)
-        levelscore=getFinalScore(0,(int(time.time() - startTime)))
+        levelscore=getFinalScore(0,(int(time.time() - startTime))) ####### ####### ####### ####### ####### ####### ####### ####### #######  TIME OVER CASE 
         exit()
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -769,7 +772,7 @@ while True:
                     score[2]='You Got It!'
 ##                    noooSound.play()
                     gameover(h)
-                    levelscore=getFinalScore(1,(int(time.time() - startTime)))
+                    levelscore=getFinalScore(1,(int(time.time() - startTime))) ####### ####### ####### ####### ####### ####### ####### RIGHT GUESS 
                     print(levelscore)
                     exit()
             else:
@@ -798,13 +801,13 @@ while True:
                             displayBoard(s, missedLetters, correctLetters, secretWord)
                             gameover(p)
                             mwahahaSound.play()
-                            infoDisplayText = ['Hahaha ','You Lost!','You had reached round ',str(roundNo+1),'The word was ',secretWord.title()]
+                            infoDisplayText = ['Hahaha ','You Lost!','You had reached round ',str(roundNo+1),'The word was ',secretWord.title()] 
                             infoDisplay(h,int(show[1]*4.5))
                             infoDisplayText = ['You can beat anything,Kid','','You Got This','','Better luck next time!','']
                             infoDisplay(p,int(show[1]*4.5))
                             gameIsDone = True
                             score[1]+=1
-                            levelscore=getFinalScore(0,(int(time.time() - startTime)))
+                            levelscore=getFinalScore(0,(int(time.time() - startTime)))  ####### ####### ####### ####### ####### ####### ####### ####### ####### WRONG GUESS 
                             print(levelscore)
                             exit()
 
