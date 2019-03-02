@@ -6,10 +6,10 @@ from colors import Color
 class Button(TextBlock):
 
     def __init__(self, x, y, w, h, text, onclick_func):
-        super().__init__(x, y, w, h, text)
+        super().__init__(x, y, w, h, text, isquestion = False)
         self.state = 'normal'
         self.onclick_func = onclick_func
-        self.HOVERED_BACK_COLOR = Color.GREEN
+        self.HOVERED_BACK_COLOR = Color.BLUE
         self.PRESSED_BACK_COLOR = Color.WHITE
 
     def update(self):

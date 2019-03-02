@@ -6,3 +6,4 @@ class Color:
     WHITE = (255, 255, 255)
     BLUEVIOLET = (138, 43, 226)
     CADETBLUE = (95, 158, 160)
+	
