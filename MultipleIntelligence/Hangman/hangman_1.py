@@ -4,7 +4,7 @@ import random
 import pygame, sys, time
 from pygame.locals import *
 
-levelread = 2
+levelread = 1
 levelscore=0
 pygame.init()
 mainClock = pygame.time.Clock()
@@ -29,8 +29,11 @@ GREY = (74,112,139)
 LGREY = (0,104,139)
 GREEN = (0,139,0)
 
-def getFinalScore(score,time):
-    return score*10/(time*1.75)
+def getFinalScore(score,time): ## if it's 1 
+    if score == 0 : 
+        return 0.3*(time)/60 
+    else : 
+        return 0.8 + 0.2*(60 - time)/60 
 
 correctSound = pygame.mixer.Sound('sound/correct.wav')
 hahahaSound = pygame.mixer.Sound('sound/hahaha.wav')
@@ -43,7 +46,7 @@ guess = ''
 missedLetters = ''
 correctLetters = ''
 curser = [240, 190, 50, 50]
-option = ['New Game','Rules: Guess the word correctly You Have 60seconds.','The category word belongs to is displayed in top right area.','You get 8 tries.','Have fun!',0,'',0]
+option = ['Start Game','Rules: Guess the word correctly You Have 60seconds.','The category word belongs to is displayed in top right area.','You get 8 tries.','Have fun!',0,'',0]
 #option = [0,'New Game']
 score = [0,0,'',0,0]
 gameIsDone = False
@@ -208,7 +211,7 @@ def background():
         pygame.draw.circle(windowSurface, GREEN, (banner[5]+300,500),240,0)
         pygame.draw.circle(windowSurface, GREEN, (banner[5]+600,480),240,0)
         pygame.draw.circle(windowSurface, GREEN, (banner[5]+900,540),240,0)
-        time_string = "Timer: {} ".format(str(int(time.time() - startTime)))
+        time_string = "Timer: {} ".format(str(60 - int(time.time() - startTime)))
         text = FlashFont.render(time_string, True, BLACK)
         windowSurface.blit(text, (900,40))
 
@@ -602,44 +605,11 @@ def menu():
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
-                    # change the keyboard variables
-                    if event.key == K_UP or event.key == ord('w'):#Curser Up
-                        moveDown = False
-                        moveUp = True
-                    if event.key == K_DOWN or event.key == ord('s'):#Curser Down
-                        moveUp = False
-                        moveDown = True
-                    if event.key == K_9:#Show FPS
-                        if show[0] == 1:
-                            show[0] = 0
-                        else:
-                            show[0] = 1
-                    if event.key == K_8:#Show Gradiated Sky
-                        if show[2] == True:
-                            show[2] = False
-                        else:
-                            show[2] = True
-                    if event.key == K_7:#Show Detailed Background
-                        if show[3] == True:
-                            show[3] = False
-                        else:
-                            show[3] = True
-                    if event.key == K_EQUALS:#Increase max FPS
-                        show[1] += 5
-                    if event.key == K_MINUS:#Decrease max FPS
-                        show[1] -= 5
-                    if event.key == K_RETURN or event.key == K_SPACE:#Select current option
-                        if curser[1]==190:
-                            option[5]=1
-                            secretWord,secretKey = getNextRound(words,levelread)
-            if event.type == KEYUP:
-                    if event.key == K_ESCAPE:
-                        pygame.quit()
-                        sys.exit()
-                    if event.key == K_UP or event.key == ord('w'):
-                        moveUp = False
-                    if event.key == K_DOWN or event.key == ord('s'):
-                        moveDown = False
+                if event.key == K_RETURN or event.key == K_SPACE:#Select current option
+                    if curser[1]==190:
+                        option[5]=1
+                        secretWord,secretKey = getNextRound(words,levelread)
+
 
         # move the Curser
         if moveDown and curser[1] < 300:
@@ -734,7 +704,7 @@ while True:
         text = FlashFont.render("Game Over!", True, BLACK)
         windowSurface.blit(text, (900,100))
         time.sleep(5)
-        levelscore=getFinalScore(0,(int(time.time() - startTime)))
+        levelscore=getFinalScore(0,(int(time.time() - startTime))) ####### ####### ####### ####### ####### ####### ####### ####### #######  TIME OVER CASE 
         exit()
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -769,7 +739,7 @@ while True:
                     score[2]='You Got It!'
 ##                    noooSound.play()
                     gameover(h)
-                    levelscore=getFinalScore(1,(int(time.time() - startTime)))
+                    levelscore=getFinalScore(1,(int(time.time() - startTime))) ####### ####### ####### ####### ####### ####### ####### RIGHT GUESS 
                     print(levelscore)
                     exit()
             else:
@@ -798,13 +768,13 @@ while True:
                             displayBoard(s, missedLetters, correctLetters, secretWord)
                             gameover(p)
                             mwahahaSound.play()
-                            infoDisplayText = ['Hahaha ','You Lost!','You had reached round ',str(roundNo+1),'The word was ',secretWord.title()]
+                            infoDisplayText = ['Hahaha ','You Lost!','You had reached round ',str(roundNo+1),'The word was ',secretWord.title()] 
                             infoDisplay(h,int(show[1]*4.5))
                             infoDisplayText = ['You can beat anything,Kid','','You Got This','','Better luck next time!','']
                             infoDisplay(p,int(show[1]*4.5))
                             gameIsDone = True
                             score[1]+=1
-                            levelscore=getFinalScore(0,(int(time.time() - startTime)))
+                            levelscore=getFinalScore(0,(int(time.time() - startTime)))  ####### ####### ####### ####### ####### ####### ####### ####### ####### WRONG GUESS 
                             print(levelscore)
                             exit()
 
