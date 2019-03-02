@@ -1,0 +1,17 @@
+.playerButtons{
+    padding-top: 5%;
+    padding-left: 30%;
+    padding-right: 30%;
+}
+.button-spacing{
+    margin: 10px;
+}
+
+.logo {
+    align-items: center;
+    padding-top: 15%;
+}
+.btn  {
+    font-family: 'Amatic SC', cursive, bold;
+    font-size: 30px;
+}
