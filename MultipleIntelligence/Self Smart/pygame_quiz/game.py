@@ -71,17 +71,14 @@ class Game:
         self.answer_objects.append(TextBlock(x, y, w, h, text, True))
 
 
-    def addAnswerButton(self, x, y, w, h, text, onclick_func, is_it_correct):
-        button1 = AnswerButton(x, y, w, h, text, onclick_func, is_it_correct)
+    def addAnswerButton(self, x, y, w, h, text, onclick_func, scores_weight):
+        button1 = AnswerButton(x, y, w, h, text, onclick_func, scores_weight)
         self.answer_objects.append(button1)
         self.mouse_handlers.append(button1.handleMouseEvent)
 
     def checkAnswer(self, obj):
-        if obj.is_it_correct_answer is True:
-            self.score += 1
-
-
-        #self.score_text_block.text = "Score: {0}/{1}".format(str(self.score), str(len(self.questions)))
+        self.score = self.score + obj.score_weight*0.5*0.25 ## 4 question, total 3 score possible 
+        print(self.score)
         self.nextQuestion()
 
 
@@ -105,26 +102,20 @@ class Game:
         del self.answer_objects[:]
         del self.mouse_handlers[:]
         self.current_question_i += 1
-        if self.current_question_i >= 4*(self.level):
+        if self.current_question_i >= 4*(self.level) :
             self.gameOver()
-        else:
+        else :
             self.current_question = self.questions[self.current_question_i]
             self.addTextBlock((screen_w-1250)/2, 100, 1250, self.question_height,
                               self.current_question.question_text,True)
 
             answers = self.current_question.answers
 
-            i = 0
+            answer_weight = self.current_question.correct_answer
 
-            for item in answers:
-                if self.current_question.correct_answer == i:
-                    is_it_correct = True
-                else:
-                    is_it_correct = False
-
-                self.addAnswerButton((screen_w-1250)/2, self.question_height+(screen_h-self.question_height)/4+i*(self.answer_height+30),
-                                     1250, self.answer_height, item, self.checkAnswer, is_it_correct)
-                i += 1
+            for index in range(len(answers)) :
+                self.addAnswerButton( (screen_w-1250)/2, self.question_height+(screen_h-self.question_height)/4+index*(self.answer_height+30),
+                                    1250, self.answer_height, answers[index], self.checkAnswer, answer_weight[index] )
 
     def run(self):
         while True:
@@ -138,14 +129,17 @@ class Game:
  
 
 
-def main(level) : 
-    
+def start_game(level) : 
+    score = 0 
     try:
-        Game1 = Game(3)
+        Game1 = Game(level)
         Game1.run()
     except ZeroDivisionError as e:
         f = open('score.txt' , 'r')
         score = float(f.read())
         f.close()
+        if score > 1 : 
+            return 0.95 
+    return score 
 
 
