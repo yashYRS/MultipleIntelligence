@@ -4,6 +4,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 import credentials as CD 
+import matplotlib.pyplot as plt 
 
 def get_text(curr_score) : 
 	body = """Respected Sir/Madam, 
@@ -26,6 +27,22 @@ Ministry of Culture
 	return body 
 
 
+
+def save_report(Mstate , Cscore , Cstate) : 
+	labels = [] 
+	scores = []
+	for key in Cscore : 
+		labels.append(key)
+		scores.append(100*Cscore[key]/Mstate[key])
+	print(Cscore)
+	print(Cstate)
+	y_pos = np.arange(len(labels))
+	plt.bar(y_pos, scores, align='center', alpha=0.5)
+	plt.xticks(y_pos, labels)
+	plt.ylabel('Score(% wise) per module ')
+	plt.xlabel('Types of Modules')
+
+	plt.savefig('report.png')
 
 
 
