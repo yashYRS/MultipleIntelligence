@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #000000;
+            overflow: hidden;
+		}
+        #canvasArea {
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+        }
+
+        
+	</style>
+    <!-- Libs and GDJS core files : -->
+		<script src="../static/staticN1/libs/jshashtable.js"></script>
+	<script src="../static/staticN1/gd.js"></script>
+	<script src="../static/staticN1/gd-splash-image.js"></script>
+	<script src="../static/staticN1/libs/hshg.js"></script>
+	<script src="../static/staticN1/libs/rbush.js"></script>
+	<script src="../static/staticN1/inputmanager.js"></script>
+	<script src="../static/staticN1/timemanager.js"></script>
+	<script src="../static/staticN1/runtimeobject.js"></script>
+	<script src="../static/staticN1/profiler.js"></script>
+	<script src="../static/staticN1/runtimescene.js"></script>
+	<script src="../static/staticN1/scenestack.js"></script>
+	<script src="../static/staticN1/polygon.js"></script>
+	<script src="../static/staticN1/force.js"></script>
+	<script src="../static/staticN1/layer.js"></script>
+	<script src="../static/staticN1/timer.js"></script>
+	<script src="../static/staticN1/runtimegame.js"></script>
+	<script src="../static/staticN1/variable.js"></script>
+	<script src="../static/staticN1/variablescontainer.js"></script>
+	<script src="../static/staticN1/oncetriggers.js"></script>
+	<script src="../static/staticN1/runtimebehavior.js"></script>
+	<script src="../static/staticN1/spriteruntimeobject.js"></script>
+	<script src="../static/staticN1/events-tools/commontools.js"></script>
+	<script src="../static/staticN1/events-tools/runtimescenetools.js"></script>
+	<script src="../static/staticN1/events-tools/inputtools.js"></script>
+	<script src="../static/staticN1/events-tools/objecttools.js"></script>
+	<script src="../static/staticN1/events-tools/cameratools.js"></script>
+	<script src="../static/staticN1/events-tools/soundtools.js"></script>
+	<script src="../static/staticN1/events-tools/storagetools.js"></script>
+	<script src="../static/staticN1/events-tools/stringtools.js"></script>
+	<script src="../static/staticN1/events-tools/windowtools.js"></script>
+	<script src="../static/staticN1/events-tools/networktools.js"></script>
+	<script src="../static/staticN1/pixi-renderers/pixi.js"></script>
+	<script src="../static/staticN1/pixi-renderers/pixi-filters-tools.js"></script>
+	<script src="../static/staticN1/pixi-renderers/runtimegame-pixi-renderer.js"></script>
+	<script src="../static/staticN1/pixi-renderers/runtimescene-pixi-renderer.js"></script>
+	<script src="../static/staticN1/pixi-renderers/layer-pixi-renderer.js"></script>
+	<script src="../static/staticN1/pixi-renderers/pixi-image-manager.js"></script>
+	<script src="../static/staticN1/pixi-renderers/spriteruntimeobject-pixi-renderer.js"></script>
+	<script src="../static/staticN1/pixi-renderers/loadingscreen-pixi-renderer.js"></script>
+	<script src="../static/staticN1/howler-sound-manager/howler.min.js"></script>
+	<script src="../static/staticN1/howler-sound-manager/howler-sound-manager.js"></script>
+	<script src="../static/staticN1/fontfaceobserver-font-manager/fontfaceobserver.js"></script>
+	<script src="../static/staticN1/fontfaceobserver-font-manager/fontfaceobserver-font-manager.js"></script>
+	<script src="../static/staticN1/Extensions/TextObject/textruntimeobject-pixi-renderer.js"></script>
+	<script src="../static/staticN1/Extensions/TextObject/textruntimeobject.js"></script>
+	<script src="../static/staticN1/code0.js"></script>
+	<script src="../static/staticN1/Extensions/TiledSpriteObject/tiledspriteruntimeobject-pixi-renderer.js"></script>
+	<script src="../static/staticN1/Extensions/TiledSpriteObject/tiledspriteruntimeobject.js"></script>
+	<script src="../static/staticN1/Extensions/TopDownMovementBehavior/topdownmovementruntimebehavior.js"></script>
+	<script src="../static/staticN1/code1.js"></script>
+	<script src="../static/staticN1/code2.js"></script>
+	<script src="../static/staticN1/data.js"></script>
+	<script src="../static/staticN1/jquery.min.js"></script>
+
+
+</head>
+<body>
+
+    
+	<script>
+
+    (function() {
+        //Initialization
+        gdjs.registerObjects();
+        gdjs.registerBehaviors();
+        gdjs.registerGlobalCallbacks();
+
+        var game = new gdjs.RuntimeGame(gdjs.projectData, {});
+
+        //Create a renderer
+        game.getRenderer().createStandardCanvas(document.body);
+
+        //Bind keyboards/mouse/touch events
+        game.getRenderer().bindStandardEvents(game.getInputManager(), window, document);
+
+        //Load all assets and start the game
+        game.loadAllAssets(function() {
+            game.startGameLoop();
+        });
+    })();
+
+	</script>
+</body>
+</html>
