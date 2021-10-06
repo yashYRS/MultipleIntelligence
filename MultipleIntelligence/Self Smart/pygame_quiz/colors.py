@@ -1,9 +1,0 @@
-class Color:
-    RED = (255, 0, 0)
-    GREEN = (0, 255, 0)
-    BLUE = (0, 0, 255)
-    BLACK = (0, 0, 0)
-    WHITE = (255, 255, 255)
-    BLUEVIOLET = (138, 43, 226)
-    CADETBLUE = (95, 158, 160)
-	
