@@ -10,8 +10,8 @@ import sys
 from musicfaces import Face
 import time
 global levelscore
-levelscore=0
 global timeStart
+levelscore = 0
 timeStart = time.time()+5
 
 
