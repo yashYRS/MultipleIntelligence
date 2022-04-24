@@ -243,7 +243,7 @@ def start_game():
     # Create a New Session with user and the session
     # Create a Agent
     # Start with the first screen
-    return render_template('FirstScreen.html', game=game, l=lvalue)
+    return render_template('start_video.html')
 
 
 # #### --------------------- LOG-IN & REGISTER ---------------------- #####
