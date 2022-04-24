@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+    Welcome {{name}}, Here's a look at your high scores
+</h1>
+    <div class="columns is-multiline">
+    {% for category in game_category %}
+        <div class="column is-one-quarter">
+            <div class="card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-48x48">
+                        <img src={{category['photo']}} alt="Placeholder image">
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">{{category['category']}}</p>
+                    {% for game in category['game_list']%}
+                        <li>{{game}}</li>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}
