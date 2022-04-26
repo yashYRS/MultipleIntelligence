@@ -27,33 +27,33 @@ SCALE_WAVES = 0.2
 # # image source, scale, angle of rendering
 
 DATA = [
-    [arcade.Sprite('data/carskid.jpeg', SCALE_CAR),
-     arcade.load_sound('data/carskid.mp3'),
-     arcade.Sprite('data/carskid.jpeg', SCALE_CAR)],
-    [arcade.Sprite('data/coins.jpeg', SCALE_COIN),
-     arcade.load_sound('data/coins.wav'),
-     arcade.Sprite('data/coins.jpeg', SCALE_COIN)],
-    [arcade.Sprite('data/doorbell.jpg', SCALE_BELL),
-     arcade.load_sound('data/doorbell.mp3'),
-     arcade.Sprite('data/doorbell.jpg', SCALE_BELL)],
-    [arcade.Sprite('data/staple.jpg', SCALE_STAPLE),
-     arcade.load_sound('data/staple.mp3'),
-     arcade.Sprite('data/staple.jpg', SCALE_STAPLE)],
-    [arcade.Sprite('data/hammer.jpeg', SCALE_HAMMER),
-     arcade.load_sound('data/hammer.mp3'),
-     arcade.Sprite('data/hammer.jpeg', SCALE_HAMMER)],
-    [arcade.Sprite('data/icecubes.jpeg', SCALE_CUBE),
-     arcade.load_sound('data/icecubes.wav'),
-     arcade.Sprite('data/icecubes.jpeg', SCALE_CUBE)],
-    [arcade.Sprite('data/machinegun.jpeg', SCALE_GUN),
-     arcade.load_sound('data/machinegun.wav'),
-     arcade.Sprite('data/machinegun.jpeg', SCALE_GUN)],
-    [arcade.Sprite('data/robot.jpeg', SCALE_ROBOT),
-     arcade.load_sound('data/robot.mp3'),
-     arcade.Sprite('data/robot.jpeg', SCALE_ROBOT)],
-    [arcade.Sprite('data/waves.jpeg', SCALE_WAVES),
-     arcade.load_sound('data/waves.mp3'),
-     arcade.Sprite('data/waves.jpeg', SCALE_WAVES)]
+    [arcade.Sprite('Music/MemoryMusic/data/carskid.jpeg', SCALE_CAR),
+     arcade.load_sound('Music/MemoryMusic/data/carskid.mp3'),
+     arcade.Sprite('Music/MemoryMusic/data/carskid.jpeg', SCALE_CAR)],
+    [arcade.Sprite('Music/MemoryMusic/data/coins.jpeg', SCALE_COIN),
+     arcade.load_sound('Music/MemoryMusic/data/coins.wav'),
+     arcade.Sprite('Music/MemoryMusic/data/coins.jpeg', SCALE_COIN)],
+    [arcade.Sprite('Music/MemoryMusic/data/doorbell.jpg', SCALE_BELL),
+     arcade.load_sound('Music/MemoryMusic/data/doorbell.mp3'),
+     arcade.Sprite('Music/MemoryMusic/data/doorbell.jpg', SCALE_BELL)],
+    [arcade.Sprite('Music/MemoryMusic/data/staple.jpg', SCALE_STAPLE),
+     arcade.load_sound('Music/MemoryMusic/data/staple.mp3'),
+     arcade.Sprite('Music/MemoryMusic/data/staple.jpg', SCALE_STAPLE)],
+    [arcade.Sprite('Music/MemoryMusic/data/hammer.jpeg', SCALE_HAMMER),
+     arcade.load_sound('Music/MemoryMusic/data/hammer.mp3'),
+     arcade.Sprite('Music/MemoryMusic/data/hammer.jpeg', SCALE_HAMMER)],
+    [arcade.Sprite('Music/MemoryMusic/data/icecubes.jpeg', SCALE_CUBE),
+     arcade.load_sound('Music/MemoryMusic/data/icecubes.wav'),
+     arcade.Sprite('Music/MemoryMusic/data/icecubes.jpeg', SCALE_CUBE)],
+    [arcade.Sprite('Music/MemoryMusic/data/machinegun.jpeg', SCALE_GUN),
+     arcade.load_sound('Music/MemoryMusic/data/machinegun.wav'),
+     arcade.Sprite('Music/MemoryMusic/data/machinegun.jpeg', SCALE_GUN)],
+    [arcade.Sprite('Music/MemoryMusic/data/robot.jpeg', SCALE_ROBOT),
+     arcade.load_sound('Music/MemoryMusic/data/robot.mp3'),
+     arcade.Sprite('Music/MemoryMusic/data/robot.jpeg', SCALE_ROBOT)],
+    [arcade.Sprite('Music/MemoryMusic/data/waves.jpeg', SCALE_WAVES),
+     arcade.load_sound('Music/MemoryMusic/data/waves.mp3'),
+     arcade.Sprite('Music/MemoryMusic/data/waves.jpeg', SCALE_WAVES)]
     ]
 
 
@@ -132,7 +132,7 @@ class MyGame(arcade.Window):
 
         for rowID in range(1, self.tiles_in_row + 1):
             for colID in range(1, self.tiles_in_row+2):
-                self.cube_sprite = arcade.Sprite("cube.png", SPRITE_SCALING_CUBE)
+                self.cube_sprite = arcade.Sprite("Music/MemoryMusic/cube.png", SPRITE_SCALING_CUBE)
                 self.cube_sprite.center_x = colID*addX
                 self.cube_sprite.center_y = rowID*addY
                 self.cube_sprites.append(self.cube_sprite)
@@ -212,7 +212,7 @@ class MyGame(arcade.Window):
         """
         Called whenever the mouse button is clicked.
         """
-        temp_spr = arcade.Sprite('temp.jpeg', 0.01)
+        temp_spr = arcade.Sprite('Music/MemoryMusic/temp.jpeg', 0.01)
         temp_spr.center_x = x
         temp_spr.center_y = y
         self.temp_sprite_list.append(temp_spr)
@@ -275,6 +275,17 @@ def main():
         score = f.read()
     return score
 
+
+def start_game(level):
+    window = MyGame()
+    window.setup(level)
+    score = 0
+    try:
+        arcade.run()
+    except Exception as e:
+        f = open("score.txt", "r")
+        score = f.read()
+    return score
 
 if __name__ == "__main__":
     main()

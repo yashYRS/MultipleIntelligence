@@ -109,7 +109,7 @@ def detect_hand(img, hand_pos):
         cv2.imshow('Gesture', img)
         cv2.imshow('Hand', crop_img)
         cv2.imshow('Thresholded', thresh_img)
-    print(count_defects)
+    # print(count_defects)
 
     return count_defects
 

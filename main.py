@@ -16,6 +16,7 @@ from models import User, GameSession, SingleGame
 
 
 from Game import GameAgent
+from professions import category_info
 from __init__ import db, create_app
 
 
@@ -175,11 +176,10 @@ def connect4():
 # #### -------------------- BODY GAMES ---------------------- #####
 @main.route('/spacewars', methods=['GET', 'POST'])
 def spacewars():
-    # TO DO: SPACE WARS CORRECY GAME STYLE
-    from Body.SpaceWar import spacewars1
+    from Body.SpaceWars import space_war
     level = game_agent.curr_level
     if level > 0:
-        final_score = spacewars1.start_game(level)
+        final_score = space_war.start_game(level)
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
         next_scene = 'main.' + next_module
@@ -187,17 +187,16 @@ def spacewars():
                                game_text=next_game_text,
                                next_scene=next_scene)
     else:
-        _ = spacewars1.start_game(1)
+        _ = space_war.start_game(1)
         return redirect(url_for('main.gamelist'))
 
 
 @main.route('/flappybird', methods=['GET', 'POST'])
 def flappybird():
-    # ## TO DO: FLAPPY BIRD CORRECT GAME ###
-    from Body.FlappyBird import game
+    from Body.FlappyBird import final
     level = game_agent.curr_level
     if level > 0:
-        final_score = game.start_game()
+        final_score = final.start_game()
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
         next_scene = 'main.' + next_module
@@ -205,7 +204,7 @@ def flappybird():
                                game_text=next_game_text,
                                next_scene=next_scene)
     else:
-        _ = game.start_game()
+        _ = final.start_game()
         return redirect(url_for('main.gamelist'))
 
 # #### -------------------- NATURE GAMES ---------------------- #####
@@ -231,7 +230,6 @@ def natureqna():
 @main.route('/natureexplore', methods=['GET', 'POST'])
 def natureexplore():
     from Nature.Discover import farmgame
-    # TO DO: CHECK RETURN TYPE OF THIS GAME
     level = game_agent.curr_level
     if level > 0:
         final_score = farmgame.start_game()
@@ -293,8 +291,14 @@ def first_game():
 @login_required
 def end_game():
     curr_session = game_agent.session_id
-    scores, professions = game_agent.give_final_verdict()
-    # Send email with profession list
+    scores = game_agent.give_final_verdict()
+
+    for category, score in scores.items():
+        new_game = SingleGame(category_name=category, score=score, session_id=curr_session)
+        db.session.add(new_game)
+
+    # add the new user to the database
+    db.session.commit()
     # Create games objects in database, and store the final score for games
     final_url = "main.profile"
     return render_template('end_video.html', initial_url=final_url)
@@ -342,54 +346,30 @@ def transition(game_text="default text", next_scene="gamelist"):
 @main.route('/profile')
 @login_required
 def profile():
-    category_info = [
-        {
-            'category': 'Word',
-            'photo': '/static/images/Word.jpeg',
-            'game_list': ['Bulls And Cows', 'Hangman']
-        },
-        {
-            'category': 'Logic',
-            'photo': '/static/images/Logic.jpeg',
-            'game_list': ['Connect4']
-        },
-        {
-            'category': 'Self',
-            'photo': '/static/images/Self.jpeg',
-            'game_list': ['Self Quiz']
-        },
-        {
-            'category': 'People',
-            'photo': '/static/images/People.jpeg',
-            'game_list': ['People Quiz']
-        },
-        {
-            'category': 'Picture',
-            'photo': '/static/images/Picture.jpeg',
-            'game_list': ['Sliding Puzzle']
-        },
-        {
-            'category': 'Nature',
-            'photo': '/static/images/Nature.jpeg',
-            'game_list': ['Nature Explore', 'Nature Q&A']
-        },
-        {
-            'category': 'Music',
-            'photo': '/static/images/Music.jpeg',
-            'game_list': ['Memory Music']
-        },
-        {
-            'category': 'Body',
-            'photo': '/static/images/Body.png',
-            'game_list': ['Flappy Bird', 'Space Wars']
-        },
-    ]
+    max_scores = []
+    for curr_item in category_info:
+        curr_category = curr_item['category']
+        all_games = SingleGame.query.filter_by(category_name=curr_category).all()
+        if len(all_games) == 0:
+            reqd_score = 0
+        else:
+            reqd_score = max([game.score for game in all_games])
+        curr_item['high_score'] = str(round(reqd_score*100, 2)) + " %"
+        max_scores.append(reqd_score)
+    max_score = str(round(max(max_scores), 2)) + " %"
+    print(max_scores, max_score)
+    print([c['high_score'] for c in category_info])
+
     return render_template('profile.html', name=current_user.name,
-                           game_category=category_info)
+                           game_category=category_info, max_score=max_score)
 
 
 @main.route('/gamelist', methods=['GET', 'POST'])
 def gamelist():
+    game_agent.session_id = 1
+    game_agent.get_max_states()
+    game_agent.reset_curr_state()
+    game_agent.curr_level = 0
     return render_template('gamelist.html')
 
 

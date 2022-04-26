@@ -1,8 +1,6 @@
-
 import random
 from collections import defaultdict
 import xml.etree.ElementTree as ET
-import profession
 
 
 class GameAgent():
@@ -254,7 +252,7 @@ class GameAgent():
 
         # Get the category where player has acheived highest scores
         best_category = max(score_percentages, key=score_percentages.get)
-        return score_percentages, profession.get_professions(best_category)
+        return score_percentages
 
 
 if __name__ == '__main__':
@@ -266,7 +264,5 @@ if __name__ == '__main__':
         n, t = ga.get_next_game()
         print("NEXT:", n, "LEVEL", ga.curr_level)
         if n == 'end_game':
-            _, professions = ga.give_final_verdict()
-            print("PROFESSIONS - ", professions)
             break
         ga.update_score(0.7)

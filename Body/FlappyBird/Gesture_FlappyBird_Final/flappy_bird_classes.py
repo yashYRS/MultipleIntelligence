@@ -250,7 +250,8 @@ class Game:
                         self.score += 1
                 else:
                     print("score :" + str(self.score/10))
-                    exit(0)      
+                    # exit(0)
+                    return
                 if self.bird.between(pipe.pos[0] - half_gap[0], pipe.pos[0] + half_gap[0]):
                     if self.bird.out(pipe.pos[1] - half_gap[1], pipe.pos[1] + half_gap[1]):
                         bump.play()
@@ -258,7 +259,8 @@ class Game:
                         self.phase[1] = False
                         self.phase[2] = True
                         print(self.score/10)
-                        exit(0)
+                        # exit(0)
+                        return
                         if self.score > self.best:
                             self.best = self.score
                             self.new = 'new'

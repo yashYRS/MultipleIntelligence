@@ -2,14 +2,15 @@ import random
 import arcade
 import time
 
-time_limit = 3 
+time_limit = 30
+
 SPRITE_SCALING_PLAYER = 0.6
 SPRITE_SCALING_DEAD_GRASS = 0.3
 SPRITE_SCALING_WASTE_HARM = 0.15
-SPRITE_SCALING_KNIFE= 0.2
-SPRITE_SCALING_TRASH= 0.3
-SPRITE_SCALING_SAPLING= 0.09
-SPRITE_SCALING_BROOM= 0.05
+SPRITE_SCALING_KNIFE = 0.2
+SPRITE_SCALING_TRASH = 0.3
+SPRITE_SCALING_SAPLING = 0.09
+SPRITE_SCALING_BROOM = 0.05
 SPRITE_SCALING_CAN = 0.05
 
 DEAD_GRASS_COUNT = 10
@@ -20,9 +21,12 @@ SCREEN_HEIGHT = 600
 BROOM_SPEED = 3
 MOVEMENT_SPEED = 4
 BULLET_SPEED = 5
-EQUIPMENT = [ ['knife.png', SPRITE_SCALING_KNIFE, 0 ] ,  ['broom.png' ,SPRITE_SCALING_BROOM , 300]\
- , ['grass.png' , SPRITE_SCALING_SAPLING , 0] , ['can.png' , SPRITE_SCALING_CAN , 0 ] ]
-## image source , scale , angle of rendering
+EQUIPMENT = [['knife.png', SPRITE_SCALING_KNIFE, 0],
+             ['broom.png', SPRITE_SCALING_BROOM, 300],
+             ['grass.png', SPRITE_SCALING_SAPLING, 0],
+             ['can.png', SPRITE_SCALING_CAN, 0]]
+# # image source , scale , angle of rendering
+
 
 class MyGame(arcade.Window):
     """ Main application class. """
@@ -30,7 +34,7 @@ class MyGame(arcade.Window):
     def __init__(self):
         """ Initializer """
         # Call the parent class initializer
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Manage Farm" , fullscreen = True )
+        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Manage Farm", fullscreen=True)
 
         # Variables that will hold sprite listss
         self.curr_state = "Instructions"
@@ -40,15 +44,15 @@ class MyGame(arcade.Window):
         self.equipment_list = None
         self.plant_sapling_list = None
         self.new_plant_sapling_list = None
-        width, height = self.get_size() 
-        self.set_viewport(0,width, 0 , height)
+        width, height = self.get_size()
+        self.set_viewport(0, width, 0, height)
         # Set up the player info
         self.dustBin_sprite = None
         self.changeScreen = False
         self.player_sprite = None
         self.score = 0
-        self.initialTime = 0 
-        self.curr_equip = 0 
+        self.initialTime = 0
+        self.curr_equip = 0
         # Don't show the mouse cursor
         self.set_mouse_visible(False)
 
@@ -62,21 +66,21 @@ class MyGame(arcade.Window):
         self.player_list = arcade.SpriteList()
         self.grass_list = arcade.SpriteList()
         self.equipment_list = arcade.SpriteList()
-        self.plant_sapling_list = arcade.SpriteList() 
+        self.plant_sapling_list = arcade.SpriteList()
         self.new_plant_sapling_list = arcade.SpriteList()
         self.wasteHarm_list = arcade.SpriteList()
-        self.static_objects_list = arcade.SpriteList() 
+        self.static_objects_list = arcade.SpriteList()
         # Set up the player
         self.score = 0
-        self.totalPlanted = 0 
+        self.totalPlanted = 0
         self.curr_state = "Instructions"
         self.initialTime = time.time()
-        self.curr_equip = 1 
-        left, screen_width, bottom , screen_height = self.get_viewport()
-        
+        self.curr_equip = 1
+        left, screen_width, bottom, screen_height = self.get_viewport()
+
         # Image from kenney.nl
         self.player_sprite = arcade.Sprite("characterRight.png", SPRITE_SCALING_PLAYER)
-        for i in range(2) : 
+        for i in range(2):
             self.dustBin_sprite = arcade.Sprite("trash.png", SPRITE_SCALING_TRASH)
             self.dustBin_sprite.center_x = left + i*(screen_width - 600) + 300
             self.dustBin_sprite.center_y = bottom + i*(screen_height - 600) + 300
@@ -84,7 +88,7 @@ class MyGame(arcade.Window):
         self.player_sprite.center_x = 50
         self.player_sprite.center_y = 70
         self.player_sprite.change_x = 0
-        self.player_sprite.change_y = 0  
+        self.player_sprite.change_y = 0
         self.player_list.append(self.player_sprite)
 
         # Create the grasss
@@ -109,17 +113,17 @@ class MyGame(arcade.Window):
             wasteHarm = arcade.Sprite("waste.png", SPRITE_SCALING_WASTE_HARM)
 
             # Position the grass
-            wasteHarm.center_x = random.randrange(left + 100 ,screen_width - 100 )
-            wasteHarm.center_y = random.randrange(bottom + 100 , screen_height - 100 )
-            wasteHarm.change_x = 0 
-            wasteHarm.change_y = 0 
+            wasteHarm.center_x = random.randrange(left + 100, screen_width - 100)
+            wasteHarm.center_y = random.randrange(bottom + 100, screen_height - 100)
+            wasteHarm.change_x = 0
+            wasteHarm.change_y = 0
             # Add the grass to the lists
-            self.wasteHarm_list.append(wasteHarm)           
+            self.wasteHarm_list.append(wasteHarm)
         # Set the background color
         arcade.set_background_color(arcade.color.AMAZON)
 
-    def draw_instructions(self) : 
-        left, screen_width, bottom , screen_height = self.get_viewport() 
+    def draw_instructions(self):
+        left, screen_width, bottom, screen_height = self.get_viewport()
         midX = (left + screen_width)/2
         midY = (bottom + screen_height)/2
         arcade.draw_text(f" INSTRUCTIONS ", midX/2 + 100 , 6*(screen_height - bottom)/7 , arcade.color.PINK , 40)
@@ -129,28 +133,20 @@ class MyGame(arcade.Window):
         arcade.draw_text(f" Navigate using Arrow Keys " ,midX/2, 2*(screen_height - bottom)/7 , arcade.color.PINK , 30)
         arcade.draw_text(f" Press Space to Continue " ,midX/2 + 150 , 1*(screen_height - bottom)/7 , arcade.color.WHITE , 15)
 
-
-
-    def draw_game(self): 
+    def draw_game(self):
         # Draw all the sprites.
         self.grass_list.draw()
-        self.wasteHarm_list.draw() 
+        self.wasteHarm_list.draw()
         self.equipment_list.draw()
-        self.plant_sapling_list.draw() 
-        self.new_plant_sapling_list.draw() 
+        self.plant_sapling_list.draw()
+        self.new_plant_sapling_list.draw()
         self.player_list.draw()
-        self.static_objects_list.draw() 
+        self.static_objects_list.draw()
         # Render the text
         arcade.draw_text(f"Time Remaining: {90 - int(time.time() - self.initialTime)}", 10, 40, arcade.color.WHITE, 14)
         if time_limit - int(time.time() - self.initialTime) < 1 : 
-            f = open('score.txt','w')
-            f.write(str(self.score/100))
-            f.close()
-
             arcade.close_window()
 
-            #self.curr_state = "GameOver
-            
     def draw_end_screen(self):
         """
         Draw "Game over" across the screen.
@@ -159,7 +155,6 @@ class MyGame(arcade.Window):
         arcade.draw_text(output, 240, 400, arcade.color.WHITE, 54)
         time.sleep(3)
         exit(0)
-
 
     def on_draw(self):
         """
@@ -174,7 +169,6 @@ class MyGame(arcade.Window):
             self.draw_game()
         elif self.curr_state == "GameOver" : 
             self.draw_end_screen() 
-
 
     def on_key_press(self, key, modifiers):
         """ Called whenever the user presses a key. """
@@ -204,8 +198,8 @@ class MyGame(arcade.Window):
                     equip_sprite.center_y = self.player_sprite.center_y - 30
                     equip_sprite.angle = EQUIPMENT[ind][2]
                     self.plant_sapling_list.append(equip_sprite)
-                    self.totalPlanted =  self.totalPlanted + 1
-                    self.score = self.score + 0.5 
+                    self.totalPlanted = self.totalPlanted + 1
+                    self.score = self.score + 0.5
 
     def on_key_release(self, key, modifiers):
         """ Called whenever a user releases a key. """
@@ -214,38 +208,30 @@ class MyGame(arcade.Window):
         elif key == arcade.key.UP or key == arcade.key.DOWN:
             self.player_sprite.change_y = 0
 
-        elif key == arcade.key.SPACE : 
-            if self.curr_state == "Instructions" : 
+        elif key == arcade.key.SPACE:
+            if self.curr_state == "Instructions":
                 self.curr_state = "Game"
-            else : 
-                for equip in self.equipment_list : 
+            else:
+                for equip in self.equipment_list:
                     equip.kill()
-                    
-        elif key == arcade.key.S : 
-            self.curr_equip = (self.curr_equip +1)%len(EQUIPMENT)
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        """
-        Called whenever the mouse button is clicked.
-        """
-        
+        elif key == arcade.key.S:
+            self.curr_equip = (self.curr_equip + 1) % len(EQUIPMENT)
 
     def update(self, delta_time):
         """ Movement and game logic """
-    
         self.grass_list.update()
-        self.wasteHarm_list.update() 
+        self.wasteHarm_list.update()
         self.equipment_list.update()
         self.plant_sapling_list.update()
-        self.new_plant_sapling_list.update() 
+        self.new_plant_sapling_list.update()
         self.player_sprite.center_x = self.player_sprite.center_x + self.player_sprite.change_x
         self.player_sprite.center_y = self.player_sprite.center_y + self.player_sprite.change_y
 
-       	left, screen_width, bottom , screen_height = self.get_viewport() 
-       	objectLists = [self.grass_list ,self.wasteHarm_list , self.equipment_list , self.player_list , self.plant_sapling_list]
-        for objectList in objectLists : 
-            for object_sprite in objectList :         
-               	if object_sprite.center_x < left + 10 :
+        left, screen_width, bottom, screen_height = self.get_viewport()
+        objectLists = [self.grass_list, self.wasteHarm_list, self.equipment_list, self.player_list, self.plant_sapling_list]
+        for objectList in objectLists:
+            for object_sprite in objectList:
+                if object_sprite.center_x < left + 10:
                     object_sprite.center_x = 10
 
                 if object_sprite.center_x > screen_width - 10:
@@ -257,23 +243,24 @@ class MyGame(arcade.Window):
                 if object_sprite.center_y > screen_height - 20:
                     object_sprite.center_y = screen_height - 20
 
-        if arcade.check_for_collision(self.player_sprite , self.dustBin_sprite) :
+        if arcade.check_for_collision(self.player_sprite, self.dustBin_sprite):
             self.player_sprite.change_x = -self.player_sprite.change_x
             self.player_sprite.change_y = -self.player_sprite.change_y
             # self.openStore = True
             # self.changeScreen = True
 
-        for grass in self.grass_list: 
+        for grass in self.grass_list:
             destroy_list = arcade.check_for_collision_with_list(grass, self.static_objects_list)
-            
-            if len(destroy_list) > 0 : 
-                grass.kill() 
 
-        for wasteHarm in self.wasteHarm_list : 
+            if len(destroy_list) > 0:
+                grass.kill()
+
+        for wasteHarm in self.wasteHarm_list:
             destroy_list = arcade.check_for_collision_with_list(wasteHarm, self.static_objects_list)
-            if len(destroy_list) > 0 : 
-                wasteHarm.kill() 
+            if len(destroy_list) > 0:
+                wasteHarm.kill()
                 self.score = self.score + 10
+            
 
         # Loop through each knife
         for equip in self.equipment_list:
@@ -289,7 +276,8 @@ class MyGame(arcade.Window):
                 # For every grass we hit, add to the score and remove the grass
                 for grass in hit_list:
                     grass.kill()
-                    self.score = self.score + 1 
+                    self.score = self.score + 1
+                
 
                 # If the knife flies off-screen, remove it.
                 if knife.bottom > SCREEN_HEIGHT:
@@ -308,49 +296,53 @@ class MyGame(arcade.Window):
                     else : 
                         waste.center_y = waste.center_y + BROOM_SPEED 
 
-            elif self.curr_equip == 3 : 
-                waterCan = equip 
+            elif self.curr_equip == 3:
+                waterCan = equip
                 grow_list = arcade.check_for_collision_with_list(waterCan , self.plant_sapling_list)
                 scoreFlag = False
-                for plant in grow_list : 
-                    tempx = plant.center_x 
+                for plant in grow_list:
+                    tempx = plant.center_x
                     tempy = plant.center_y
                     tempScale = plant.scale + 0.1
-                    if tempScale < 0.2 : 
+                    if tempScale < 0.2:
                         grass = arcade.Sprite("grass.png", tempScale)
                         grass.center_x = tempx
                         grass.center_y = tempy
                         self.new_plant_sapling_list.append(grass)
                         scoreFlag = True
-                        plant.kill() 
-                if len(grow_list) > 0 : 
-                    if scoreFlag : 
+                        plant.kill()
+                if len(grow_list) > 0:
+                    if scoreFlag:
                         self.score = self.score + 2
 
-
-        for plant in self.plant_sapling_list : 
-            destroy = len(arcade.check_for_collision_with_list(plant , self.wasteHarm_list)) + len(arcade.check_for_collision_with_list(plant , self.grass_list))
-            if destroy > 0 : 
+        for plant in self.plant_sapling_list:
+            destroy = len(arcade.check_for_collision_with_list(plant, self.wasteHarm_list)) + len(arcade.check_for_collision_with_list(plant , self.grass_list))
+            if destroy > 0:
                 plant.kill()
-                self.score = self.score - 0.5
+                self.score = self.score + 5
+
                 self.totalPlanted = self.totalPlanted - 1 
-            
 
 
-def main():
+def start_game():
     window = MyGame()
     window.setup()
-    score = 0 
     try:
-        arcade.run() 
+        arcade.run()
     except Exception as e:
-        f = open("score.txt" , "r")
-        score = f.read()
-    return score 
+        print(e)
+    try:
+        curr_score = window.score
+    except Exception as e:
+        curr_score = 10
+    curr_score = curr_score/100
+    if curr_score > 0.5:
+        return 0.9
+    else:
+        curr_score = curr_score + 0.3
+    return curr_score
 
 
 if __name__ == "__main__":
-    main()
-
-
-""" Ideas further : Water to grow the plant size """ 
+    score = start_game()
+    print("SCORE - ", score)

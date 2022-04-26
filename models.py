@@ -33,16 +33,11 @@ class SingleGame(db.Model):
     gameid = db.Column(db.Integer, primary_key=True)
 
     category_name = db.Column(db.String(100))
-    category_image_path = db.Column(db.String(100))
-    game_name = db.Column(db.String(100))
 
-    level = db.Column(db.Integer)
     score = db.Column(db.Float)
     session_id = db.Column(db.Integer, db.ForeignKey('game_session.session_id'), nullable=False)
 
-    def __init__(self, category_name, game_name, level, score, session_id):
+    def __init__(self, category_name, score, session_id):
         self.score = score
-        self.level = level
-        self.game_name = game_name
         self.category_name = category_name
         self.session_id = session_id
