@@ -86,7 +86,6 @@ def slidingpuzzle():
 @main.route('/animal_sound', methods=['GET', 'POST'])
 def animal_sound():
     from Music.AnimalSounds import music1
-    # TO DO: CHECK THE RETURN TYPE FOR THIS GAME
     level = game_agent.curr_level
     if level > 0:
         final_score = music1.start_game()
@@ -124,7 +123,6 @@ def people_quiz():
     from People.Quiz import game
     level = game_agent.curr_level
     if level > 0:
-        # TO DO: CHECK THE RETURN TYPE FOR THIS GAME
         final_score = game.start_game(level)
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
@@ -144,7 +142,6 @@ def self_quiz():
     from Self.Quiz import game
     level = game_agent.curr_level
     if level > 0:
-        # TO DO: CHECK THE RETURN TYPE FOR THIS GAME
         final_score = game.start_game(level)
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
@@ -163,7 +160,6 @@ def connect4():
     from Logic.Connect4 import connect4
     level = game_agent.curr_level
     if level > 0:
-        # TO DO: CHECK THE RETURN TYPE FOR THIS GAME
         final_score = connect4.start_game(level)
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
@@ -218,7 +214,6 @@ def flappybird():
 @main.route('/natureqna', methods=['GET', 'POST'])
 def natureqna():
     from Nature.Knowledge import nature
-    # TO DO: CHECK RETURN TYPE OF THIS GAME
     level = game_agent.curr_level
     if level > 0:
         final_score = nature.start_game(level)
@@ -251,6 +246,7 @@ def natureexplore():
         return redirect(url_for('main.gamelist'))
 
 # #### --------------------- START GAME ---------------------- #####
+
 
 @main.route('/start_game', methods=['GET', 'POST'])
 @login_required
