@@ -1,0 +1,14 @@
+{% extends "base_without_gif.html" %}
+{% block content %}    
+
+<article class="message is-large">
+  <div class="message-header" style="background-color:#000000; color:#D3B8B2;">
+    <img class="is-rounded" src="/static/images/prison_guard.png" alt="Guard">
+    {{game_text}}
+  </div>
+  <footer class="card-footer" style="background-color:#000000">
+    <a href="{{ url_for('main.profile') }}" class="card-footer-item">Quit</a>
+    <a href="{{url_for(next_scene)}}" class="card-footer-item">Continue</a>
+  </footer>
+</article>
+{% endblock %}

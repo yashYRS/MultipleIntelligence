@@ -247,7 +247,7 @@ def start_game(level):
     board = create_board()
 
     pygame.init()
-    coinSound = pygame.mixer.Sound('coin.wav')
+    coinSound = pygame.mixer.Sound('Logic/Connect4/coin.wav')
     rules = []
     rules.append("Use the mouse to drop coins on the board")
     rules.append("After your turn we do the same")

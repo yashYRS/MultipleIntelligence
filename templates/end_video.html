@@ -10,7 +10,7 @@
             min-height: 100%;
         }
     </style>
-    <video autoplay controls id="myVideo" onended="window.location = 'profile.html';">
+    <video autoplay controls id="myVideo" onended="window.location = '{{url_for(final_url)}}';">
             <source src="/static/videos/endscene.mp4" type="video/mp4">
     </video>
 {% endblock %}

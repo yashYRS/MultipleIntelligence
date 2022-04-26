@@ -25,6 +25,9 @@ class GameSession(db.Model):
     date_created = db.Column(db.DateTime,  default=db.func.current_timestamp())
     games = db.relationship('SingleGame', backref='game_session', lazy=True)
 
+    def __init__(self, user_id):
+        self.user_id = user_id
+
 
 class SingleGame(db.Model):
     gameid = db.Column(db.Integer, primary_key=True)
@@ -37,17 +40,9 @@ class SingleGame(db.Model):
     score = db.Column(db.Float)
     session_id = db.Column(db.Integer, db.ForeignKey('game_session.session_id'), nullable=False)
 
-    def __init__(self, category_name, game_name):
-        category_images = {
-            'Word': '/static/images/word.png',
-            'Logic': '/static/images/Logic.png',
-            'Self': '/static/images/Self.png',
-            'People': '/static/images/People.png',
-            'Picture': '/static/images/Picture.png',
-            'Nature': '/static/images/Nature.png',
-            'Music': '/static/images/Music.png',
-            'Body': '/static/images/Body.png',
-        }
-        self.category_name = category_name
-        self.category_image_path = category_images[category_name]
+    def __init__(self, category_name, game_name, level, score, session_id):
+        self.score = score
+        self.level = level
         self.game_name = game_name
+        self.category_name = category_name
+        self.session_id = session_id

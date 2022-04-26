@@ -1,40 +1,40 @@
 smarts = {
-        'Visual_Spatial': {
+        'picture': {
                 'prof1': 'Architect',
                 'prof2': 'Artist',
                 'prof3': 'Engineer'
         },
-        'Linguitic-Verbal': {
+        'word': {
                 'prof1': 'Writer/Journalist',
                 'prof2': 'Lawyer',
                 'prof3': 'Teacher'
         },
-        'Logical-Mathematical': {
+        'logic': {
                 'prof1': 'Scientist/Mathematician',
                 'prof2': 'Engineer',
                 'prof3': 'Accountant'
         },
-        'Bodily-Kinesthetic': {
+        'body': {
                 'prof1': 'Dancer/Actor',
                 'prof2': 'Sculptor',
                 'prof3': 'Builder'
         },
-        'Musical': {
+        'music': {
                 'prof1': 'Musician',
                 'prof2': 'Singer',
                 'prof3': 'Music-Conductor'
         },
-        'Interpersonal': {
+        'people': {
                 'prof1': 'Psychologist/Counselor',
                 'prof2': 'Politician',
                 'prof3': 'Manager'
         },
-        'Intrapersonal': {
+        'self': {
                 'prof1': 'Theorist',
                 'prof2': 'Writer',
                 'prof3': 'Philosopher'
         },
-        'Naturalistic': {
+        'nature': {
                 'prof1': 'Biologist',
                 'prof2': 'Conservationist',
                 'prof3': 'Farmer'

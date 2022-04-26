@@ -1,5 +1,5 @@
 <GameData>
-	<Game ID = "1" name = "connect4" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "3" >
+	<Game ID = "1" name = "connect4" story1 = "static/game_text/connect4_1.txt" story2 = "static/game_text/connect4_2.txt" story3 = "static/game_text/connect4_3.txt" levels = "3" >
 		<Parameter picture ="0"></Parameter>
 		<Parameter music = "0"></Parameter>
 		<Parameter word = "0"></Parameter>
@@ -9,17 +9,7 @@
 		<Parameter self = "0"></Parameter>
 		<Parameter logic = "1"></Parameter>
 	</Game>
-	<Game ID = "2" name = "get_out" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "3" >
-		<Parameter picture ="0.7"></Parameter>
-		<Parameter music = "0"></Parameter>
-		<Parameter word = "0"></Parameter>
-		<Parameter nature = "0"></Parameter>
-		<Parameter body = "0.1"></Parameter>
-		<Parameter people = "0"></Parameter>
-		<Parameter self = "0"></Parameter>
-		<Parameter logic = "0.2"></Parameter>
-	</Game>		
-	<Game ID = "3" name = "bulls_cows" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "3" >
+	<Game ID = "2" name = "bullscows" story1 = "static/game_text/bulls_and_cows_1.txt" story2 = "static/game_text/bulls_and_cows_2.txt" story3 = "static/game_text/bulls_and_cows_3.txt" levels = "3" >
 		<Parameter picture ="0"></Parameter>
 		<Parameter music = "0"></Parameter>
 		<Parameter word = "0.5"></Parameter>
@@ -28,8 +18,8 @@
 		<Parameter people = "0"></Parameter>
 		<Parameter self = "0"></Parameter>
 		<Parameter logic = "0.5"></Parameter>			
-	</Game>		
-	<Game ID = "4" name = "hangman" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "3" >
+	</Game>
+	<Game ID = "3" name = "hangman" story1 = "static/game_text/hangman_1.txt" story2 = "static/game_text/hangman_2.txt" story3 = "static/game_text/hangman_3.txt" levels = "3" >
 		<Parameter picture ="0.1"></Parameter>
 		<Parameter music = "0"></Parameter>
 		<Parameter word = "0.9"></Parameter>
@@ -38,18 +28,8 @@
 		<Parameter people = "0"></Parameter>
 		<Parameter self = "0"></Parameter>
 		<Parameter logic = "0"></Parameter>
-	</Game>		
-	<Game ID = "5" name = "natural_isometric" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "2" >
-		<Parameter picture ="0.1"></Parameter>
-		<Parameter music = "0"></Parameter>
-		<Parameter word = "0.4"></Parameter>
-		<Parameter nature = "0.5"></Parameter>
-		<Parameter body = "0"></Parameter>
-		<Parameter people = "0"></Parameter>
-		<Parameter self = "0"></Parameter>
-		<Parameter logic = "0"></Parameter>
-	</Game>		
-	<Game ID = "6" name = "flappy_bird" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "2" >
+	</Game>				
+	<Game ID = "4" name = "flappybird" story1 = "static/game_text/flappybird_1.txt" story2 = "static/game_text/flappybird_2.txt" levels = "2" >
 		<Parameter picture ="0.1"></Parameter>
 		<Parameter music = "0"></Parameter>
 		<Parameter word = "0"></Parameter>
@@ -59,7 +39,7 @@
 		<Parameter self = "0"></Parameter>
 		<Parameter logic = "0"></Parameter>
 	</Game>		
-	<Game ID = "7" name = "nature_q_a" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "1" >
+	<Game ID = "5" name = "natureqna" story1 = "static/game_text/NatureQA_1.txt" story2 = "static/game_text/NatureQA_2.txt" story3 = "static/game_text/NatureQA_3.txt" levels = "3" >
 		<Parameter picture ="0.2"></Parameter>
 		<Parameter music = "0"></Parameter>
 		<Parameter word = "0"></Parameter>
@@ -69,7 +49,7 @@
 		<Parameter self = "0"></Parameter>
 		<Parameter logic = "0"></Parameter>
 	</Game>
-	<Game ID = "8" name = "nature_explore" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "1" >
+	<Game ID = "6" name = "natureexplore" story1 = "static/game_text/nature_explore.txt" levels = "1" >
 		<Parameter picture ="0.4"></Parameter>
 		<Parameter music = "0"></Parameter>
 		<Parameter word = "0"></Parameter>
@@ -79,7 +59,7 @@
 		<Parameter self = "0"></Parameter>
 		<Parameter logic = "0"></Parameter>
 	</Game>
-	<Game ID = "9" name = "star_wars" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "3" >
+	<Game ID = "7" name = "spacewars" story1 = "static/game_text/spacewars_1.txt" story2 = "static/game_text/spacewars_2.txt" story3 = "static/game_text/spacewars_3.txt" levels = "3" >
 		<Parameter picture ="0.1"></Parameter>
 		<Parameter music = "0"></Parameter>
 		<Parameter word = "0"></Parameter>
@@ -89,7 +69,7 @@
 		<Parameter self = "0"></Parameter>
 		<Parameter logic = "0.1"></Parameter>
 	</Game>
-	<Game ID = "10" name = "memory_music" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "2" >
+	<Game ID = "8" name = "memorymusic" story1 = "static/game_text/memory_music_1.txt" story2 = "static/game_text/memory_music_2.txt" levels = "2" >
 		<Parameter picture ="0"></Parameter>
 		<Parameter music = "1"></Parameter>
 		<Parameter word = "0"></Parameter>
@@ -99,7 +79,7 @@
 		<Parameter self = "0"></Parameter>
 		<Parameter logic = "0"></Parameter>
 	</Game>
-	<Game ID = "11" name = "sounds_quiz" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "1" >
+	<Game ID = "9" name = "animal_sound" story1 = "static/game_text/animal_sound.txt" levels = "1" >
 		<Parameter picture ="0"></Parameter>
 		<Parameter music = "0.8"></Parameter>
 		<Parameter word = "0"></Parameter>
@@ -109,7 +89,7 @@
 		<Parameter self = "0"></Parameter>
 		<Parameter logic = "0"></Parameter>
 	</Game>
-	<Game ID = "12" name = "sliding_puzzle" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "2" >
+	<Game ID = "10" name = "slidingpuzzle" story1 = "static/game_text/slidingpuzzle_1.txt" story2 = "static/game_text/slidingpuzzle_2.txt" levels = "2" >
 		<Parameter picture ="0.5"></Parameter>
 		<Parameter music = "0"></Parameter>
 		<Parameter word = "0"></Parameter>
@@ -119,27 +99,7 @@
 		<Parameter self = "0"></Parameter>
 		<Parameter logic = "0.5"></Parameter>
 	</Game>
-	<Game ID = "13" name = "pitch_matching" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "1" >
-		<Parameter picture ="0"></Parameter>
-		<Parameter music = "1"></Parameter>
-		<Parameter word = "0"></Parameter>
-		<Parameter nature = "0"></Parameter>
-		<Parameter body = "0"></Parameter>
-		<Parameter people = "0"></Parameter>
-		<Parameter self = "0"></Parameter>
-		<Parameter logic = "0"></Parameter>
-	</Game>
-	<Game ID = "14" name = "brick_breaker" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "3" >
-		<Parameter picture ="0.1"></Parameter>
-		<Parameter music = "0"></Parameter>
-		<Parameter word = "0"></Parameter>
-		<Parameter nature = "0"></Parameter>
-		<Parameter body = "0.8"></Parameter>
-		<Parameter people = "0"></Parameter>
-		<Parameter self = "0"></Parameter>
-		<Parameter logic = "0.1"></Parameter>
-	</Game>
-	<Game ID = "15" name = "self_smart" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "2" >
+	<Game ID = "11" name = "self_quiz" story1 = "static/game_text/self_smart_1.txt" story2 = "static/game_text/self_smart_1.txt" levels = "2" >
 		<Parameter picture ="0"></Parameter>
 		<Parameter music = "0"></Parameter>
 		<Parameter word = "0.05"></Parameter>
@@ -149,7 +109,7 @@
 		<Parameter self = "0.95"></Parameter>
 		<Parameter logic = "0"></Parameter>
 	</Game>
-	<Game ID = "16" name = "people_smart" module_name = "" module_story1 = "" module_story2 = "" module_story3 = "" levels = "2" >
+	<Game ID = "12" name = "people_quiz" story1 = "static/game_text/people_smart_1.txt" story2 = "static/game_text/people_smart_2.txt" levels = "2" >
 		<Parameter picture ="0"></Parameter>
 		<Parameter music = "0"></Parameter>
 		<Parameter word = "0.05"></Parameter>

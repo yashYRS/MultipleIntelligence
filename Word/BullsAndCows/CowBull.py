@@ -2,6 +2,7 @@
 # if levelscore>1 then its a guess
 import sys
 import time
+import os
 import random
 import pygame
 from pygame.locals import *
@@ -29,12 +30,13 @@ def finfScoreToSend(score, time):
 
 def getLevelFile(level):
     level = int(level)
+    print("FILE LIST", os.listdir())
     if level == 1:
-        file = open("Wordlist.txt", "r")
+        file = open("Word/BullsAndCows/Wordlist.txt", "r")
     elif level == 2:
-        file = open("Wordlist1.txt", "r")
+        file = open("Word/BullsAndCows/Wordlist1.txt", "r")
     elif level == 3:
-        file = open("Wordlist1.txt", "r")
+        file = open("Word/BullsAndCows/Wordlist1.txt", "r")
     return file
 
 
