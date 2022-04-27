@@ -47,7 +47,7 @@ def hangman():
     from Word.Hangman import hangman
     level = game_agent.curr_level
     if level > 0:
-        final_score = hangman.mainloop(level)
+        final_score = hangman.start_game(level)
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
         next_scene = 'main.' + next_module
@@ -55,7 +55,7 @@ def hangman():
                                game_text=next_game_text,
                                next_scene=next_scene)
     else:
-        _ = hangman.mainloop(1)
+        _ = hangman.start_game(1)
         return redirect(url_for('main.gamelist'))
 
 
