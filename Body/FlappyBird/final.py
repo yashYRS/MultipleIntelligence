@@ -3,9 +3,8 @@ import dlib
 import cv2
 import numpy as np
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
-from classes.flappy_bird_classes import draw, one_game_run
-from classes.flappy_bird_classes import width, height, hand_pos, hand_convex_number
-from classes.hand_detect import detect_hand
+import flappy_bird_classes as FC
+import hand_detect as HD
 
 
 def game_loop():
@@ -23,19 +22,19 @@ def game_loop():
         ret, img = cap.read()
         # img = cv2.flip(img,1)
         if track_flag is False:
-            count_defects = detect_hand(img, hand_pos)
-            if count_defects > hand_convex_number:
+            count_defects = HD.detect_hand(img, FC.hand_pos)
+            if count_defects > FC.hand_convex_number:
                 cv2.destroyAllWindows()
-                detect_hand.open_window_flag = False
+                HD.detect_hand.open_window_flag = False
                 hand_to_detect = False
-                tracker.start_track(img, dlib.rectangle(hand_pos[0], hand_pos[1], hand_pos[2], hand_pos[3]))
+                tracker.start_track(img, dlib.rectangle(FC.hand_pos[0], FC.hand_pos[1], FC.hand_pos[2], FC.hand_pos[3]))
                 track_flag = True
                 pos = tracker.get_position()
                 track_pos_prev = [(pos.left() + pos.right()) / 2., (pos.top() + pos.bottom()) / 2.]
                 # we start the game if there is a hand detected
                 start_time = time.time()
                 try:
-                    one_game_run(cap, tracker, track_pos_prev)
+                    FC.one_game_run(cap, tracker, track_pos_prev)
                 except Exception as e:
                     pass
                 end_time = time.time()

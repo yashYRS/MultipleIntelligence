@@ -112,7 +112,7 @@ class Cannon(Sprite):
     def fire(self):
         if self.status == "ready":
             # Play cannon sound
-            os.system("aplay Laser.wav&")
+            # os.system("aplay Laser.wav&")
             self.goto(self.player.xcor(), self.player.ycor())
             self.setheading(self.player.heading())
             self.status = "firing"
@@ -243,16 +243,16 @@ class Game():
         self.pen.write(msg, font=("Arial", 16, "normal")) 
 
     def show_splash(self):
-        turtle.bgpic("splash8.png")
+        turtle.bgpic("Body/SpaceWars/splash8.png")
         turtle.update()
         time.sleep(6)
-        turtle.bgpic("starfield.gif")
+        turtle.bgpic("Body/SpaceWars/starfield.gif")
         self.state = "setup"
 
 
 def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
     window = turtle.Screen()
-    window.screensize()
+    window.screensize(600, 400)
     window.setup(width=1.0, height=1.0, startx=None, starty=None)
 
     # creating the actual screen (required by macos)
@@ -260,7 +260,7 @@ def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
     # control the speed of animation
     turtle.speed(0)
     turtle.bgcolor("black") 
-    turtle.bgpic("splash8.png")
+    turtle.bgpic("Body/SpaceWars/splash8.png")
     turtle.title("Space War")
     turtle.ht()
     # limits the amount of memory the turtle module uses (saves the memory)
@@ -274,8 +274,8 @@ def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
     mins = 0
 
     # Register shapes
-    turtle.register_shape("enemy.gif")
-    turtle.register_shape("ally.gif")
+    turtle.register_shape("Body/SpaceWars/enemy.gif")
+    turtle.register_shape("Body/SpaceWars/ally.gif")
 
     # Create game object
     game = Game()
@@ -300,11 +300,11 @@ def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
 
         enemies = []
         for i in range(4):
-            enemies.append(Enemy("enemy.gif", "red", -100, 0, enemy_speed=enemy_speed))
+            enemies.append(Enemy("Body/SpaceWars/enemy.gif", "red", -100, 0, enemy_speed=enemy_speed))
 
         allies = []
         for n in range(2):
-            allies.append(Ally("ally.gif", "blue", 100, 0, ally_speed=ally_speed))
+            allies.append(Ally("Body/SpaceWars/ally.gif", "blue", 100, 0, ally_speed=ally_speed))
 
         particles = []
         for i in range(20):
@@ -407,6 +407,7 @@ def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
         for particle in particles:
             particle.move()
 
+        print(game.state)
         if game.state == "gameover":
             return gscore, lives
     return gscore

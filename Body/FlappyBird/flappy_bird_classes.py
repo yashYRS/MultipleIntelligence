@@ -3,7 +3,7 @@ import math
 import dlib
 import cv2
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
-from hand_detect import detect_hand
+import hand_detect as HD
 
 width, height = 400, 400
 gap_width, gap_height = 40, 80
@@ -13,11 +13,12 @@ center = [width / 2, height / 2]
 half_gap = [gap_width / 2, gap_height / 2]
 
 # flap_up_velocity
-flap_up_velocity = 0.5  # difficulty level, 1:easies, 2:moderate hard, 3: very hard
-fall_velocity = 0.2
+flap_up_velocity = 1  # difficulty level, 1:easies, 2:moderate hard, 3: very hard
+fall_velocity = 0.2 #higher difficulty : 0.4
 jump_vertical_ratio = 0.01
 hand_pos = [250, 250, 350, 350]  # hand position
-hand_convex_number = 2  # Lower number for better initialisations
+hand_convex_number = 3  # Lower number for better initialisations
+
 
 class Image:
     def __init__(self, url, size):
@@ -160,7 +161,7 @@ class Game:
 
         self.track_pos_prev = track_pos_current
 
-        print("Vertical ration is %f" % vertical_ratio)
+        # print("Vertical ratio is %f" % vertical_ratio)
         # if the ratio is larger than jump_vertical_ratio, then it is a jump
         if vertical_ratio > jump_vertical_ratio:
             if self.phase[0] or self.phase[1]:
@@ -181,7 +182,7 @@ class Game:
         top = max(0, int(pos.top()))
         bottom = min(img.shape[1], int(pos.bottom()))
         crop_img = img[top:bottom, left:right]
-        cv2.imshow('Gesture', img)
+        #cv2.imshow('Gesture', img)
         #cv2.imshow('Hand', crop_img)
         #cv2.waitKey(16)
 
@@ -192,9 +193,10 @@ class Game:
             while self.cap.isOpened():
                 ret, img = self.cap.read()
                 if not track_flag:
-                    count_defects = detect_hand(img, hand_pos)
+                    count_defects = HD.detect_hand(img, hand_pos)
+                    return
                     if count_defects > hand_convex_number:
-                        cv2.destroyWindow('Thresholded')
+                        cv2.destroyAllWindows() 
                         self.tracker.start_track(img, dlib.rectangle(hand_pos[0], hand_pos[1], hand_pos[2], hand_pos[3]))
                         track_flag = True
                         pos = self.tracker.get_position()
@@ -243,6 +245,7 @@ class Game:
                         self.bird.vel = 0
                         self.phase[1] = False
                         self.phase[2] = True
+                        return
                         if self.score > self.best:
                             self.best = self.score
                             self.new = 'new'
@@ -269,13 +272,19 @@ class Game:
             canvas.draw_text(str(self.score), [200, 80], 30, 'DeepSkyBlue', 'sans-serif')
 
 
-game = Game()
-
 def draw(canvas):
     game.update()
     game.draw(canvas)
 
+
+game = Game()
 # create a simplegui frame
-frame = simplegui.create_frame("Flappy bird game using hand control", width, height)
+frame = simplegui.create_frame("Flappy bird game with hand control", width, height)
 # register simplegui frame keydown handler
 frame.set_draw_handler(draw)
+
+
+def one_game_run(cap, tracker, track_pos_prev):
+    game.start(cap, tracker, track_pos_prev)
+    frame.start()
+    return

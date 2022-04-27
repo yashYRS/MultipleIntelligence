@@ -4,6 +4,7 @@ import math
 
 from sys import platform
 
+
 if platform == "linux" or platform == "linux2":
     # linux
     assert("linux not tested!")
@@ -15,6 +16,8 @@ elif platform == "win32":
     # Windows...
     import pyautogui
 
+open_window_flag = True
+
 
 def detect_hand(img, hand_pos):
     '''
@@ -23,11 +26,14 @@ def detect_hand(img, hand_pos):
     :param hand_pos:
     :return:
     '''
-    cv2.rectangle(img, (hand_pos[2], hand_pos[3]), (hand_pos[0], hand_pos[1]), (0, 255, 0), 0)
+    kernel = np.ones((3, 3), np.uint8)
+    cv2.rectangle(img, (hand_pos[2], hand_pos[3]), (hand_pos[0], hand_pos[1]), (0, 255, 0), 2)
     crop_img = img[hand_pos[1]:hand_pos[3], hand_pos[0]:hand_pos[2]]
+
     # find the maximum defect
     grey_img = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
-    blurred_img = cv2.GaussianBlur(grey_img, ksize=(21, 21), sigmaX=0)
+    dilated_img = cv2.dilate(grey_img,kernel,iterations=4)
+    blurred_img = cv2.GaussianBlur(dilated_img, ksize=(21, 21), sigmaX=0)
     _, thresh_img = cv2.threshold(blurred_img, 127, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
     contours, hierarchy = cv2.findContours(thresh_img.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     max_area = -1
@@ -62,7 +68,7 @@ def detect_hand(img, hand_pos):
             cv2.circle(crop_img, far, 1, [0, 0, 255], -1)
         cv2.line(crop_img, start, end, [0, 255, 0], 2)
 
-    if platform == "linux" or platform == "linux2":
+    if platform == "linux" or platform == "linux2" and open_window_flag:
         # linux
         cv2.namedWindow('Gesture')
         cv2.moveWindow('Gesture', 800, 210)
@@ -76,35 +82,34 @@ def detect_hand(img, hand_pos):
         cv2.imshow('Gesture', img)
         cv2.imshow('Hand', crop_img)
         cv2.imshow('Thresholded', thresh_img)
-    elif platform == "darwin":
+    elif platform == "darwin" and open_window_flag:
         # OS X: because Wudi cannot install pyautogui on my mac--sad
         cv2.namedWindow('Gesture')
         cv2.moveWindow('Gesture', 800, 210)
 
         cv2.namedWindow('Hand')
         cv2.moveWindow('Hand', 800, 100-crop_img.shape[1])
-        
+
         cv2.namedWindow('Thresholded')
         cv2.moveWindow('Thresholded', 800 + crop_img.shape[0], 100-crop_img.shape[1])
 
         cv2.imshow('Gesture', img)
         cv2.imshow('Hand', crop_img)
         cv2.imshow('Thresholded', thresh_img)
-    elif platform == "win32":
+    elif platform == "win32" and open_window_flag:
         # Windows...
         cv2.namedWindow('Gesture')
         cv2.moveWindow('Gesture', 2000, 210)
 
         cv2.namedWindow('Hand')
         cv2.moveWindow('Hand', 2000, 100-crop_img.shape[1])
-        
+
         cv2.namedWindow('Thresholded')
         cv2.moveWindow('Thresholded', 2000 + crop_img.shape[0], 100-crop_img.shape[1])
 
         cv2.imshow('Gesture', img)
         cv2.imshow('Hand', crop_img)
         cv2.imshow('Thresholded', thresh_img)
-    print(count_defects)
+    # print(count_defects)
 
     return count_defects
-
