@@ -1,14 +1,16 @@
 #! /usr/local/bin/python
 
 import os
+import sys
+import time
+import random
+
 import pygame
 from pygame.locals import *
 from pygame.color import THECOLORS
-from musicword import Word
-import random
-import sys
-from musicfaces import Face
-import time
+
+import musicword as MW
+import musicfaces as MF
 global levelscore
 global timeStart
 
@@ -17,20 +19,20 @@ levelscore = 0
 timeStart = time.time()+5
 EXEC_DIR = os.path.dirname(__file__)
 image_dir = os.walk(os.path.join(EXEC_DIR, "sounds"))
-
+print(EXEC_DIR)
 
 pygame.init()
 pygame.display.set_caption("MusicSMart")
 
-img = pygame.image.load('speaker.png')
-an1 = pygame.image.load('an1.png')
-an2 = pygame.image.load('an2.png')
-an3 = pygame.image.load('an3.png')
-an5 = pygame.image.load('an5.png')
-an6 = pygame.image.load('an6.png')
-an7 = pygame.image.load('an7.png')
-tr1 = pygame.image.load('tr1.png')
-tr3 = pygame.image.load('tr3.png')
+img = pygame.image.load(os.path.join(EXEC_DIR, 'speaker.png'))
+an1 = pygame.image.load(os.path.join(EXEC_DIR, 'an1.png'))
+an2 = pygame.image.load(os.path.join(EXEC_DIR, 'an2.png'))
+an3 = pygame.image.load(os.path.join(EXEC_DIR, 'an3.png'))
+an5 = pygame.image.load(os.path.join(EXEC_DIR, 'an5.png'))
+an6 = pygame.image.load(os.path.join(EXEC_DIR, 'an6.png'))
+an7 = pygame.image.load(os.path.join(EXEC_DIR, 'an7.png'))
+tr1 = pygame.image.load(os.path.join(EXEC_DIR, 'tr1.png'))
+tr3 = pygame.image.load(os.path.join(EXEC_DIR, 'tr3.png'))
 
 #  Global Variables
 screen = pygame.display.set_mode((0, 0))
@@ -53,13 +55,13 @@ screen_x, screen_y = screen.get_size()
 for root, dir, files in image_dir:
     for file in files:
         if '.DS_Store' not in file:
-            image_list.append(file)
+            image_list.append(os.path.join(EXEC_DIR, 'sounds', file))
 
 print("image_list 0", image_list)
 rand = random.choice(image_list)
-the_word = Word(rand)
+the_word = MW.Word(rand)
 image_list.remove(rand)
-sname = 'sounds/' + str(rand)
+sname = str(rand)
 global sound
 sound = pygame.mixer.Sound(sname)
 sound1 = pygame.mixer.Sound(sname)
@@ -77,9 +79,9 @@ ignored_keys = ('escape', 'return', 'backspace', 'enter', 'space', 'right shift'
                 ,'left shift', 'left meta', 'right meta', 'f1', 'f2', 'f3', 'f4', 'f5'\
                 ,'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12', 'f13', 'f14', 'f15', 'caps lock')
 
-### Faces and groups to hold them
-happy = Face('happy') # For right answer (check happy.lifepan) faces.py
-sad = Face('sad')  #For right answer (check sad.lifepan) faces.py
+### MF.Faces and groups to hold them
+happy = MF.Face('happy') # For right answer (check happy.lifepan) faces.py
+sad = MF.Face('sad')  #For right answer (check sad.lifepan) faces.py
 happy_group = pygame.sprite.GroupSingle()
 sad_group = pygame.sprite.GroupSingle()
 hyphen = False
@@ -280,8 +282,8 @@ def main():
                     print("image_list 1", image_list)
                     rand = random.choice(image_list)
                     image_list.remove(rand)
-                    the_word = Word(rand)
-                    sname = 'sounds/' + str(rand)
+                    the_word = MW.Word(rand)
+                    sname = str(rand)
                     sound = pygame.mixer.Sound(sname)
                     sound.play()
             except Exception as e:
@@ -297,7 +299,7 @@ def main():
             # print("image_list 2", image_list)
             # rand = random.choice(image_list)
             # image_list.remove(rand)
-            # the_word = Word(rand)
+            # the_word = MW.Word(rand)
             # sname = 'sounds/' + str(rand)
             # sound = pygame.mixer.Sound(sname)
             levelscore += 1
@@ -361,8 +363,8 @@ def main():
                             print("image_list 3", image_list)
                             rand = random.choice(image_list)
                             image_list.remove(rand)
-                            the_word = Word(rand)
-                            sname = 'sounds/' + str(rand)
+                            the_word = MW.Word(rand)
+                            sname = str(rand)
                             sound = pygame.mixer.Sound(sname)
                             sound.play()
                     except Exception as e:
