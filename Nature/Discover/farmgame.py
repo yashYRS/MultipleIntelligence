@@ -21,10 +21,10 @@ SCREEN_HEIGHT = 600
 BROOM_SPEED = 3
 MOVEMENT_SPEED = 4
 BULLET_SPEED = 5
-EQUIPMENT = [['knife.png', SPRITE_SCALING_KNIFE, 0],
-             ['broom.png', SPRITE_SCALING_BROOM, 300],
-             ['grass.png', SPRITE_SCALING_SAPLING, 0],
-             ['can.png', SPRITE_SCALING_CAN, 0]]
+EQUIPMENT = [['Nature/Discover/knife.png', SPRITE_SCALING_KNIFE, 0],
+             ['Nature/Discover/broom.png', SPRITE_SCALING_BROOM, 300],
+             ['Nature/Discover/grass.png', SPRITE_SCALING_SAPLING, 0],
+             ['Nature/Discover/can.png', SPRITE_SCALING_CAN, 0]]
 # # image source , scale , angle of rendering
 
 
@@ -79,9 +79,9 @@ class MyGame(arcade.Window):
         left, screen_width, bottom, screen_height = self.get_viewport()
 
         # Image from kenney.nl
-        self.player_sprite = arcade.Sprite("characterRight.png", SPRITE_SCALING_PLAYER)
+        self.player_sprite = arcade.Sprite("Nature/Discover/characterRight.png", SPRITE_SCALING_PLAYER)
         for i in range(2):
-            self.dustBin_sprite = arcade.Sprite("trash.png", SPRITE_SCALING_TRASH)
+            self.dustBin_sprite = arcade.Sprite("Nature/Discover/trash.png", SPRITE_SCALING_TRASH)
             self.dustBin_sprite.center_x = left + i*(screen_width - 600) + 300
             self.dustBin_sprite.center_y = bottom + i*(screen_height - 600) + 300
             self.static_objects_list.append(self.dustBin_sprite)
@@ -96,7 +96,7 @@ class MyGame(arcade.Window):
 
             # Create the grass instance
             # Coin image from kenney.nl
-            grass = arcade.Sprite("deadgrass.png", SPRITE_SCALING_DEAD_GRASS)
+            grass = arcade.Sprite("Nature/Discover/deadgrass.png", SPRITE_SCALING_DEAD_GRASS)
 
             # Position the grass
             grass.center_x = random.randrange(screen_width)
@@ -110,7 +110,7 @@ class MyGame(arcade.Window):
 
             # Create the grass instance
             # Coin image from kenney.nl
-            wasteHarm = arcade.Sprite("waste.png", SPRITE_SCALING_WASTE_HARM)
+            wasteHarm = arcade.Sprite("Nature/Discover/waste.png", SPRITE_SCALING_WASTE_HARM)
 
             # Position the grass
             wasteHarm.center_x = random.randrange(left + 100, screen_width - 100)
@@ -305,7 +305,7 @@ class MyGame(arcade.Window):
                     tempy = plant.center_y
                     tempScale = plant.scale + 0.1
                     if tempScale < 0.2:
-                        grass = arcade.Sprite("grass.png", tempScale)
+                        grass = arcade.Sprite("Nature/Discover/grass.png", tempScale)
                         grass.center_x = tempx
                         grass.center_y = tempy
                         self.new_plant_sapling_list.append(grass)

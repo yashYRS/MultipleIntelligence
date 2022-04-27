@@ -215,7 +215,7 @@ def natureqna():
     from Nature.Knowledge import nature
     level = game_agent.curr_level
     if level > 0:
-        final_score = nature.start_game(level)
+        final_score = nature.start_game()
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
         next_scene = 'main.' + next_module
@@ -223,7 +223,7 @@ def natureqna():
                                game_text=next_game_text,
                                next_scene=next_scene)
     else:
-        _ = nature.start_game(1)
+        _ = nature.start_game()
         return redirect(url_for('main.gamelist'))
 
 

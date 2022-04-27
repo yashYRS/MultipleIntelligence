@@ -8,7 +8,7 @@ from colors import Color
 import os
 
 surface = pygame.display.set_mode((0, 0))
-background = pygame.image.load("bg.png").convert()
+background = pygame.image.load("Self/Quiz/bg.png").convert()
 nscore = 0
 flag = 0
 screen_h = pygame.display.Info().current_h
@@ -86,9 +86,6 @@ class Game:
         self.cleanScreen()
         self.game_over_text_block.text = "Your response has been noted"
         self.objects.append(self.game_over_text_block)
-        f = open('score.txt', 'w')
-        f.write(str(self.score))
-        f.close()
         pygame.quit()
         a = 1/0
 
@@ -135,9 +132,9 @@ def start_game(level):
         Game1 = Game(level)
         Game1.run()
     except ZeroDivisionError as e:
-        f = open('score.txt', 'r')
-        score = float(f.read())
-        f.close()
-        if score > 1:
-            return 0.95
+        pass
+    score = Game1.score
+    print("GOT SCORE", score)
+    if score > 1:
+        return 0.95
     return score

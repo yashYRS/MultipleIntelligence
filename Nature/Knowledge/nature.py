@@ -25,8 +25,8 @@ def getLevel():
 EXEC_DIR = os.path.dirname(__file__)
 
 ### Test for platform since the .app bundle behaves strangely
-tree = pygame.image.load("tree.png")
-tr = pygame.image.load("tr1.png")
+tree = pygame.image.load("Nature/Knowledge/tree.png")
+tr = pygame.image.load("Nature/Knowledge/tr1.png")
 if levelread == 1:
     if sys.platform == "darwin":
         image_dir = os.walk("word_files")
