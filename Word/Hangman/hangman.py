@@ -99,7 +99,7 @@ def game_loop(word):
                         if dis < RADIUS:
                             letter[3] = False
                             guessed.append(ltr)
-                            if ltr not in word:
+                            if ltr.lower() not in word:
                                 hangman_status += 1
         draw(word, hangman_status, guessed)
         won = True

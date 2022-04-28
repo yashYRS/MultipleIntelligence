@@ -174,7 +174,10 @@ def spacewars():
     from Body.SpaceWars import space_war
     level = game_agent.curr_level
     if level > 0:
-        final_score = space_war.start_game(level)
+        try:
+            final_score = space_war.start_game(level)
+        except Exception as e:
+            final_score = 0
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
         next_scene = 'main.' + next_module
@@ -182,7 +185,10 @@ def spacewars():
                                game_text=next_game_text,
                                next_scene=next_scene)
     else:
-        _ = space_war.start_game(1)
+        try:
+            _ = space_war.start_game(1)
+        except Exception as e:
+            pass
         return redirect(url_for('main.gamelist'))
 
 
@@ -191,7 +197,10 @@ def flappybird():
     from Body.FlappyBird import final
     level = game_agent.curr_level
     if level > 0:
-        final_score = final.start_game()
+        try:
+            final_score = final.start_game()
+        except Exception as e:
+            final_score = 0
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
         next_scene = 'main.' + next_module
@@ -199,7 +208,10 @@ def flappybird():
                                game_text=next_game_text,
                                next_scene=next_scene)
     else:
-        _ = final.start_game()
+        try:
+            _ = final.start_game()
+        except Exception as e:
+            pass
         return redirect(url_for('main.gamelist'))
 
 # #### -------------------- NATURE GAMES ---------------------- #####
@@ -227,7 +239,11 @@ def natureexplore():
     from Nature.Discover import farmgame
     level = game_agent.curr_level
     if level > 0:
-        final_score = farmgame.start_game()
+        try:
+            final_score = farmgame.start_game()
+        except Exception as e:
+            final_score = 0
+            pass
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
         next_scene = 'main.' + next_module
@@ -235,7 +251,10 @@ def natureexplore():
                                game_text=next_game_text,
                                next_scene=next_scene)
     else:
-        _ = farmgame.start_game()
+        try:
+            _ = farmgame.start_game()
+        except Exception as e:
+            pass
         return redirect(url_for('main.gamelist'))
 
 # #### --------------------- START GAME ---------------------- #####
@@ -286,17 +305,19 @@ def first_game():
 @login_required
 def end_game():
     curr_session = game_agent.session_id
-    scores = game_agent.give_final_verdict()
+    try:
+        scores = game_agent.give_final_verdict()
 
-    for category, score in scores.items():
-        new_game = SingleGame(category_name=category, score=score, session_id=curr_session)
-        db.session.add(new_game)
-
+        for category, score in scores.items():
+            new_game = SingleGame(category_name=category, score=score, session_id=curr_session)
+            db.session.add(new_game)
+        db.session.commit()
+    except Exception as e:
+        pass
     # add the new user to the database
-    db.session.commit()
     # Create games objects in database, and store the final score for games
     final_url = "main.profile"
-    return render_template('end_video.html', initial_url=final_url)
+    return render_template('end_video.html', final_url=final_url)
 
 
 # #### --------------------- LOG-IN & REGISTER ---------------------- #####
