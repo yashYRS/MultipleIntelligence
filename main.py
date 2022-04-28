@@ -63,15 +63,10 @@ def hangman():
 @main.route('/slidingpuzzle', methods=['GET', 'POST'])
 def slidingpuzzle():
 
-    from Picture.SlidingPuzzle import slidingpuzzle_1
-    folder = 'static/images'
+    from Picture import sliding_tile
     level = game_agent.curr_level
     if level > 0:
-        if level == 1:
-            final_score = slidingpuzzle_1.start_game(folder)
-        elif level == 2:
-            from Picture.SlidingPuzzle import slidingpuzzle_2
-            final_score = slidingpuzzle_2.start_game(folder)
+        final_score = sliding_tile.start_game(level)
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
         next_scene = 'main.' + next_module
@@ -79,7 +74,7 @@ def slidingpuzzle():
                                game_text=next_game_text,
                                next_scene=next_scene)
     else:
-        _ = slidingpuzzle_1.start_game(folder)
+        _ = sliding_tile.start_game(1)
         return redirect(url_for('main.gamelist'))
 
 
