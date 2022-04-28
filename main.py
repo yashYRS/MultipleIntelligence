@@ -30,7 +30,7 @@ def bullscows():
     from Word.BullsAndCows import CowBull
     level = game_agent.curr_level
     if level > 0:
-        final_score = CowBull.start_game(level)
+        final_score = CowBull.game_loop(level)
         game_agent.update_score(final_score)
         next_module, next_game_text = game_agent.get_next_game()
         next_scene = 'main.' + next_module
@@ -38,7 +38,7 @@ def bullscows():
                                game_text=next_game_text,
                                next_scene=next_scene)
     else:
-        _ = CowBull.start_game(1)
+        _ = CowBull.game_loop(1)
         return redirect(url_for('main.gamelist'))
 
 

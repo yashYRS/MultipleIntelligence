@@ -50,7 +50,7 @@ def draw(word, hangman_status, guessed):
             display_word += letter + " "
         else:
             display_word += "_ "
-    print("D:", display_word, "G:", guessed, "W:", word, "HS:", hangman_status)
+    # print("D:", display_word, "G:", guessed, "W:", word, "HS:", hangman_status)
     text = WORD_FONT.render(display_word, 1, BLACK)
     win.blit(text, (400, 200))
 

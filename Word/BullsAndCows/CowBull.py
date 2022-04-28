@@ -8,29 +8,29 @@ import pygame
 from pygame.locals import *
 
 levelscore = 0
-levelread = 3
+level = 3
 # Initialising PyGame Module
 pygame.init()
 
+WIDTH, HEIGHT = 800, 500
 # Initialising Global Variables
-Canvas = pygame.display.set_mode((0, 0))
+Canvas = pygame.display.set_mode((WIDTH, HEIGHT))
+
 pygame.display.set_caption("Bulls n Cows")
 white = (255, 255, 255)
 black = (0, 0, 0)
 red = (139, 35, 35)
 font1 = "Times New Roman"
 font2 = "Arial"
-toggleKey = ["  *" for i in range(0, 26)]
 
 
-def finfScoreToSend(score, time):
+def get_score_to_send(score, time):
     fscore = score / (time * 0.75)
     return fscore
 
 
 def getLevelFile(level):
     level = int(level)
-    print("FILE LIST", os.listdir())
     if level == 1:
         file = open("Word/BullsAndCows/Wordlist.txt", "r")
     elif level == 2:
@@ -53,8 +53,8 @@ def text(string, size, color, top, left, fonttype=None, bold=False, italic=False
 
 # Function To Set A Word From The Database
 def set_word():
-    file = getLevelFile(levelread)
-    if levelread == 1:
+    file = getLevelFile(level)
+    if level == 1:
         rval = 113
     else:
         rval = 94
@@ -69,10 +69,10 @@ def set_word():
 # Function To Display Alphabets
 def alph():
     alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    start_coord = 30
+    start_coord = WIDTH*0.02
     for i in alpha:
-        text(i, 55, black, 50, start_coord)
-        start_coord += 40
+        text(i, size=30, color=black, top=HEIGHT*0.2, left=start_coord)
+        start_coord += 30
 
 
 # Function To Wait For An Input At Certain Screens
@@ -96,8 +96,9 @@ def displayTime(ret=False):
     timeCurrent = time.time()
     timer = float(timeCurrent - timeStart)
     timer = round(timer, 1)
-    pygame.draw.rect(Canvas, white, (975, 15, 120, 30))
-    text("Time : " + str(timer), 23, black, 10, 975, font1, False, True)
+    pygame.draw.rect(Canvas, white, (WIDTH*0.28, HEIGHT*0.1, 200, 30))
+    text("Time : " + str(timer), size=25, color=black, top=HEIGHT*0.1,
+         left=WIDTH*0.3, fonttype=font2, bold=False, italic=True)
     if ret:
         return timer
 
@@ -107,60 +108,35 @@ def dispGame(turn, words):
 
     Canvas.fill(white)  # Refresh The Game Scren
     alph()  # Display The Alphabets
-    for i in range(26):  # Display Toggle Keys
-        text(toggleKey[i], 20, black, 95, 30 + i * 40, font1)
 
-    text("Your word has been chosen.", 25, black, 140, 30, font2, False, True)
-    text(
-        "Choose from the above alphabets to guess the word.",
-        25,
-        black,
-        170,
-        30,
-        font2,
-        False,
-        True,
-    )
+    text("Turn " + str(turn) + ":", size=20, color=black, top=HEIGHT*0.5,
+         left=WIDTH*0.1, fonttype=font2, bold=False, italic=True)
 
-    a = "Turn : " + str(turn)
-    text(a, 23, black, 10, 30, font1, False, True)
-    level = "Level: " + str(levelread)  # Display Turn Count
-    text(level, 23, black, 30, 30, font1, False, True)
-    pygame.draw.line(Canvas, black, (20, 118), (1080, 118), 1)
+    # pygame.draw.line(Canvas, black, (0, 118), (1080, 118), 1)
+    # Display Input Blanks
     for i in range(4):
-        text("_", 140, black, 330, i * 100 + 100)  # Display Input Blanks
+        text("_", size=60, color=black, top=HEIGHT*0.5, left=WIDTH*0.25 + i*70)
+
     for i in range(len(words)):  # Display Previous Inputs
-        text(str(i + 1) + ". " + words[i][0], 22, black, 122 + i * 55, 930, font1)
-        b = "B: " + str(words[i][1]) + " / C: " + str(words[i][2])
-        text(b, 19, black, 145 + i * 55, 950, font1)
-
-
-# Function To Update The Toggle Key
-def helpKeys(index):
-    if toggleKey[index] == "  *":
-        toggleKey[index] = "  ?"
-    elif toggleKey[index] == "  ?":
-        toggleKey[index] = "  X"
-    elif toggleKey[index] == "  X":
-        toggleKey[index] = "  *"
-    pygame.draw.rect(Canvas, white, (30 + index * 40, 95, 40, 20))
-    text(toggleKey[index], 20, black, 95, 30 + index * 40, font1)
+        reqd_text = str(i + 1) + ". " + words[i][0] + " | B:" + str(words[i][1]) + " / C:" + str(words[i][2])
+        text(reqd_text, 20, black,
+             HEIGHT*0.3 + i*30, WIDTH*0.7, font1)
 
 
 # Function To Display/Refresh User Input
 def updateguess(guess=""):
 
     # Command To Clear Old Input By Overlapping It With A Rectangle Of Background Color
-    pygame.draw.rect(Canvas, white, (100, 320, 400, 70))
+    pygame.draw.rect(Canvas, white, (WIDTH*0.24, HEIGHT*0.44, 300, 60))
 
     # Command To Display Updated Input
     for i in range(len(guess)):
-        text(guess[i], 120, black, 320, i * 100 + 100)
+        text(guess[i], 50, black, HEIGHT*0.45, WIDTH*0.25 + i*70)
     pygame.display.update()
 
 
 # Main Game Loop
-def startGame():
+def startGame(level, total_guesses):
     turn = 1
     words = []
     word = set_word()
@@ -170,12 +146,7 @@ def startGame():
     dispGame(turn, words)
     pygame.display.update()
 
-    # 'Turn' Loop
-    if levelread == 3:
-        tval = 6
-    else:
-        tval = 11
-    while turn < tval:
+    while turn < total_guesses:
         letter = 1
         B = 0
         C = 0
@@ -187,7 +158,8 @@ def startGame():
         # 'Letter' Loop
         while submit:
             while erase:
-                text("Erase", 50, black, 620, 950, font2)
+                text("ERASE", size=20, color=black, top=HEIGHT*0.8,
+                     left=WIDTH*0.5, fonttype=font2)
                 erase = False
 
             # To initiate timer
@@ -195,57 +167,36 @@ def startGame():
 
             # Detect Certain Events Such As Mouse Motion And Mouse Clicks
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    terminate()
 
                 # Underline The Alphabet That The Mouse Cursor Is Hovering On
                 if event.type == MOUSEMOTION:
-                    if (
-                        event.pos[0] > 30
-                        and event.pos[0] < 1070
-                        and event.pos[1] > 50
-                        and event.pos[1] < 120
-                    ):
-                        x = int((event.pos[0] - 30) / 40)
-                        pygame.draw.line(Canvas, white, (1, 90), (1099, 90), 2)
+                    mouse_w, mouse_h = event.pos
+                    # size=30 top=HEIGHT*0.2, left=WIDTH*0.02 + 30
+                    if (HEIGHT*0.2 + 30 > mouse_h > HEIGHT*0.19 and
+                            WIDTH > mouse_w > WIDTH*0.01):
+                        x = int((mouse_w - WIDTH*0.02) / 30)
+                        pygame.draw.line(Canvas, white, (0, HEIGHT*0.2+30), (WIDTH, HEIGHT*0.2+30), 2)
                         pygame.draw.line(
-                            Canvas, black, (x * 40 + 25, 90), (x * 40 + 60, 90), 2
+                            Canvas, black, (x*30 + 10, HEIGHT*0.2+30), (x*30 + 35, HEIGHT*0.2+30), 2
                         )
                         pygame.display.update()
 
-                # Detect Click On Toggle Keys
                 if event.type == MOUSEBUTTONDOWN:
-                    if (
-                        event.pos[0] > 30
-                        and event.pos[0] < 1070
-                        and event.pos[1] > 95
-                        and event.pos[1] < 120
-                    ):
-                        x = int((event.pos[0] - 30) / 40)
-                        helpKeys(x)
+                    mouse_w, mouse_h = event.pos
 
-                # Detect Click On Erase Button
-                if event.type == MOUSEBUTTONDOWN:
-                    if (
-                        letter > 1
-                        and event.pos[0] > 950
-                        and event.pos[0] < 1070
-                        and event.pos[1] > 620
-                        and event.pos[1] < 670
-                    ):
+                    # Detect Click On Erase Button
+                    if (letter > 1 and (HEIGHT*0.8 + 20 > mouse_h > HEIGHT*0.8)
+                            and (WIDTH*0.5 + 80 > mouse_w > WIDTH*0.48)):
                         letter = letter - 1
                         guess = guess[0:-1]
                         updateguess(guess)
 
                     # Detect Click On A Certain Alphabet
-                    if (
-                        event.pos[0] > 30
-                        and event.pos[0] < 1070
-                        and event.pos[1] > 50
-                        and event.pos[1] < 95
-                    ):
-                        x = int((event.pos[0] - 30) / 40)
+                    if (HEIGHT*0.2 + 30 > mouse_h > HEIGHT*0.19 and
+                            WIDTH > mouse_w > WIDTH*0.01):
+                        x = int((mouse_w - WIDTH*0.02) / 30)
                         string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        # print(string[x])
                         if letter == 1:
                             guess = guess + string[x]
                             updateguess(guess)
@@ -260,17 +211,15 @@ def startGame():
                                 letter = letter + 1
                 if letter == 5:
                     if sub:
-                        text("Submit", 60, black, 550, 80, font2)
+                        text("SUBMIT", size=20, color=black, top=HEIGHT*0.8,
+                             left=WIDTH*0.2, fonttype=font2)
                         sub = False
 
                     # Detect Click On Submit Button And Exit The 'Letter' Loop
                     if event.type == MOUSEBUTTONDOWN:
-                        if (
-                            event.pos[0] > 80
-                            and event.pos[0] < 270
-                            and event.pos[1] > 550
-                            and event.pos[1] < 600
-                        ):
+                        mouse_w, mouse_h = event.pos
+                        if (HEIGHT*0.78 + 25 > mouse_h > HEIGHT*0.78 and
+                                WIDTH*0.2 + 80 > mouse_w > WIDTH*0.2):
                             submit = False
 
         # Analysing The Input
@@ -287,7 +236,7 @@ def startGame():
             if guess in words[i]:
                 repeat = True
         if B == 4:
-            return endGame(word, True, turn, displayTime(True))
+            return endGame(word, True, turn, displayTime(True), B, C)
         elif repeat:
             dispGame(turn, words)
         else:
@@ -296,106 +245,73 @@ def startGame():
             dispGame(turn, words)
 
     # End Game Once All 10 Turns Are Used Up
-    return endGame(word, False, turn, displayTime(True))
+    return endGame(word, False, turn, displayTime(True), B, C)
 
 
 # Function To Display The End Game Screen
-def endGame(word, result, turn, timer):
-    score = 0
-    Canvas.fill(red)
-    text("The required answer was", 50, white, 125, 200)
-    text(word, 100, white, 200, 325)
+def endGame(word, result, turn, timer, B, C):
+    Canvas.fill(white)
+    reqd_text = "HIDDEN CODE: " + word
+    text(reqd_text, size=40, color=black, top=HEIGHT*0.35,
+         left=WIDTH*0.25, fonttype=font2)
+    # Give full marks for bull guesses, half for cows, quarter for guess left
+    score = B/4 + C/8 + turn/4
+    if score > 1:
+        score = 1
+
     if result:
-        if levelread == 3:
-            score = 6 - turn
-        else:
-            score = 11 - turn
-        text("Congratulations! You guessed the word correctly.", 50, white, 325, 200)
-        text("Score: " + str(score), 75, white, 425, 320)
-        levelscore = finfScoreToSend(score, timer)
-        print("Score: " + str(levelscore))
+        result_text = "Game Won! Well Done  :)"
     else:
-        text("Oops! You failed to guess the word correctly.", 50, white, 325, 200)
-        text("Score : 0", 75, white, 425, 320)
-    text("Time : " + str(timer) + "s", 75, white, 500, 320)
+        result_text = "Better Luck Next Time :("
+
+    text(result_text, size=40, color=black, top=HEIGHT*0.55,
+         left=WIDTH*0.2, fonttype=font2)
     time.sleep(2)
     return score
 
 
-# Main Function
-Canvas.fill(red)
-txt = "Welcome to Bulls & Cows! Current Level: " + str(levelread)
-text(txt, 60, white, 50, 100, font1, True)
-text(
-    "Simple Rules: You have to guess the word I'm Thinking!", 35, white, 150, 20, font2
-)
-text(
-    "Fill in the blanks with letters that make up a word you want to guess.",
-    35,
-    white,
-    220,
-    20,
-    font2,
-    True,
-)
-text(
-    "Select the letters by clicking on them.(No repeating letters)",
-    35,
-    white,
-    290,
-    20,
-    font2,
-    True,
-)
-text(
-    "Your result is displayed in the top right corner.", 35, white, 360, 20, font2, True
-)
-text(
-    "'B' is bulls which denotes how many letters are in the correct position.",
-    35,
-    white,
-    430,
-    20,
-    font2,
-    True,
-)
-text(
-    "'C' is cows which tells you how many letters are in the wrong position.",
-    35,
-    white,
-    500,
-    20,
-    font2,
-    True,
-)
-if levelread == 3:
-    text(
-        "You get 5 guesses and the time is recorded. Have Fun!",
-        40,
-        white,
-        570,
-        20,
-        font2,
-        True,
-    )
-else:
-    text(
-        "You get 10 guesses and the time is recorded. Have Fun!",
-        40,
-        white,
-        570,
-        20,
-        font2,
-        True,
-    )
-text("Click to start!", 50, white, 640, 450, font1, True)
+def game_loop(level=1):
+    # Main Function
+    Canvas.fill(white)
+    text("Bulls & Cows", size=30, color=black, top=HEIGHT*0.05,
+         left=WIDTH*0.3, fonttype=font1, bold=True)
+    text("The Misson is to guess the hidden 4 letter word", size=20,
+         color=black, top=HEIGHT*0.2, left=WIDTH*0.15, fonttype=font2)    
 
+    if level == 3:
+        guess_text = "You get 7 guesses to crack the code",
+        total_guesses = 8
+    elif level == 2:
+        guess_text = "You get 9 guesses to crack the code",
+        total_guesses = 3
+    elif level == 1:
+        guess_text = "You get 11 guesses to crack the code"
+        total_guesses = 12
 
-waitforkey()
-global timeStart
-timeStart = time.time()
-start = startGame()
-while start:
-    toggleKey = ["  *" for i in range(0, 26)]
+    text("The hidden word will never have repeating characters", size=20,
+         color=black, top=HEIGHT*0.3, left=WIDTH*0.15, fonttype=font2)
+    text("At every turn, select any 4 distinct letters and submit a guess",
+         size=20, color=black, top=HEIGHT*0.4, left=WIDTH*0.15, fonttype=font2)
+    text("Every guess is given 2 scores viz. Bull (B) score and Cow (C) score",
+         size=20, color=black, top=HEIGHT*0.5, left=WIDTH*0.15, fonttype=font2)
+    text("B: number of letters from the guess, in the correct position.",
+         size=20, color=black, top=HEIGHT*0.6, left=WIDTH*0.15, fonttype=font2)
+    text("C: number of letters from the guess, that are part of the word",
+         size=20, color=black, top=HEIGHT*0.7, left=WIDTH*0.15, fonttype=font2)
+    text("but are in incorrect position", size=20, color=black,
+         top=HEIGHT*0.75, left=WIDTH*0.3, fonttype=font2)
+
+    text(guess_text, size=20, color=black, top=HEIGHT*0.85,
+         left=WIDTH*0.25, fonttype=font2)
+    text("Click to start!", size=20, color=black, top=HEIGHT*0.95,
+         left=WIDTH*0.4, fonttype=font2)
+
+    waitforkey()
+    global timeStart
     timeStart = time.time()
-    start = startGame()
+    score = startGame(level, total_guesses)
+    print("SCORE", score)
+
+
+if __name__ == "__main__":
+    game_loop()
