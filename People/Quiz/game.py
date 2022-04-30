@@ -8,7 +8,7 @@ from colors import Color
 import os
 
 surface = pygame.display.set_mode((0, 0))
-background = pygame.image.load("People/Quiz/bg.png").convert()
+background = pygame.image.load("static/images/yoda.jpg").convert()
 nscore = 0
 flag = 0
 screen_h = pygame.display.Info().current_h

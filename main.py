@@ -371,10 +371,10 @@ def profile():
         else:
             reqd_score = max([game.score for game in all_games])
         curr_item['high_score'] = str(round(reqd_score*100, 2)) + " %"
-        max_scores.append(reqd_score)
+        max_scores.append(reqd_score*100)
     max_score = str(round(max(max_scores), 2)) + " %"
-    print(max_scores, max_score)
-    print([c['high_score'] for c in category_info])
+    print("M", max_score)
+    print("C:", [c['high_score'] for c in category_info])
 
     return render_template('profile.html', name=current_user.name,
                            game_category=category_info, max_score=max_score)

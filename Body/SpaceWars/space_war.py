@@ -2,6 +2,7 @@ import os
 import random
 import time
 import turtle
+import traceback
 import tkinter as T
 
 
@@ -17,7 +18,7 @@ class Sprite(turtle.Turtle):
         self.speed(0)
         # sprites wont draw anything on the screen
         self.penup()
-        self.color(color) 
+        self.color(color)
         # to make it appear
         self.fd(0)
         # go to the starting point
@@ -31,7 +32,7 @@ class Sprite(turtle.Turtle):
     # Boundary detection
         if self.xcor() > 290:
             self.setx(290)
-            self.rt(60)  
+            self.rt(60)
         if self.xcor() < -290:
             self.setx(-290)
             self.rt(60)
@@ -225,29 +226,39 @@ class Game():
         self.pen.penup()
         self.pen.goto(-300, 300)
         self.pen.pendown()
-        for side in range(4):  
+        for side in range(4):
             self.pen.fd(600)
             self.pen.rt(90)
         self.pen.penup()
-        self.pen.ht()   
+        self.pen.ht()
         self.pen.pendown()
 
     def show_status(self):
         self.pen.undo()
-        if self.lives > 0:
-            msg = "Level: %s   Lives: %s   Score: %s" %(self.level, self.lives, self.score)
+        if self.state != "gameover":
+            msg = "Level: %s   Lives: %s   Score: %s" % (self.level, self.lives, self.score)
         else:
-            msg = "Game Over ! Score : %s" %(self.score)
-        self.pen.penup() #not draw anything
+            msg = "Game Over ! Score : %s" % (self.score)
+
+        # Don't draw anything
+        self.pen.penup()
         self.pen.goto(-110, 310)
-        self.pen.write(msg, font=("Arial", 16, "normal")) 
+        self.pen.write(msg, font=("Arial", 16, "normal"))
 
     def show_splash(self):
         turtle.bgpic("Body/SpaceWars/splash8.png")
         turtle.update()
-        time.sleep(6)
+        time.sleep(4)
         turtle.bgpic("Body/SpaceWars/starfield.gif")
         self.state = "setup"
+
+    def exit_game(self, score):
+        turtle.update()
+        self.show_status()
+
+        time.sleep(2)
+        turtle.bye()
+        return
 
 
 def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
@@ -259,7 +270,7 @@ def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
     turtle.fd(0)
     # control the speed of animation
     turtle.speed(0)
-    turtle.bgcolor("black") 
+    turtle.bgcolor("black")
     turtle.bgpic("Body/SpaceWars/splash8.png")
     turtle.title("Space War")
     turtle.ht()
@@ -284,10 +295,12 @@ def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
     game.draw_border()
 
     # Show the game show_status
+    print("Before showing status")
     game.show_status()
 
+    print("Before After showing splash")
     game.show_splash()
-
+    print("After showing splash")
     if game.state == "setup":
         # Create my sprites
         player = Player("triangle", "white", 0, 0, player_speed=player_speed)
@@ -316,6 +329,7 @@ def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
     # turtle.onkey(player.accelarate, "Up")
     # turtle.onkey(player.decelarate, "Down")
     turtle.onkey(cannon.fire, "space")
+    turtle.onkey(game.exit_game, "q")
     # to listen to the key presses
     turtle.listen()
 
@@ -323,7 +337,9 @@ def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
     # Main game loop
     while True:
         # stops the updating until we get here
-        if time.time() - start_time > 40:
+        if time.time() - start_time > 60:
+            game.state = "gameover"
+            game.exit_game(gscore)
             return gscore, lives
         turtle.update()
         time.sleep(0.02)
@@ -344,6 +360,8 @@ def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
             gscore -= 5
             if game.lives < 1:
                 game.state = "gameover"
+                game.exit_game(gscore)
+                return gscore, lives
             game.show_status()
             player.color("white")
 
@@ -364,7 +382,9 @@ def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
                 gscore -= 5
                 game.lives -= 1
                 if game.lives < 1:
-                    game.state = "gameover" 
+                    game.state = "gameover"
+                    game.exit_game(gscore)
+                    return gscore, lives
                 game.show_status()
                 player.color("white")
 
@@ -407,8 +427,8 @@ def game_loop(player_speed, ally_speed, enemy_speed, enemy_canon_speed):
         for particle in particles:
             particle.move()
 
-        print(game.state)
         if game.state == "gameover":
+            game.exit_game(gscore)
             return gscore, lives
     return gscore
 
@@ -444,7 +464,8 @@ def start_game(level):
             return game_score/500
 
     except Exception as e:
-        print(e)
+        print(''.join(traceback.format_exception(None, e, e.__traceback__)))
+    print("Score returned", game_score)
     return game_score
 
 

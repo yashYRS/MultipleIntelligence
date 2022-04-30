@@ -267,6 +267,7 @@ def endGame(word, result, turn, timer, B, C):
     text(result_text, size=40, color=black, top=HEIGHT*0.55,
          left=WIDTH*0.2, fonttype=font2)
     time.sleep(2)
+    pygame.quit()
     return score
 
 
